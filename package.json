@@ -1,0 +1,27 @@
+{
+  "name": "ketofan-back-end",
+  "version": "1.0.0",
+  "description": "ketofan api",
+  "main": "./src/server.js",
+  "dependencies": {
+    "config": "^3.3.6",
+    "express": "^4.17.1",
+    "knex": "^0.95.4",
+    "pg": "^8.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node ./src/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fuboki10/Ketofan-Back-End.git"
+  },
+  "author": "fuboki10",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fuboki10/Ketofan-Back-End/issues"
+  },
+  "homepage": "https://github.com/fuboki10/Ketofan-Back-End#readme"
+}
