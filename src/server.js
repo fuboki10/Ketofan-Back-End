@@ -6,6 +6,10 @@ const port = process.env.PORT || config.get('PORT') || 3000;
 
 const server = app.listen(port, () => logger.info(`app listening on port ${port}`));
 
+const db = require('../db/db');
+
+db.select().then(console.log);
+
 const exitHandler = () => {
   if (server) {
     server.close(() => {
