@@ -3,13 +3,13 @@ const config = require('config');
 const logger = require('./logger');
 
 const nodeEnv = process.env.NODE_ENV || config.get('NODE_ENV');
-morgan.token('message', (req, res) => res.locals.errorMessage || '');
+morgan.token('message', (_, res) => res.locals.errorMessage || '');
 
 const getIpFormat = () => (nodeEnv === 'production' ? ':remote-addr - :remote-user [:date[clf]]' : '');
 // eslint-disable-next-line max-len
-const successResponseFormat = `${getIpFormat()} ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms`;
+const successResponseFormat = `${getIpFormat()} :method :url HTTP/:http-version" :status :res[content-length] :response-time ms`;
 // eslint-disable-next-line max-len
-const errorResponseFormat = `${getIpFormat()} ":method :url HTTP/:http-version" :status :res[content-length] :response-time ms - message: :message`;
+const errorResponseFormat = `${getIpFormat()} :method :url HTTP/:http-version" :status :res[content-length] :response-time ms - message: :message`;
 
 const successHandler = morgan(successResponseFormat, {
   skip: (req, res) => res.statusCode >= 400,

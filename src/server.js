@@ -1,12 +1,19 @@
 const config = require('config');
 const app = require('./app');
 const logger = require('./utils/logger');
+const db = require('../db/db');
 
 const port = process.env.PORT || config.get('PORT') || 3000;
 
+// start server
 const server = app.listen(port, () => logger.info(`app listening on port ${port}`));
 
-const exitHandler = () => {
+// server exit handler
+const exitHandler = async () => {
+  if (db) {
+    await db.destroy();
+  }
+
   if (server) {
     server.close(() => {
       logger.info('Server closed');
@@ -17,6 +24,7 @@ const exitHandler = () => {
   }
 };
 
+// signals listeners
 const unexpectedErrorHandler = (error) => {
   logger.info(error);
   exitHandler();

@@ -1,5 +1,5 @@
 {
-  "DB" : "postgres://postgres:root@172.22.128.1:5432/ketofan",
+  "DB" : "postgres://postgres:root@localhost:5432/ketofan",
   "NODE_ENV" : "development",
   "PORT": 3000,
   "JWT_KEY": "foo",

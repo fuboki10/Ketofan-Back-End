@@ -26,8 +26,14 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-app.get('/', async (req, res) => {
+// root page
+app.get('/', (_, res) => {
   res.send('Hello world!!');
+});
+
+// send back a 404 error for any unknown api request
+app.use((_, res) => {
+  res.status(404).json('Not found');
 });
 
 module.exports = app;
