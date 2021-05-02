@@ -1,7 +1,10 @@
 const express = require('express');
 const config = require('config');
 const cors = require('cors');
+const status = require('http-status');
 const morgan = require('./utils/morgan');
+const { errorConverter, errorHandler } = require('./middlewares/error');
+const AppError = require('./utils/AppError');
 
 const app = express();
 
@@ -27,13 +30,19 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // root page
-app.get('/', (_, res) => {
+app.get('/', (req, res) => {
   res.send('Hello world!!');
 });
 
 // send back a 404 error for any unknown api request
-app.use((_, res) => {
-  res.status(404).json('Not found');
+app.use((req, res, next) => {
+  next(new AppError('Not Found', status.NOT_FOUND));
 });
+
+// convert error to AppError, if needed
+app.use(errorConverter);
+
+// handle error
+app.use(errorHandler);
 
 module.exports = app;
