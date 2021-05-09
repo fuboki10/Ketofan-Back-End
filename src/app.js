@@ -5,6 +5,7 @@ const status = require('http-status');
 const morgan = require('./utils/morgan');
 const { errorConverter, errorHandler } = require('./middlewares/error');
 const AppError = require('./utils/AppError');
+const routesV1 = require('./routes/v1');
 
 const app = express();
 
@@ -33,6 +34,9 @@ app.use(cors(corsOptions));
 app.get('/', (req, res) => {
   res.send('Hello world!!');
 });
+
+// v1 API routes
+app.use('/api/v1', routesV1);
 
 // send back a 404 error for any unknown api request
 app.use((req, res, next) => {
