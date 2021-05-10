@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
-import { userService } from '../services';
+import { authService } from '../services';
 
 export const signup = async (req : Request, res : Response) => {
-  const user = await userService.createUser(req.body);
+  const user = await authService.createUser(req.body);
 
   res.status(status.OK).json({
     status: status.OK,
