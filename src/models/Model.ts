@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 // eslint-disable-next-line import/extensions
-import db from '../../db/db';
+import db from '../../db';
 
 /**
  * @interface
