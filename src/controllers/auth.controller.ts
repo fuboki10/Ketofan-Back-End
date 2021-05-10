@@ -3,10 +3,13 @@ import status from 'http-status';
 import { authService } from '../services';
 
 export const signup = async (req : Request, res : Response) => {
-  const user = await authService.createUser(req.body);
+  const { username, password } = req.body;
+  const user = await authService.createUser({ username, password });
 
+  const token = await authService.generateAuthToken(user.id);
   res.status(status.OK).json({
     status: status.OK,
+    token,
     data: {
       user,
     },

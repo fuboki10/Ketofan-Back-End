@@ -22,7 +22,7 @@ function handleDuplicateKeyViolationDB(error : any) : AppError {
  * @author Abdelrahman Tarek
  * @summary Convert Error to AppError
  */
-const errorConverter = (err : any, req : Request, res : Response, next : NextFunction) => {
+const errorConverter = (err : any, _req : Request, _res : Response, next : NextFunction) => {
   let error = err;
 
   if (error.code === '23505') error = handleDuplicateKeyViolationDB(error);
@@ -41,7 +41,8 @@ const errorConverter = (err : any, req : Request, res : Response, next : NextFun
  * @author Abdelrahman Tarek
  * @summary Handle Errors
  */
-const errorHandler = (err : any, req : Request, res : Response, next : NextFunction) => {
+// eslint-disable-next-line no-unused-vars
+const errorHandler = (err : any, _req : Request, res : Response, _next : NextFunction) => {
   let { statusCode, message } = err;
 
   // if production and not operational consider it be internal server error

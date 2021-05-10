@@ -53,8 +53,9 @@ export default class Model {
     this.schema = props.schema;
   }
 
-  public find() : Knex.QueryBuilder {
-    return this.db;
+  public find(filters : Object = {}) : Knex.QueryBuilder {
+    return this.db
+      .where(filters);
   }
 
   public findById(id : number) : Knex.QueryBuilder {

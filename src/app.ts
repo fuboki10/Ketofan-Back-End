@@ -26,7 +26,7 @@ app.use(express.json());
 
 // enable cors
 const corsOptions = {
-  exposedHeaders: ['x-auth-token', 'auth-token'],
+  exposedHeaders: ['Authorization'],
   origin: '*',
   credentials: true,
   methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE', 'OPTIONS'],

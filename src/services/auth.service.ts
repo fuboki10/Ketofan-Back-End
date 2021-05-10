@@ -1,11 +1,37 @@
 import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { User } from '../models';
+// eslint-disable-next-line import/order
+import config = require('config');
 
 interface UserProps {
   username: string;
   password: string;
 }
 
+/**
+ * Generate Authentication token
+ *
+ * @function
+ * @public
+ * @async
+ * @author Abdelrahman Tarek
+ * @summary Generate Authentication token
+ * @param {String} userId User ID
+ * @returns {String} `token` authentication token
+ */
+export const generateAuthToken = async (userId : string) => {
+  const expTime : string = process.env.JWT_EXPIRES_IN || config.get('JWT_EXPIRES_IN');
+  const privateKey : string = process.env.JWT_KEY || config.get('JWT_KEY');
+
+  const jwtString = jwt.sign(
+    { id: userId },
+    privateKey,
+    { expiresIn: expTime },
+  );
+
+  return jwtString;
+};
 /**
  * Hash Password
  *
@@ -41,14 +67,15 @@ export const createUser = async (userProps : UserProps) => {
       username: userProps.username,
       password: hashedPassword,
     })
-    .returning(['id', 'username', 'password']);
+    .returning(['id', 'username']);
 
-  return user;
+  return user[0];
 };
 
 const userService = {
   createUser,
   hashPassword,
+  generateAuthToken,
 };
 
 export default userService;
