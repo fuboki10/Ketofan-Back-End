@@ -1,11 +1,14 @@
+/* eslint-disable import/extensions */
 import express from 'express';
-import config from 'config';
 import cors from 'cors';
 import status from 'http-status';
 import morgan from './utils/morgan';
 import { errorConverter, errorHandler } from './middlewares/error';
 import AppError from './utils/AppError';
 import routesV1 from './routes/v1';
+
+// eslint-disable-next-line import/order
+import config = require('config');
 
 const app = express();
 

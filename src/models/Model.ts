@@ -68,11 +68,11 @@ export default class Model {
       .del();
   }
 
-  dropTable(knex : Knex) {
-    knex.schema.dropTableIfExists(this.name);
+  dropTable(knex : Knex) : Knex.SchemaBuilder {
+    return knex.schema.dropTableIfExists(this.name);
   }
 
-  createTable(knex : Knex) {
-    knex.schema.createTable(this.name, this.schema);
+  createTable(knex : Knex) : Knex.SchemaBuilder {
+    return knex.schema.createTable(this.name, this.schema);
   }
 }

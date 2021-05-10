@@ -1,6 +1,8 @@
-import config from 'config';
+/* eslint-disable import/extensions */
 import app from './app';
 import logger from './utils/logger';
+// eslint-disable-next-line import/order
+import config = require('config');
 
 const port = process.env.PORT || config.get('PORT') || 3000;
 

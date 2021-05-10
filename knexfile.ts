@@ -1,6 +1,10 @@
-import config from 'config';
+import config = require('config');
 
-export default {
+interface IConfig {
+  [key: string]: any;
+}
+
+const knexConfig : IConfig = {
   development: {
     client: 'pg',
     connection: process.env.DB || config.get('DB'),
@@ -28,3 +32,5 @@ export default {
     seeds: { directory: './db/seeds' },
   },
 };
+
+export default knexConfig;

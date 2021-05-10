@@ -40,7 +40,7 @@
     "migrate": "knex migrate:latest",
     "unmigrate": "knex migrate:rollback",
     "seed": "knex seed:run",
-    "postinstall": "node ./db/createDatabase"
+    "postinstall": "ts-node ./db/createDatabase"
   },
   "repository": {
     "type": "git",

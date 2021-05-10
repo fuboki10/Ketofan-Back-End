@@ -1,7 +1,10 @@
 import morgan from 'morgan';
-import config from 'config';
 import { Response } from 'express';
+// eslint-disable-next-line import/extensions
 import logger from './logger';
+// eslint-disable-next-line import/order
+import config = require('config');
+// eslint-disable-next-line import/extensions
 
 const nodeEnv = process.env.NODE_ENV || config.get('NODE_ENV');
 morgan.token('message', (_, res : Response) => res.locals.errorMessage || '');
