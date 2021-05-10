@@ -1,5 +1,5 @@
-const winston = require('winston');
-const config = require('config');
+import * as winston from 'winston';
+import config = require('config');
 
 const enumerateErrorFormat = winston.format((info) => {
   if (info instanceof Error) {
@@ -24,9 +24,9 @@ const logger = winston.createLogger({
       ? winston.format.colorize()
       : winston.format.uncolorize(),
     winston.format.splat(),
-    winston.format.printf(({ level, message }) => `${level}: ${message}`)
+    winston.format.printf(({ level, message }) => `${level}: ${message}`),
   ),
-  transports: transports,
+  transports,
 });
 
-module.exports = logger;
+export default logger;
