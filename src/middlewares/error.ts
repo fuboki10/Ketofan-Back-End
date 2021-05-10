@@ -9,11 +9,23 @@ import logger from '../utils/logger';
 const env = process.env.NODE_ENV || config.get('NODE_ENV');
 
 /**
+ * handle duplicate key violation in PostgreSQL
+ * @author Abdelrahman Tarek
+ * @param error
+ * @returns AppError
+ */
+function handleDuplicateKeyViolationDB(error : any) : AppError {
+  return new AppError(error.detail, status.BAD_REQUEST);
+}
+
+/**
  * @author Abdelrahman Tarek
  * @summary Convert Error to AppError
  */
 const errorConverter = (err : any, req : Request, res : Response, next : NextFunction) => {
   let error = err;
+
+  if (error.code === '23505') error = handleDuplicateKeyViolationDB(error);
 
   // create AppError object if it's not an operational error
   if (!(error instanceof AppError)) {
