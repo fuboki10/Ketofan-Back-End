@@ -1,16 +1,31 @@
-const status = require('http-status');
-const config = require('config');
-const AppError = require('../utils/AppError');
-const logger = require('../utils/logger');
+import status from 'http-status';
+import config from 'config';
+import {
+  Request, Response, NextFunction,
+} from 'express';
+import AppError from '../utils/AppError';
+import logger from '../utils/logger';
 
 const env = process.env.NODE_ENV || config.get('NODE_ENV');
+
+/**
+ * handle duplicate key violation in PostgreSQL
+ * @author Abdelrahman Tarek
+ * @param error
+ * @returns AppError
+ */
+function handleDuplicateKeyViolationDB(error : any) : AppError {
+  return new AppError(error.detail, status.BAD_REQUEST);
+}
 
 /**
  * @author Abdelrahman Tarek
  * @summary Convert Error to AppError
  */
-const errorConverter = (err, req, res, next) => {
+const errorConverter = (err : any, _req : Request, _res : Response, next : NextFunction) => {
   let error = err;
+
+  if (error.code === '23505') error = handleDuplicateKeyViolationDB(error);
 
   // create AppError object if it's not an operational error
   if (!(error instanceof AppError)) {
@@ -26,7 +41,8 @@ const errorConverter = (err, req, res, next) => {
  * @author Abdelrahman Tarek
  * @summary Handle Errors
  */
-const errorHandler = (err, req, res, next) => {
+// eslint-disable-next-line no-unused-vars
+const errorHandler = (err : any, _req : Request, res : Response, _next : NextFunction) => {
   let { statusCode, message } = err;
 
   // if production and not operational consider it be internal server error
@@ -53,7 +69,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(statusCode).json(response);
 };
 
-module.exports = {
+export {
   errorConverter,
   errorHandler,
 };

@@ -1,8 +1,10 @@
-const Knex = require('knex');
+/* eslint-disable import/extensions */
+import Knex from 'knex';
+import knexfile from '../knexfile';
+import logger from '../src/utils/logger';
 
-const config = require('config');
-const knexfile = require('../knexfile');
-const logger = require('../src/utils/logger');
+// eslint-disable-next-line import/order
+import config = require('config');
 
 /**
  * @author Abdelrahman Tarek

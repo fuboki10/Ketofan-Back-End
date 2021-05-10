@@ -3,7 +3,13 @@
  * @class
  * @extends {Error}
  */
-class AppError extends Error {
+export default class AppError extends Error {
+  statusCode : number;
+
+  status: string;
+
+  isOperational: boolean;
+
   /**
    * @constructor
    * @author Abdelrahman Tarek
@@ -12,7 +18,7 @@ class AppError extends Error {
    * @param {Boolean} [isOperational=true] `true` if the error is operational
    * @param {String} [stack] Error stack
    */
-  constructor(message, statusCode, isOperational = true, stack = '') {
+  constructor(message : string, statusCode : number, isOperational : boolean = true, stack : string = '') {
     super(message);
 
     this.statusCode = statusCode;
@@ -25,5 +31,3 @@ class AppError extends Error {
     }
   }
 }
-
-module.exports = AppError;

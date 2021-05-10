@@ -1,6 +1,8 @@
-const config = require('config');
-const app = require('./app');
-const logger = require('./utils/logger');
+/* eslint-disable import/extensions */
+import app from './app';
+import logger from './utils/logger';
+// eslint-disable-next-line import/order
+import config = require('config');
 
 const port = process.env.PORT || config.get('PORT') || 3000;
 
@@ -20,7 +22,7 @@ const exitHandler = async () => {
 };
 
 // signals listeners
-const unexpectedErrorHandler = (error) => {
+const unexpectedErrorHandler = (error : Error) => {
   logger.info(error);
   exitHandler();
 };
