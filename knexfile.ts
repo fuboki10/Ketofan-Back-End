@@ -14,7 +14,7 @@ const knexConfig : IConfig = {
     seeds: { directory: './db/seeds' },
   },
 
-  testing: {
+  test: {
     client: 'pg',
     connection: process.env.DB || config.get('DB'),
     migrations: {
