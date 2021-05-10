@@ -5,7 +5,7 @@ import { SchemaInterface } from './Model';
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.increments('id').primary();
-  table.string('username', 50);
+  table.string('username', 50).unique();
   table.string('password', 50);
 };
 

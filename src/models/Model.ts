@@ -53,26 +53,26 @@ export default class Model {
     this.schema = props.schema;
   }
 
-  find() : Knex.QueryBuilder {
+  public find() : Knex.QueryBuilder {
     return this.db;
   }
 
-  findById(id : number) : Knex.QueryBuilder {
+  public findById(id : number) : Knex.QueryBuilder {
     return this.db
       .where('id', id);
   }
 
-  removeById(id : number) : Knex.QueryBuilder {
+  public removeById(id : number) : Knex.QueryBuilder {
     return this.db
       .where('id', id)
       .del();
   }
 
-  dropTable(knex : Knex) : Knex.SchemaBuilder {
+  public dropTable(knex : Knex) : Knex.SchemaBuilder {
     return knex.schema.dropTableIfExists(this.name);
   }
 
-  createTable(knex : Knex) : Knex.SchemaBuilder {
+  public createTable(knex : Knex) : Knex.SchemaBuilder {
     return knex.schema.createTable(this.name, this.schema);
   }
 }
