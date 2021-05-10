@@ -1,17 +1,18 @@
-const express = require('express');
-const config = require('config');
-const cors = require('cors');
-const status = require('http-status');
-const morgan = require('./utils/morgan');
-const { errorConverter, errorHandler } = require('./middlewares/error');
-const AppError = require('./utils/AppError');
-const routesV1 = require('./routes/v1');
+import express from 'express';
+import config from 'config';
+import cors from 'cors';
+import status from 'http-status';
+import morgan from './utils/morgan';
+import { errorConverter, errorHandler } from './middlewares/error';
+import AppError from './utils/AppError';
+import routesV1 from './routes/v1';
 
 const app = express();
 
 const nodeEnv = process.env.NODE_ENV || config.get('NODE_ENV') || 'development';
 
 // logger format
+
 if (nodeEnv !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
@@ -31,7 +32,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // root page
-app.get('/', (req, res) => {
+app.get('/', (req : express.Request, res: express.Response) => {
   res.send('Hello world!!');
 });
 
@@ -39,7 +40,7 @@ app.get('/', (req, res) => {
 app.use('/api/v1', routesV1);
 
 // send back a 404 error for any unknown api request
-app.use((req, res, next) => {
+app.use((req : express.Request, res: express.Response, next : express.NextFunction) => {
   next(new AppError('Not Found', status.NOT_FOUND));
 });
 
@@ -49,4 +50,4 @@ app.use(errorConverter);
 // handle error
 app.use(errorHandler);
 
-module.exports = app;
+export default app;

@@ -1,6 +1,6 @@
-const config = require('config');
-const app = require('./app');
-const logger = require('./utils/logger');
+import config from 'config';
+import app from './app';
+import logger from './utils/logger';
 
 const port = process.env.PORT || config.get('PORT') || 3000;
 
@@ -20,7 +20,7 @@ const exitHandler = async () => {
 };
 
 // signals listeners
-const unexpectedErrorHandler = (error) => {
+const unexpectedErrorHandler = (error : Error) => {
   logger.info(error);
   exitHandler();
 };

@@ -1,7 +1,10 @@
-const status = require('http-status');
-const config = require('config');
-const AppError = require('../utils/AppError');
-const logger = require('../utils/logger');
+import status from 'http-status';
+import config from 'config';
+import {
+  Request, Response, NextFunction,
+} from 'express';
+import AppError from '../utils/AppError';
+import logger from '../utils/logger';
 
 const env = process.env.NODE_ENV || config.get('NODE_ENV');
 
@@ -9,7 +12,7 @@ const env = process.env.NODE_ENV || config.get('NODE_ENV');
  * @author Abdelrahman Tarek
  * @summary Convert Error to AppError
  */
-const errorConverter = (err, req, res, next) => {
+const errorConverter = (err : any, req : Request, res : Response, next : NextFunction) => {
   let error = err;
 
   // create AppError object if it's not an operational error
@@ -26,7 +29,7 @@ const errorConverter = (err, req, res, next) => {
  * @author Abdelrahman Tarek
  * @summary Handle Errors
  */
-const errorHandler = (err, req, res, next) => {
+const errorHandler = (err : any, req : Request, res : Response, next : NextFunction) => {
   let { statusCode, message } = err;
 
   // if production and not operational consider it be internal server error
@@ -53,7 +56,7 @@ const errorHandler = (err, req, res, next) => {
   res.status(statusCode).json(response);
 };
 
-module.exports = {
+export {
   errorConverter,
   errorHandler,
 };

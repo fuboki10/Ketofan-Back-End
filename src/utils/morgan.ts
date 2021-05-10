@@ -1,9 +1,10 @@
-const morgan = require('morgan');
-const config = require('config');
-const logger = require('./logger');
+import morgan from 'morgan';
+import config from 'config';
+import { Response } from 'express';
+import logger from './logger';
 
 const nodeEnv = process.env.NODE_ENV || config.get('NODE_ENV');
-morgan.token('message', (_, res) => res.locals.errorMessage || '');
+morgan.token('message', (_, res : Response) => res.locals.errorMessage || '');
 
 const getIpFormat = () => (nodeEnv === 'production' ? ':remote-addr - :remote-user [:date[clf]]' : '');
 // eslint-disable-next-line max-len
@@ -12,16 +13,13 @@ const successResponseFormat = `${getIpFormat()} :method :url HTTP/:http-version"
 const errorResponseFormat = `${getIpFormat()} :method :url HTTP/:http-version" :status :res[content-length] :response-time ms - message: :message`;
 
 const successHandler = morgan(successResponseFormat, {
-  skip: (req, res) => res.statusCode >= 400,
-  stream: { write: (message) => logger.info(message.trim()) },
+  skip: (_, res : Response) => res.statusCode >= 400,
+  stream: { write: (message : string) => logger.info(message.trim()) },
 });
 
 const errorHandler = morgan(errorResponseFormat, {
-  skip: (req, res) => res.statusCode < 400,
-  stream: { write: (message) => logger.error(message.trim()) },
+  skip: (_, res : Response) => res.statusCode < 400,
+  stream: { write: (message : string) => logger.error(message.trim()) },
 });
 
-module.exports = {
-  successHandler,
-  errorHandler,
-};
+export default { successHandler, errorHandler };

@@ -1,6 +1,6 @@
-const config = require('config');
+import config from 'config';
 
-module.exports = {
+export default {
   development: {
     client: 'pg',
     connection: process.env.DB || config.get('DB'),
