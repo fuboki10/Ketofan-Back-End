@@ -1,13 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User } from '../models';
+import status from 'http-status';
+import { User, CreateUserProps, UserInterface } from '../models';
+import AppError from '../utils/AppError';
 // eslint-disable-next-line import/order
 import config = require('config');
-
-interface UserProps {
-  username: string;
-  password: string;
-}
 
 /**
  * Generate Authentication token
@@ -32,6 +29,24 @@ export const generateAuthToken = async (userId : string) => {
 
   return jwtString;
 };
+
+/**
+ * Check if password is correct
+ *
+ * @function
+ * @public
+ * @async
+ * @author Abdelrahman Tarek
+ * @param {String} password
+ * @param {String} hashedPassword
+ * @summary Check if password is correct
+ * @returns {Boolean} `isPasswordMatch` is `true` the password is correct
+ */
+const checkPassword = async (password : string, hashedPassword : string) : Promise<boolean> => {
+  const isPasswordMatch : boolean = await bcrypt.compare(password, hashedPassword);
+  return isPasswordMatch;
+};
+
 /**
  * Hash Password
  *
@@ -59,15 +74,44 @@ export const hashPassword = async (password : string) : Promise<string> => {
  * @param {Object} userProps
  * @returns
  */
-export const createUser = async (userProps : UserProps) => {
-  const hashedPassword = await hashPassword(userProps.password);
+export const createUser = async (userProps : CreateUserProps) : Promise<UserInterface> => {
+  const hashedPassword : String = await hashPassword(userProps.password);
 
-  const user = await User.db
+  const user : UserInterface[] = await User.db
+    .not.returning('password')
     .insert({
       username: userProps.username,
       password: hashedPassword,
-    })
-    .returning(['id', 'username']);
+    });
+
+  return user[0];
+};
+
+/**
+ * verify user login
+ * @function
+ * @async
+ * @public
+ * @author Abdelrahman Tarek
+ * @param userProps {object{ username: string }
+ * @param password
+ * @returns
+ */
+export const verifyUser = async (
+  userProps : {username:string}, password : string,
+) : Promise<UserInterface> => {
+  const user : UserInterface[] | undefined = await User.find(userProps);
+
+  // if user is not found throw error
+  if (!user || !user[0] || !('password' in user[0]) || !user[0].password) {
+    throw new AppError('User is not found', status.UNAUTHORIZED);
+  }
+
+  // check if input password match user password
+  const passwordMatch = await checkPassword(password, user[0].password);
+
+  // if not match throw error
+  if (!passwordMatch) throw new AppError('Wrong Password', status.UNAUTHORIZED);
 
   return user[0];
 };
@@ -76,6 +120,7 @@ const userService = {
   createUser,
   hashPassword,
   generateAuthToken,
+  verifyUser,
 };
 
 export default userService;

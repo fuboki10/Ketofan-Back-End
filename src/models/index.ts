@@ -1,5 +1,7 @@
-import User from './user.model';
+import User, { UserInterface, CreateUserProps } from './user.model';
 
 export {
   User,
+  UserInterface,
+  CreateUserProps,
 };
