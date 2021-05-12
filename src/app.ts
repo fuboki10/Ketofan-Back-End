@@ -15,7 +15,6 @@ const app = express();
 const nodeEnv = process.env.NODE_ENV || config.get('NODE_ENV') || 'development';
 
 // logger format
-
 if (nodeEnv !== 'test') {
   app.use(morgan.successHandler);
   app.use(morgan.errorHandler);
@@ -23,6 +22,11 @@ if (nodeEnv !== 'test') {
 
 // parse json request body
 app.use(express.json());
+
+// parse urlencoded request body
+app.use(
+  express.urlencoded({ extended: true }),
+);
 
 // enable cors
 const corsOptions = {

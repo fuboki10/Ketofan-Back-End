@@ -7,4 +7,7 @@ const router = express.Router();
 router.route('/signup')
   .post(catchAsync(authController.signup));
 
+router.route('/signin')
+  .post(catchAsync(authController.signin));
+
 export default router;

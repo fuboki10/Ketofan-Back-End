@@ -58,6 +58,12 @@ export default class Model {
       .where(filters);
   }
 
+  public findOne(filters : Object = {}) : Knex.QueryBuilder {
+    return this.db
+      .where(filters)
+      .limit(1);
+  }
+
   public findById(id : number) : Knex.QueryBuilder {
     return this.db
       .where('id', id);

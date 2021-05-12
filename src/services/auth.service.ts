@@ -1,13 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { User } from '../models';
+import status from 'http-status';
+import { User, CreateUserProps, UserInterface } from '../models';
+import AppError from '../utils/AppError';
 // eslint-disable-next-line import/order
 import config = require('config');
-
-interface UserProps {
-  username: string;
-  password: string;
-}
 
 /**
  * Generate Authentication token
@@ -59,23 +56,38 @@ export const hashPassword = async (password : string) : Promise<string> => {
  * @param {Object} userProps
  * @returns
  */
-export const createUser = async (userProps : UserProps) => {
-  const hashedPassword = await hashPassword(userProps.password);
+export const createUser = async (userProps : CreateUserProps) : Promise<UserInterface> => {
+  const hashedPassword : String = await hashPassword(userProps.password);
 
-  const user = await User.db
+  const user : UserInterface[] = await User.db
+    .returning(['id', 'username'])
     .insert({
       username: userProps.username,
       password: hashedPassword,
-    })
-    .returning(['id', 'username']);
+    });
 
   return user[0];
+};
+
+export const verifyUser = async (
+  userProps : {username:string}, password : string,
+) : Promise<UserInterface> => {
+  const user : UserInterface | undefined = await User.findOne(userProps);
+
+  if (!user || !user.password) {
+    throw new AppError('User is not found', status.NOT_FOUND);
+  }
+
+  await bcrypt.compare(password, user.password);
+
+  return user;
 };
 
 const userService = {
   createUser,
   hashPassword,
   generateAuthToken,
+  verifyUser,
 };
 
 export default userService;
