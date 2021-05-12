@@ -16,6 +16,19 @@ const createTokenAndSend = async (user : UserInterface, res: Response) => {
   });
 };
 
+/**
+ * Signup
+ *
+ * @function
+ * @async
+ * @public
+ * @version 1.0.0
+ * @author Abdelrahman Tarek
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @description Signup
+ * @summary Signup
+ */
 export const signup = async (req : Request, res : Response) => {
   const { username, password } = req.body;
 
@@ -24,6 +37,20 @@ export const signup = async (req : Request, res : Response) => {
   createTokenAndSend(user, res);
 };
 
+/**
+ * Signin
+ *
+ * @function
+ * @async
+ * @public
+ * @version 1.0.0
+ * @throws AppError 401/404
+ * @author Abdelrahman Tarek
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @description Signin
+ * @summary Signin
+ */
 export const signin = async (req : Request, res : Response) => {
   const { username, password } = req.body;
 
