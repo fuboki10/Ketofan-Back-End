@@ -11,6 +11,11 @@ const loginValidate = [
     .trim()
     .escape(),
 
+  // check email
+  body('email', 'Please Enter a valid Email Address')
+    .isEmail().trim().escape()
+    .normalizeEmail(),
+
   // check password
   body('password')
     .isLength({ min: 8 })

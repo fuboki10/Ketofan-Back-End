@@ -89,9 +89,10 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
   const hashedPassword : String = await hashPassword(userProps.password);
 
   const user : UserInterface[] = await User.db
-    .not.returning('password')
+    .returning('*')
     .insert({
       username: userProps.username,
+      email: userProps.email,
       password: hashedPassword,
     });
 
@@ -109,7 +110,7 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
  * @returns
  */
 export const verifyUser = async (
-  userProps : {username:string}, password : string,
+  userProps : {username:string; email:string;}, password : string,
 ) : Promise<UserInterface> => {
   const user : UserInterface[] | undefined = await User.find(userProps);
 

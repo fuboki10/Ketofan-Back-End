@@ -7,7 +7,7 @@ import { UserInterface } from '../models';
 const createTokenAndSend = async (user : UserInterface, res: Response) => {
   const token = await authService.generateAuthToken(user.id);
 
-  res.status(status.OK).json({
+  return res.status(status.OK).json({
     status: status.OK,
     token,
     data: {
@@ -30,11 +30,11 @@ const createTokenAndSend = async (user : UserInterface, res: Response) => {
  * @summary Signup
  */
 export const signup = async (req : Request, res : Response) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
-  const user = await authService.createUser({ username, password });
+  const user = await authService.createUser({ username, email, password });
 
-  createTokenAndSend(user, res);
+  return createTokenAndSend(user, res);
 };
 
 /**
@@ -52,11 +52,11 @@ export const signup = async (req : Request, res : Response) => {
  * @summary Signin
  */
 export const signin = async (req : Request, res : Response) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
 
-  const user = await authService.verifyUser({ username }, password);
+  const user = await authService.verifyUser({ username, email }, password);
 
-  createTokenAndSend(user, res);
+  return createTokenAndSend(user, res);
 };
 
 const authController = {
