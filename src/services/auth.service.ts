@@ -30,6 +30,17 @@ export const generateAuthToken = async (userId : string) => {
   return jwtString;
 };
 
+export const verifyAuthToken = async (token : string) : Promise<Object> => {
+  const payload = new Promise<Object>((resolve, reject) => {
+    jwt.verify(token, config.get('JWT_KEY'), (err, result) => {
+      if (err || !result) return reject(new AppError('Invalid Token', 400));
+      return resolve(result);
+    });
+  });
+
+  return payload;
+};
+
 /**
  * Check if password is correct
  *
@@ -117,9 +128,10 @@ export const verifyUser = async (
 };
 
 const userService = {
-  createUser,
-  hashPassword,
   generateAuthToken,
+  verifyAuthToken,
+  hashPassword,
+  createUser,
   verifyUser,
 };
 
