@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import status from 'http-status';
 import AppError from '../utils/AppError';
 import { authService } from '../services';
 
@@ -19,7 +20,7 @@ export const authenticate = async (req : Request, res : Response, next : NextFun
   const [bearer, token] = req?.headers?.authorization?.split ? req.headers.authorization.split(' ') : [undefined];
 
   // check if token not found
-  if (!bearer || bearer !== 'Bearer' || !token) return next(new AppError('Please log in.', 401));
+  if (!bearer || bearer !== 'Bearer' || !token) return next(new AppError('Please log in.', status.UNAUTHORIZED));
 
   // verification token
   await authService.verifyAuthToken(token);
