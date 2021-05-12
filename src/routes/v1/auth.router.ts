@@ -9,6 +9,6 @@ router.route('/signup')
   .post(authValidator.signup, catchAsync(authController.signup));
 
 router.route('/signin')
-  .post(catchAsync(authController.signin));
+  .post(authValidator.login, catchAsync(authController.signin));
 
 export default router;
