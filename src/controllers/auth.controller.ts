@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
+import _ from 'lodash';
 import { authService } from '../services';
 import { UserInterface } from '../models';
 
@@ -10,7 +11,7 @@ const createTokenAndSend = async (user : UserInterface, res: Response) => {
     status: status.OK,
     token,
     data: {
-      user,
+      user: _.omit(user, ['password']),
     },
   });
 };

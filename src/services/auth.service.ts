@@ -29,6 +29,24 @@ export const generateAuthToken = async (userId : string) => {
 
   return jwtString;
 };
+
+/**
+ * Check if password is correct
+ *
+ * @function
+ * @public
+ * @async
+ * @author Abdelrahman Tarek
+ * @param {String} password
+ * @param {String} hashedPassword
+ * @summary Check if password is correct
+ * @returns {Boolean} `isPasswordMatch` is `true` the password is correct
+ */
+const checkPassword = async (password : string, hashedPassword : string) : Promise<boolean> => {
+  const isPasswordMatch : boolean = await bcrypt.compare(password, hashedPassword);
+  return isPasswordMatch;
+};
+
 /**
  * Hash Password
  *
@@ -60,7 +78,7 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
   const hashedPassword : String = await hashPassword(userProps.password);
 
   const user : UserInterface[] = await User.db
-    .returning(['id', 'username'])
+    .not.returning('password')
     .insert({
       username: userProps.username,
       password: hashedPassword,
@@ -69,18 +87,33 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
   return user[0];
 };
 
+/**
+ * verify user login
+ * @function
+ * @async
+ * @public
+ * @author Abdelrahman Tarek
+ * @param userProps {object{ username: string }
+ * @param password
+ * @returns
+ */
 export const verifyUser = async (
   userProps : {username:string}, password : string,
 ) : Promise<UserInterface> => {
-  const user : UserInterface | undefined = await User.findOne(userProps);
+  const user : UserInterface[] | undefined = await User.find(userProps);
 
-  if (!user || !user.password) {
-    throw new AppError('User is not found', status.NOT_FOUND);
+  // if user is not found throw error
+  if (!user || !user[0] || !('password' in user[0]) || !user[0].password) {
+    throw new AppError('User is not found', status.UNAUTHORIZED);
   }
 
-  await bcrypt.compare(password, user.password);
+  // check if input password match user password
+  const passwordMatch = await checkPassword(password, user[0].password);
 
-  return user;
+  // if not match throw error
+  if (!passwordMatch) throw new AppError('Wrong Password', status.UNAUTHORIZED);
+
+  return user[0];
 };
 
 const userService = {
