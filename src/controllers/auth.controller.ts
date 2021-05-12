@@ -52,9 +52,9 @@ export const signup = async (req : Request, res : Response) => {
  * @summary Signin
  */
 export const signin = async (req : Request, res : Response) => {
-  const { username, email, password } = req.body;
+  const { username, password } = req.body;
 
-  const user = await authService.verifyUser({ username, email }, password);
+  const user = await authService.verifyUser(username, password);
 
   return createTokenAndSend(user, res);
 };

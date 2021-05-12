@@ -109,10 +109,10 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
  * @param password
  * @returns
  */
-export const verifyUser = async (
-  userProps : {username:string; email:string;}, password : string,
-) : Promise<UserInterface> => {
-  const user : UserInterface[] | undefined = await User.find(userProps);
+export const verifyUser = async (username : string, password : string) : Promise<UserInterface> => {
+  const user : UserInterface[] | undefined = await User
+    .find({ username })
+    .orWhere({ email: username });
 
   // if user is not found throw error
   if (!user || !user[0] || !('password' in user[0]) || !user[0].password) {
