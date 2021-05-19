@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 // eslint-disable-next-line import/extensions
-import db from '../../db';
+import dbConn from '../../db';
 
 /**
  * @interface
@@ -37,8 +37,6 @@ export interface ModelProps {
 export default class Model {
   name: string;
 
-  db : Knex.QueryBuilder;
-
   // eslint-disable-next-line no-unused-vars
   schema: SchemaInterface;
 
@@ -49,8 +47,11 @@ export default class Model {
    */
   constructor(props : ModelProps) {
     this.name = props.name;
-    this.db = db(this.name);
     this.schema = props.schema;
+  }
+
+  get db() {
+    return dbConn(this.name);
   }
 
   public find(filters : Object = {}) : Knex.QueryBuilder {

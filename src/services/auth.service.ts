@@ -33,7 +33,7 @@ export const generateAuthToken = async (userId : string) => {
 export const verifyAuthToken = async (token : string) : Promise<Object> => {
   const payload = new Promise<Object>((resolve, reject) => {
     jwt.verify(token, config.get('JWT_KEY'), (err, result) => {
-      if (err || !result) return reject(new AppError('Invalid Token', 400));
+      if (err || !result) return reject(new AppError('Invalid Token', status.BAD_REQUEST));
       return resolve(result);
     });
   });
@@ -89,9 +89,10 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
   const hashedPassword : String = await hashPassword(userProps.password);
 
   const user : UserInterface[] = await User.db
-    .not.returning('password')
+    .returning('*')
     .insert({
       username: userProps.username,
+      email: userProps.email,
       password: hashedPassword,
     });
 
@@ -108,10 +109,10 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
  * @param password
  * @returns
  */
-export const verifyUser = async (
-  userProps : {username:string}, password : string,
-) : Promise<UserInterface> => {
-  const user : UserInterface[] | undefined = await User.find(userProps);
+export const verifyUser = async (username : string, password : string) : Promise<UserInterface> => {
+  const user : UserInterface[] | undefined = await User
+    .find({ username })
+    .orWhere({ email: username });
 
   // if user is not found throw error
   if (!user || !user[0] || !('password' in user[0]) || !user[0].password) {
