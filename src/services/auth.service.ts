@@ -6,6 +6,10 @@ import AppError from '../utils/AppError';
 // eslint-disable-next-line import/order
 import config = require('config');
 
+interface PayloadInterface {
+  id: string;
+}
+
 /**
  * Generate Authentication token
  *
@@ -30,8 +34,8 @@ export const generateAuthToken = async (userId : string) => {
   return jwtString;
 };
 
-export const verifyAuthToken = async (token : string) : Promise<Object> => {
-  const payload = new Promise<Object>((resolve, reject) => {
+export const verifyAuthToken = async (token : string) : Promise<PayloadInterface> => {
+  const payload = new Promise<any>((resolve, reject) => {
     jwt.verify(token, config.get('JWT_KEY'), (err, result) => {
       if (err || !result) return reject(new AppError('Invalid Token', status.BAD_REQUEST));
       return resolve(result);

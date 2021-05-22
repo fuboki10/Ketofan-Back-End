@@ -65,12 +65,12 @@ export default class Model {
       .limit(1);
   }
 
-  public findById(id : number) : Knex.QueryBuilder {
+  public findById(id : string) : Knex.QueryBuilder {
     return this.db
       .where('id', id);
   }
 
-  public removeById(id : number) : Knex.QueryBuilder {
+  public removeById(id : string) : Knex.QueryBuilder {
     return this.db
       .where('id', id)
       .del();
