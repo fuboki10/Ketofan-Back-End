@@ -40,6 +40,14 @@ const signupValidate = [
     .trim()
     .escape(),
 
+  // check role
+  body('role')
+    .isString()
+    .toLowerCase()
+    .isIn(['super_admin', 'admin', 'doctor', 'patient'])
+    .trim()
+    .escape(),
+
 ];
 
 export default validate(signupValidate);

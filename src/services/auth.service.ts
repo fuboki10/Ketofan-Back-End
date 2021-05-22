@@ -94,6 +94,7 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
       username: userProps.username,
       email: userProps.email,
       password: hashedPassword,
+      role: userProps.role,
     });
 
   return user[0];
