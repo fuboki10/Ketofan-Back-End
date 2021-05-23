@@ -3,18 +3,18 @@ import { Knex } from 'knex';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
-export interface PatientInterface {
+export interface DoctorInterface {
   id: string;
   userId: string;
-  birthDate?: Date;
+  bio?: string;
   profileImage?: string;
   phone?: string;
 }
 
-export interface CreatePatientProps {
+export interface CreateDoctorProps {
   id?: string;
   userId: string;
-  birthDate?: Date;
+  bio?: string;
   profileImage?: string;
   phone?: string;
 }
@@ -25,11 +25,11 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .inTable('users')
     .onDelete('CASCADE')
     .unique();
-  table.date('birthDate');
+  table.text('bio');
   table.string('profileImage');
   table.string('phone', 20).unique();
 };
 
-const Doctor = ModelBuilder.build('patients', schema);
+const Doctor = ModelBuilder.build('doctors', schema);
 
 export default Doctor;

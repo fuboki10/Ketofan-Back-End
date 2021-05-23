@@ -99,16 +99,15 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
     const user : UserInterface[] = await trx('users').returning('*').insert({
       password: hashedPassword,
       email: userProps.email,
-      role: userProps.role,
+      name: userProps.name,
+      gender: userProps.gender,
+      role: 'patient',
     });
 
-    if (userProps.role === 'patient') {
-      await trx('patients').insert({
-        userId: user[0].id,
-        name: userProps.name,
-        gender: userProps.gender,
-      });
-    }
+    await trx('patients').insert({
+      userId: user[0].id,
+    });
+
     return user[0];
   });
 };

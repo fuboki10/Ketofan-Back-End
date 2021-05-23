@@ -25,17 +25,8 @@ const signupValidate = [
     .trim()
     .escape(),
 
-  // check role
-  body('role')
-    .isString()
-    .toLowerCase()
-    .isIn(['super_admin', 'admin', 'doctor', 'patient'])
-    .trim()
-    .escape(),
-
   // check name
   body('name')
-    .optional()
     .isString()
     .isLength({ min: 1, max: 100 })
     .isAlpha()
@@ -45,7 +36,6 @@ const signupValidate = [
 
   // check gender
   body('gender')
-    .optional()
     .isString()
     .isIn(['M', 'F'])
     .withMessage('Please Enter a Valid gender'),

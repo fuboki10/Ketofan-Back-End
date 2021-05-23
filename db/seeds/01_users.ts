@@ -10,16 +10,16 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   await knex('users').insert([
     {
-      id: 1, username: 'admin1', role: 'super_admin', password: hashedPassword, email: 'admin1@gmail.com',
+      role: 'super_admin', password: hashedPassword, email: 'admin1@gmail.com', gender: 'M', name: 'admin',
     },
     {
-      id: 2, username: 'admin2', role: 'admin', password: hashedPassword, email: 'admin2@gmail.com',
+      role: 'admin', password: hashedPassword, email: 'admin2@gmail.com', gender: 'M', name: 'admin',
     },
     {
-      id: 3, username: 'doctor1', role: 'doctor', password: hashedPassword, email: 'doctor1@gmail.com',
+      role: 'doctor', password: hashedPassword, email: 'doctor1@gmail.com', gender: 'M', name: 'doctor',
     },
     {
-      id: 4, username: 'patient1', role: 'patient', password: hashedPassword, email: 'patient1@gmail.com',
+      role: 'patient', password: hashedPassword, email: 'patient1@gmail.com', gender: 'M', name: 'patient',
     },
   ]);
 }
