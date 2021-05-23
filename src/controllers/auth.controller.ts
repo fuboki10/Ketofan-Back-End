@@ -7,13 +7,15 @@ import { UserInterface } from '../models';
 const createTokenAndSend = async (user : UserInterface, res: Response) => {
   const token = await authService.generateAuthToken(user.id);
 
-  return res.status(status.OK).json({
+  const response = {
     status: status.OK,
     token,
     data: {
       user: _.omit(user, ['password']),
     },
-  });
+  };
+
+  return res.status(status.OK).json(response);
 };
 
 /**
@@ -30,9 +32,7 @@ const createTokenAndSend = async (user : UserInterface, res: Response) => {
  * @summary Signup
  */
 export const signup = async (req : Request, res : Response) => {
-  const { username, email, password } = req.body;
-
-  const user = await authService.createUser({ username, email, password });
+  const user = await authService.createUser(req.body);
 
   return createTokenAndSend(user, res);
 };
@@ -52,9 +52,9 @@ export const signup = async (req : Request, res : Response) => {
  * @summary Signin
  */
 export const signin = async (req : Request, res : Response) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  const user = await authService.verifyUser(username, password);
+  const user = await authService.verifyUser(email, password);
 
   return createTokenAndSend(user, res);
 };

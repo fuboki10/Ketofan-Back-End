@@ -1,11 +1,11 @@
 import { Knex } from 'knex';
 
-import User from '../../src/models/user.model';
+import Patient from '../../src/models/patient.model';
 
 export async function up(knex: Knex): Promise<any> {
-  return User.createTable(knex);
+  return Patient.createTable(knex);
 }
 
 export async function down(knex: Knex): Promise<any> {
-  return User.dropTable(knex);
+  return Patient.dropTable(knex);
 }

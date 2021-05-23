@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import status from 'http-status';
 import AppError from '../utils/AppError';
 import { authService } from '../services';
+import { User } from '../models';
 
 /**
  * Authentication middleware
@@ -23,7 +24,35 @@ export const authenticate = async (req : Request, res : Response, next : NextFun
   if (!bearer || bearer !== 'Bearer' || !token) return next(new AppError('Please log in.', status.UNAUTHORIZED));
 
   // verification token
-  await authService.verifyAuthToken(token);
+  const payload = await authService.verifyAuthToken(token);
 
+  const { id } = payload;
+  const user = await User.findById(id);
+
+  if (!user) return next(new AppError('User Not Found', status.UNAUTHORIZED));
+
+  req.user = user;
+
+  return next();
+};
+
+/**
+ * @version 1.0.0
+ * @throws AppError 403 if user doesn`t have permission
+ * @author Abdelrahman Tarek
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ * @param {Function} next - Express next middleware function
+ * @param {Array<String>} roles authorized roles
+ * @description give permission to users based on roles
+ * @summary User Authorization
+ */
+// eslint-disable-next-line max-len
+export const authorize = (roles : [string]) => (req : Request, res : Response, next : NextFunction) => {
+  if (!roles.includes(req.user.role)) {
+    return next(
+      new AppError('You do not have permission to perform this action.', 403),
+    );
+  }
   return next();
 };
