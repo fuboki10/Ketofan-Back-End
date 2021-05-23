@@ -7,22 +7,7 @@ const isUniqueEmail : CustomValidator = async (value) => {
   if (user && user.length > 0) { throw new Error('E-mail already in use'); }
 };
 
-const isUniqueUser : CustomValidator = async (value) => {
-  const user = await User.find({ username: value });
-  if (user && user.length > 0) { throw new Error('Username already in use'); }
-};
-
 const signupValidate = [
-  // check username
-  body('username')
-    .isLength({ min: 8 })
-    .withMessage('Username Must Be at Least 8 Characters')
-    .isLength({ max: 20 })
-    .withMessage('Username Must Be at Most 20 Characters')
-    .trim()
-    .escape()
-    .custom(isUniqueUser),
-
   // check email
   body('email', 'Please Enter a valid Email Address')
     .isEmail()
@@ -47,6 +32,23 @@ const signupValidate = [
     .isIn(['super_admin', 'admin', 'doctor', 'patient'])
     .trim()
     .escape(),
+
+  // check name
+  body('name')
+    .optional()
+    .isString()
+    .isLength({ min: 1, max: 100 })
+    .isAlpha()
+    .withMessage('Please Enter a Valid Name')
+    .trim()
+    .escape(),
+
+  // check gender
+  body('gender')
+    .optional()
+    .isString()
+    .isIn(['M', 'F'])
+    .withMessage('Please Enter a Valid gender'),
 
 ];
 

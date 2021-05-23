@@ -32,13 +32,7 @@ const createTokenAndSend = async (user : UserInterface, res: Response) => {
  * @summary Signup
  */
 export const signup = async (req : Request, res : Response) => {
-  const {
-    username, email, password, role,
-  } = req.body;
-
-  const user = await authService.createUser({
-    username, email, password, role,
-  });
+  const user = await authService.createUser(req.body);
 
   return createTokenAndSend(user, res);
 };
@@ -58,9 +52,9 @@ export const signup = async (req : Request, res : Response) => {
  * @summary Signin
  */
 export const signin = async (req : Request, res : Response) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
-  const user = await authService.verifyUser(username, password);
+  const user = await authService.verifyUser(email, password);
 
   return createTokenAndSend(user, res);
 };

@@ -2,14 +2,12 @@ import { body } from 'express-validator';
 import validate from '../../middlewares/validate';
 
 const loginValidate = [
-  // check username
-  body('username')
-    .isLength({ min: 8 })
-    .withMessage('Username Must Be at Least 8 Characters')
-    .isLength({ max: 20 })
-    .withMessage('Username Must Be at Most 20 Characters')
+  // check email
+  body('email', 'Please Enter a valid Email Address')
+    .isEmail()
     .trim()
-    .escape(),
+    .escape()
+    .normalizeEmail(),
 
   // check password
   body('password')

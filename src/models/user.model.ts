@@ -1,11 +1,11 @@
 /* eslint-disable camelcase */
 import { Knex } from 'knex';
+import knex from '../../db';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
 export interface UserInterface {
   id: string;
-  username: string;
   email: string;
   password?: string;
   role: string;
@@ -17,20 +17,20 @@ export interface UserInterface {
 
 export interface CreateUserProps {
   id?: string;
-  username: string;
   email: string;
   password: string;
   role: string;
+  name?: string;
+  gender?: string;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.increments('id').primary().notNullable();
-  table.string('username', 50).unique().notNullable();
   table.string('email').unique().notNullable();
   table.string('password').notNullable();
   table.string('role', 50).notNullable();
   table.boolean('verified').notNullable().defaultTo(false);
-  table.date('lastLogin');
+  table.timestamp('lastLogin').notNullable().defaultTo(knex.fn.now());
   table.timestamps(true, true);
 };
 

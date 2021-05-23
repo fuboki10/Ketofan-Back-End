@@ -1,7 +1,10 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import status from 'http-status';
-import { User, CreateUserProps, UserInterface } from '../models';
+import knex from '../../db';
+import {
+  User, CreateUserProps, UserInterface,
+} from '../models';
 import AppError from '../utils/AppError';
 // eslint-disable-next-line import/order
 import config = require('config');
@@ -92,16 +95,22 @@ export const hashPassword = async (password : string) : Promise<string> => {
 export const createUser = async (userProps : CreateUserProps) : Promise<UserInterface> => {
   const hashedPassword : String = await hashPassword(userProps.password);
 
-  const user : UserInterface[] = await User.db
-    .returning('*')
-    .insert({
-      username: userProps.username,
-      email: userProps.email,
+  return knex.transaction(async (trx) => {
+    const user : UserInterface[] = await trx('users').returning('*').insert({
       password: hashedPassword,
+      email: userProps.email,
       role: userProps.role,
     });
 
-  return user[0];
+    if (userProps.role === 'patient') {
+      await trx('patients').insert({
+        userId: user[0].id,
+        name: userProps.name,
+        gender: userProps.gender,
+      });
+    }
+    return user[0];
+  });
 };
 
 /**
@@ -114,10 +123,9 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
  * @param password
  * @returns
  */
-export const verifyUser = async (username : string, password : string) : Promise<UserInterface> => {
+export const verifyUser = async (email : string, password : string) : Promise<UserInterface> => {
   const user : UserInterface[] | undefined = await User
-    .find({ username })
-    .orWhere({ email: username });
+    .find({ email });
 
   // if user is not found throw error
   if (!user || !user[0] || !('password' in user[0]) || !user[0].password) {
