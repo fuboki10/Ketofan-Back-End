@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 // eslint-disable-next-line import/extensions
-import db from '../../db';
+import dbConn from '../../db';
 
 /**
  * @interface
@@ -37,8 +37,6 @@ export interface ModelProps {
 export default class Model {
   name: string;
 
-  db : Knex.QueryBuilder;
-
   // eslint-disable-next-line no-unused-vars
   schema: SchemaInterface;
 
@@ -49,8 +47,11 @@ export default class Model {
    */
   constructor(props : ModelProps) {
     this.name = props.name;
-    this.db = db(this.name);
     this.schema = props.schema;
+  }
+
+  get db() {
+    return dbConn(this.name);
   }
 
   public find(filters : Object = {}) : Knex.QueryBuilder {
@@ -58,12 +59,18 @@ export default class Model {
       .where(filters);
   }
 
-  public findById(id : number) : Knex.QueryBuilder {
+  public findOne(filters : Object = {}) : Knex.QueryBuilder {
+    return this.db
+      .where(filters)
+      .limit(1);
+  }
+
+  public findById(id : string) : Knex.QueryBuilder {
     return this.db
       .where('id', id);
   }
 
-  public removeById(id : number) : Knex.QueryBuilder {
+  public removeById(id : string) : Knex.QueryBuilder {
     return this.db
       .where('id', id)
       .del();

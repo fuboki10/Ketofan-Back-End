@@ -1,4 +1,3 @@
-
 <h1 align="center"> :hospital: Ketofan </h1>
 
 <div align="center">
@@ -33,12 +32,9 @@
 - [License](#license)
 - [Contributers](#contributers)
 
-
-
 ## About The Project
 
 Ketofan is a digital healthcare booking platform. We aim to automate physician, clinic and hospital bookings making healthcare easily accessible.Patients are able to search, compare, and book the best doctors in just 1 minute. Doctors also provide Patients with seamless healthcare experiences.
-
 
 ### Built With
 
@@ -68,14 +64,14 @@ git clone https://github.com/fuboki10/Ketofan-Back-End.git
 ```sh
 npm install
 ```
- 
- ### Environmental Variables
 
- For developers, you can directly use our `development.json` located in `config\development.json` or modify it if you like.
+### Environmental Variables
 
- For production, you need to make your own `config\production.json` with the following structure.
- 
- ```json
+For developers, you can directly use our `development.json` located in `config\development.json` or modify it if you like.
+
+For production, you need to make your own `config\production.json` with the following structure.
+
+```json
 {
   "JWT_KEY": "foo",
   "JWT_EXPIRES_IN": "30d",
@@ -83,22 +79,22 @@ npm install
   "DB": "postgres://<user>:<password>@<host>:<port>/ketofan",
   "PORT": "3000"
 }
+```
 
- ```
-* `JWT_KEY`: Your json web token secret key.
-* `JWT_EXPIRES_IN`: The period token can last before expiring expressed in seconds or a string describing a time span
+- `JWT_KEY`: Your json web token secret key.
+- `JWT_EXPIRES_IN`: The period token can last before expiring expressed in seconds or a string describing a time span
   > Eg: `60`, `"2 days"`, `"10h"`, `"7d"`. A numeric value is interpreted as a seconds count. If you use a string be sure you provide the time units (days, hours, etc), otherwise milliseconds unit is used by default (`"120"` is equal to `"120ms"`).
-* `DB`: Your database path 
+- `DB`: Your database path
   > Eg: `"postgres://<user>:<password>@localhost:<port>/ketofan"` If you're hosting on your localhost server.
-* `PORT`: Your api hosting port
-* `NODE_ENV`: It **must** be `"production"` in order to run the api on production otherwise use `config\development.json`
+- `PORT`: Your api hosting port
+- `NODE_ENV`: It **must** be `"production"` in order to run the api on production otherwise use `config\development.json`
 
 ### Running
 
 1. Running on development
 
 ```sh
-npm start
+npm run dev
 ```
 
 2. Running on production
@@ -106,18 +102,20 @@ npm start
 Upon creating `config\production.json` like in [Environmental Variables](#environmental-variables) section. run this script:
 
 ```sh
+npm run build
 npm start
 ```
-
 
 <!-- TESTING -->
 
 ## Testing
-The tests can be found in ````tests````, and each controller has its own test file in ````tests\unit\controller````. Mongoose models tests are also found in ````tests\unit\models```` as well as middleware which is located at ````tests\unit\middlewares````.
+
+The tests can be found in `tests`, and each controller has its own test file in `tests\unit\controller`. Mongoose models tests are also found in `tests\unit\models` as well as middleware which is located at `tests\unit\middlewares`.
 
 ### Running Unit Tests
 
 run the following script:
+
 ```sh
 npm test
 ```
@@ -126,19 +124,24 @@ npm test
 
 ## API Documentation
 
+https://documenter.getpostman.com/view/10395649/TzXtJLpG
+
 <!-- FUNC DOC -->
 
 ## Functional Documentation
 
 install the latest version on npm globally (might require `sudo` if you are on linux):
+
 ```sh
 npm install -g jsdoc
 ```
 
 in order to generate the documentation, run the `jsdoc` command:
+
 ```sh
 jsdoc -r ./src
 ```
+
 By default, the generated documentation is saved in a directory named `out`. You
 can use the `--destination` (`-d`) option to specify another directory.
 
