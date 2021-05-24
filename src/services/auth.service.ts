@@ -11,6 +11,7 @@ import config = require('config');
 
 interface PayloadInterface {
   id: string;
+  role: string;
 }
 
 /**
@@ -24,15 +25,11 @@ interface PayloadInterface {
  * @param {String} userId User ID
  * @returns {String} `token` authentication token
  */
-export const generateAuthToken = async (userId : string) => {
+export const generateAuthToken = async (payload : PayloadInterface) => {
   const expTime : string = process.env.JWT_EXPIRES_IN || config.get('JWT_EXPIRES_IN');
   const privateKey : string = process.env.JWT_KEY || config.get('JWT_KEY');
 
-  const jwtString = jwt.sign(
-    { id: userId },
-    privateKey,
-    { expiresIn: expTime },
-  );
+  const jwtString = jwt.sign(payload, privateKey, { expiresIn: expTime });
 
   return jwtString;
 };

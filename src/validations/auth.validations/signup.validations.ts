@@ -13,7 +13,6 @@ const signupValidate = [
     .isEmail()
     .trim()
     .escape()
-    .normalizeEmail()
     .custom(isUniqueEmail),
 
   // check password
@@ -29,7 +28,7 @@ const signupValidate = [
   body('name')
     .isString()
     .isLength({ min: 1, max: 100 })
-    .isAlpha()
+    .custom((value) => value.match(/^[A-Za-z ]+$/))
     .withMessage('Please Enter a Valid Name')
     .trim()
     .escape(),
