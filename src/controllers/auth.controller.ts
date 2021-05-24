@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
 import _ from 'lodash';
-import { authService, mailService } from '../services';
+import { authService, verifyService } from '../services';
 import { UserInterface } from '../models';
-import logger from '../utils/logger';
 
 const createTokenAndSend = async (user : UserInterface, res: Response) => {
   const payload = {
@@ -40,23 +39,7 @@ const createTokenAndSend = async (user : UserInterface, res: Response) => {
 export const signup = async (req : Request, res : Response) => {
   const user = await authService.createUser(req.body);
 
-  const message = `Hello ${user.name}<br>
-  You are almost done<br>Confirm your account below to finish creating your Ketofan account`;
-
-  const mailOptions = {
-    email: user.email,
-    subject: 'Verify your account',
-    message,
-    button: 'CONFIRM ACCOUNT',
-    link: `${req.get('host')}/verify/`,
-  };
-
-  mailService.sendEmail(mailOptions)
-    .then(() => logger.info(`Sent Mail to ${user.email}`))
-    .catch((error) => {
-      const { code, response } = error;
-      logger.error(`${code} : ${response.body.errors[0].message}`);
-    });
+  verifyService.createVerifyTokenAndSendEmail(user);
 
   return createTokenAndSend(user, res);
 };
