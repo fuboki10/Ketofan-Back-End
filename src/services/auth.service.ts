@@ -12,6 +12,7 @@ import config = require('config');
 interface PayloadInterface {
   id: string;
   role: string;
+  verified: boolean;
 }
 
 /**
@@ -133,6 +134,10 @@ export const verifyUser = async (email : string, password : string) : Promise<Us
 
   // if not match throw error
   if (!passwordMatch) throw new AppError('Wrong Password', status.UNAUTHORIZED);
+
+  // update lastLogin
+  user[0].lastLogin = new Date();
+  User.findById(user[0].id).update({ lastLogin: user[0].lastLogin }).then();
 
   return user[0];
 };

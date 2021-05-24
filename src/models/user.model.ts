@@ -11,10 +11,10 @@ export interface UserInterface {
   role: string;
   name: string;
   gender: string;
-  verified?: boolean;
-  lastLogin?: Date;
-  created_at?: Date;
-  updated_at?: Date;
+  verified: boolean;
+  lastLogin: Date;
+  created_at: Date;
+  updated_at: Date;
 }
 
 export interface CreateUserProps {

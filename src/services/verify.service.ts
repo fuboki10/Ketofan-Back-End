@@ -1,10 +1,12 @@
 import crypto from 'crypto';
-import { VerifyToken, UserInterface } from '../models';
+import status from 'http-status';
+import { VerifyToken, User, UserInterface } from '../models';
 import mailService from './mail.service';
 import logger from '../utils/logger';
+import AppError from '../utils/AppError';
 
 const createVerifyToken = async (user: UserInterface) : Promise<string> => {
-  const token = crypto.randomBytes(16).toString('base64');
+  const token = crypto.randomBytes(48).toString('hex');
 
   await VerifyToken.db
     .insert({
@@ -40,8 +42,33 @@ export const createVerifyTokenAndSendEmail = async (user : UserInterface) => {
   sendVerifyEmail(user, token);
 };
 
+export const findToken = async (token : string) : Promise<any> => {
+  const verifyToken = await VerifyToken.find({ token });
+
+  if (!verifyToken || !verifyToken[0]) throw new AppError('Invalid Token', status.BAD_REQUEST);
+
+  return verifyToken[0];
+};
+
+export const verifyUser = async (userId : string) : Promise<UserInterface> => {
+  const user : UserInterface[] = await User.findById(userId)
+    .returning('*')
+    .update({ verified: true });
+
+  if (!user || !user[0]) throw new AppError('User Not Found', status.NOT_FOUND);
+
+  return user[0];
+};
+
+export const removeToken = async (token : string) : Promise<void> => {
+  await VerifyToken.find({ token }).delete();
+};
+
 const verifyService = {
   createVerifyTokenAndSendEmail,
+  findToken,
+  verifyUser,
+  removeToken,
 };
 
 export default verifyService;

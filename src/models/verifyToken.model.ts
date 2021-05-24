@@ -4,19 +4,18 @@ import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
-  table.integer('userId').unsigned().notNullable()
+  table.increments('id').primary().notNullable();
+  table.integer('userId').unsigned().notNullable().unique()
     .references('id')
     .inTable('users')
     .onDelete('CASCADE')
     .onUpdate('CASCADE');
 
-  table.string('token', 50).notNullable();
+  table.string('token').unique().notNullable();
 
   table.timestamps(true, true);
-
-  table.primary(['userId', 'token']);
 };
 
-const VerifyToken = ModelBuilder.build('verifyTokens', schema);
+const VerifyToken = ModelBuilder.build('verify_tokens', schema);
 
 export default VerifyToken;
