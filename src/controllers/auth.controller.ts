@@ -1,22 +1,6 @@
 import { Request, Response } from 'express';
-import status from 'http-status';
-import _ from 'lodash';
-import { authService } from '../services';
-import { UserInterface } from '../models';
-
-const createTokenAndSend = async (user : UserInterface, res: Response) => {
-  const token = await authService.generateAuthToken(user.id);
-
-  const response = {
-    status: status.OK,
-    token,
-    data: {
-      user: _.omit(user, ['password']),
-    },
-  };
-
-  return res.status(status.OK).json(response);
-};
+import { authService, verifyService } from '../services';
+import { createTokenAndSend } from './helpers/sendUser';
 
 /**
  * Signup
@@ -33,6 +17,8 @@ const createTokenAndSend = async (user : UserInterface, res: Response) => {
  */
 export const signup = async (req : Request, res : Response) => {
   const user = await authService.createUser(req.body);
+
+  verifyService.createVerifyTokenAndSendEmail(user);
 
   return createTokenAndSend(user, res);
 };

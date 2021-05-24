@@ -1,6 +1,7 @@
 import User, { UserInterface, CreateUserProps } from './user.model';
 import Patient, { PatientInterface, CreatePatientProps } from './patient.model';
 import Doctor, { DoctorInterface, CreateDoctorProps } from './doctor.model';
+import VerifyToken from './verifyToken.model';
 
 export {
   User,
@@ -12,4 +13,5 @@ export {
   Doctor,
   DoctorInterface,
   CreateDoctorProps,
+  VerifyToken,
 };

@@ -11,6 +11,8 @@ import config = require('config');
 
 interface PayloadInterface {
   id: string;
+  role: string;
+  verified: boolean;
 }
 
 /**
@@ -24,15 +26,11 @@ interface PayloadInterface {
  * @param {String} userId User ID
  * @returns {String} `token` authentication token
  */
-export const generateAuthToken = async (userId : string) => {
+export const generateAuthToken = async (payload : PayloadInterface) => {
   const expTime : string = process.env.JWT_EXPIRES_IN || config.get('JWT_EXPIRES_IN');
   const privateKey : string = process.env.JWT_KEY || config.get('JWT_KEY');
 
-  const jwtString = jwt.sign(
-    { id: userId },
-    privateKey,
-    { expiresIn: expTime },
-  );
+  const jwtString = jwt.sign(payload, privateKey, { expiresIn: expTime });
 
   return jwtString;
 };
@@ -136,6 +134,10 @@ export const verifyUser = async (email : string, password : string) : Promise<Us
 
   // if not match throw error
   if (!passwordMatch) throw new AppError('Wrong Password', status.UNAUTHORIZED);
+
+  // update lastLogin
+  user[0].lastLogin = new Date();
+  User.findById(user[0].id).update({ lastLogin: user[0].lastLogin }).then();
 
   return user[0];
 };

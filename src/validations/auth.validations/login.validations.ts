@@ -6,8 +6,7 @@ const loginValidate = [
   body('email', 'Please Enter a valid Email Address')
     .isEmail()
     .trim()
-    .escape()
-    .normalizeEmail(),
+    .escape(),
 
   // check password
   body('password')

@@ -94,7 +94,7 @@ For production, you need to make your own `config\production.json` with the foll
 1. Running on development
 
 ```sh
-npm start
+npm run dev
 ```
 
 2. Running on production
@@ -102,6 +102,7 @@ npm start
 Upon creating `config\production.json` like in [Environmental Variables](#environmental-variables) section. run this script:
 
 ```sh
+npm run build
 npm start
 ```
 
