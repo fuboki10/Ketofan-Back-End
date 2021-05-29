@@ -29,9 +29,10 @@ export const authenticate = async (req : Request, res : Response, next : NextFun
   const { id } = payload;
   const user = await User.findById(id);
 
-  if (!user) return next(new AppError('User Not Found', status.UNAUTHORIZED));
+  if (!user || !user[0]) return next(new AppError('User Not Found', status.UNAUTHORIZED));
 
-  req.user = user;
+  // eslint-disable-next-line prefer-destructuring
+  req.user = user[0];
 
   return next();
 };
@@ -48,7 +49,7 @@ export const authenticate = async (req : Request, res : Response, next : NextFun
  * @summary User Authorization
  */
 // eslint-disable-next-line max-len
-export const authorize = (roles : [string]) => (req : Request, res : Response, next : NextFunction) => {
+export const authorize = (roles : Array<string>) => (req : Request, res : Response, next : NextFunction) => {
   if (!roles.includes(req.user.role)) {
     return next(
       new AppError('You do not have permission to perform this action.', 403),
