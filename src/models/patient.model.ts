@@ -30,6 +30,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.string('phone', 20).unique();
 };
 
-const Doctor = ModelBuilder.build('patients', schema);
+const Patient = ModelBuilder.build('patients', schema);
 
-export default Doctor;
+export default Patient;

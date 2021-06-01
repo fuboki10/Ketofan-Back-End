@@ -1,5 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 import authController from './auth.controller';
 import verifyController from './verify.controller';
+import specializationController from './specialization.controller';
 
-export { authController, verifyController };
+export { authController, verifyController, specializationController };

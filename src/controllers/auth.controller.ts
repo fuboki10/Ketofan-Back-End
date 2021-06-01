@@ -16,7 +16,7 @@ import { createTokenAndSend } from './helpers/sendUser';
  * @summary Signup
  */
 export const signup = async (req : Request, res : Response) => {
-  const user = await authService.createUser(req.body);
+  const user = await authService.create(req.body);
 
   verifyService.createVerifyTokenAndSendEmail(user);
 
