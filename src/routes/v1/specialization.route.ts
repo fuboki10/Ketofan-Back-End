@@ -19,4 +19,19 @@ router
     catchAsync(specializationController.create),
   );
 
+router
+  .route('/:id')
+  .put(
+    authenticate,
+    authorize(['admin', 'super_admin']),
+    specializationValidator.edit,
+    catchAsync(specializationController.edit),
+  )
+  .delete(
+    authenticate,
+    authorize(['admin', 'super_admin']),
+    specializationValidator.remove,
+    catchAsync(specializationController.remove),
+  );
+
 export default router;

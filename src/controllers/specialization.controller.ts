@@ -24,9 +24,37 @@ export const getAll = async (req: Request, res : Response) => {
 };
 
 export const create = async (req: Request, res : Response) => {
-  const { name } = req.body;
+  const specialization = await specializationService.create(req.body);
 
-  const specialization = await specializationService.create(name);
+  const response = {
+    status: status.OK,
+    data: {
+      specialization,
+    },
+  };
+
+  res.status(status.OK).json(response);
+};
+
+export const edit = async (req: Request, res : Response) => {
+  const { id } : any = req.params;
+
+  const specialization = await specializationService.edit(id, req.body);
+
+  const response = {
+    status: status.OK,
+    data: {
+      specialization,
+    },
+  };
+
+  res.status(status.OK).json(response);
+};
+
+export const remove = async (req: Request, res : Response) => {
+  const { id } : any = req.params;
+
+  const specialization = await specializationService.remove(id);
 
   const response = {
     status: status.OK,
@@ -41,6 +69,8 @@ export const create = async (req: Request, res : Response) => {
 const specializationController = {
   getAll,
   create,
+  edit,
+  remove,
 };
 
 export default specializationController;

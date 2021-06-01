@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { validationResult, ValidationChain } from 'express-validator';
+import { validationResult, ValidationChain, matchedData } from 'express-validator';
 import status from 'http-status';
 
 /**
@@ -15,6 +15,11 @@ const validate = (validations: ValidationChain[]) => async (req: Request, res: R
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
+    // Extracts data validated or sanitized by express-validator
+    req.body = matchedData(req, { locations: ['body'] });
+    req.params = matchedData(req, { locations: ['params'] });
+    req.query = matchedData(req, { locations: ['query'] });
+
     return next();
   }
 
