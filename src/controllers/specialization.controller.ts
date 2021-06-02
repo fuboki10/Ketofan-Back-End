@@ -2,10 +2,10 @@ import { Request, Response } from 'express';
 import status from 'http-status';
 import { specializationService } from '../services';
 
-export const getAll = async (req: Request, res : Response) => {
+export const get = async (req: Request, res : Response) => {
   const { offset, limit } : any = req.query;
 
-  const { specializations, total } = await specializationService.getAll(limit, offset);
+  const { specializations, total } = await specializationService.get(limit, offset);
 
   const response = {
     status: status.OK,
@@ -67,7 +67,7 @@ export const remove = async (req: Request, res : Response) => {
 };
 
 const specializationController = {
-  getAll,
+  get,
   create,
   edit,
   remove,

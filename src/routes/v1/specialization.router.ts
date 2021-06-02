@@ -9,8 +9,8 @@ const router = express.Router();
 router
   .route('/')
   .get(
-    specializationValidator.getAll,
-    catchAsync(specializationController.getAll),
+    specializationValidator.get,
+    catchAsync(specializationController.get),
   )
   .post(
     authenticate,

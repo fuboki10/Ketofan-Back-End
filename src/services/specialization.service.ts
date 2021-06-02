@@ -2,7 +2,7 @@ import status from 'http-status';
 import { Specialization, CreateSpecializationProps } from '../models';
 import AppError from '../utils/AppError';
 
-export const getAll = async (limit : number, offset : number) => {
+export const get = async (limit : number, offset : number) => {
   const [specializations, total] : any = await Promise.all([
     Specialization.find().offset(offset).limit(limit),
     Specialization.db.count(),
@@ -41,7 +41,7 @@ export const remove = async (id : number) => {
 };
 
 const specializationService = {
-  getAll,
+  get,
   create,
   edit,
   remove,

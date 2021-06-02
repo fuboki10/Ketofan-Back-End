@@ -10,7 +10,7 @@ const checklimit : CustomValidator = async (value) => {
   if (value > 50) throw new Error('Limit Must Be at Most 50');
 };
 
-const getAllValidate = [
+const getValidate = [
   // check offset
   query('offset')
     .isInt()
@@ -29,4 +29,4 @@ const getAllValidate = [
 
 ];
 
-export default validate(getAllValidate);
+export default validate(getValidate);
