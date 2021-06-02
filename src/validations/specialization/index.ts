@@ -3,11 +3,11 @@ import create from './create.validation';
 import edit from './edit.validation';
 import remove from './remove.validation';
 
-const specializationhValidator = {
+const specializationValidator = {
   getAll,
   create,
   edit,
   remove,
 };
 
-export default specializationhValidator;
+export default specializationValidator;

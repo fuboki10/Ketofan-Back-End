@@ -3,7 +3,7 @@ import Patient, { PatientInterface, CreatePatientProps } from './patient.model';
 import Doctor, { DoctorInterface, CreateDoctorProps } from './doctor.model';
 import Specialization, { SpecializationInterface, CreateSpecializationProps } from './specialization.model';
 import VerifyToken from './verifyToken.model';
-import ContactUs from './contactUs.model';
+import ContactUs, { ContactUsInterface, CreateContactUsProps } from './contactUs.model';
 
 export {
   User,
@@ -20,4 +20,6 @@ export {
   CreateSpecializationProps,
   VerifyToken,
   ContactUs,
+  ContactUsInterface,
+  CreateContactUsProps,
 };

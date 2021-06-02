@@ -9,7 +9,7 @@ const removeValidate = [
   param('id')
     .isInt()
     .toInt()
-    .withMessage('Please Enter a Valid id')
+    .withMessage('Please Enter a valid id')
     .bail()
     .custom(checkId),
 
