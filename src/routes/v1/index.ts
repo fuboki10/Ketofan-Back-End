@@ -5,6 +5,7 @@ import verifyRouter from './verify.router';
 import specializationRouter from './specialization.router';
 import contactUsRouter from './contactUs.router';
 import areaRouter from './area.router';
+import insuranceRouter from './insurance.router';
 
 const router = express.Router();
 
@@ -14,5 +15,6 @@ router.use('/verify', verifyRouter);
 router.use('/specializations', specializationRouter);
 router.use('/contactUs', contactUsRouter);
 router.use('/areas', areaRouter);
+router.use('/insurances', insuranceRouter);
 
 export default router;
