@@ -5,6 +5,7 @@ import Specialization, { SpecializationInterface, CreateSpecializationProps } fr
 import VerifyToken from './verifyToken.model';
 import ContactUs, { ContactUsInterface, CreateContactUsProps } from './contactUs.model';
 import Area from './area.model';
+import Insurance from './insurance.model';
 
 export {
   User,
@@ -24,4 +25,5 @@ export {
   ContactUsInterface,
   CreateContactUsProps,
   Area,
+  Insurance,
 };
