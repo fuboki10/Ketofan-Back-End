@@ -16,12 +16,12 @@ const createValidate = [
   param('id')
     .isInt()
     .toInt()
-    .withMessage('Please Enter a Valid id')
+    .withMessage('Please Enter a valid id')
     .bail()
     .custom(checkId),
 
   // check name
-  body('name', 'Please Enter a Valid name')
+  body('name', 'Please Enter a valid name')
     .toLowerCase()
     .matches(/^[A-Z]+$/i)
     .trim()

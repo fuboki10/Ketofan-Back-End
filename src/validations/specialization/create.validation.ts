@@ -7,7 +7,7 @@ const isUniqueName : CustomValidator = async (value) => {
   if (specialization && specialization.length > 0) { throw new Error('Name already in use'); }
 };
 
-const editValidate = [
+const createValidate = [
   // check name
   body('name', 'Please Enter a Valid name')
     .toLowerCase()
@@ -18,4 +18,4 @@ const editValidate = [
 
 ];
 
-export default validate(editValidate);
+export default validate(createValidate);
