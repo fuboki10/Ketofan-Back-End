@@ -39,6 +39,13 @@ const signupValidate = [
     .isIn(['M', 'F'])
     .withMessage('Please Enter a valid gender'),
 
+  // chech dateOfBirth
+  body('dateOfBirth', 'Please Enter a valid date of birth')
+    .isString()
+    .isDate()
+    .trim()
+    .escape(),
+
 ];
 
 export default validate(signupValidate);
