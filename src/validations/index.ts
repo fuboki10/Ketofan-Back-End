@@ -3,6 +3,7 @@ import specializationValidator from './specialization';
 import contactUsValidator from './contactUs';
 import areaValidator from './area';
 import insuranceValidator from './insurance';
+import doctorValidator from './doctor';
 
 const validators = {
   authValidator,
@@ -10,6 +11,7 @@ const validators = {
   contactUsValidator,
   areaValidator,
   insuranceValidator,
+  doctorValidator,
 };
 
 export default validators;
@@ -20,4 +22,5 @@ export {
   contactUsValidator,
   areaValidator,
   insuranceValidator,
+  doctorValidator,
 };
