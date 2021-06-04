@@ -1,6 +1,6 @@
 import express from 'express';
 import { contactUsController } from '../../controllers';
-import { contactUsValidator } from '../../validations';
+import { contactUsValidator, commonValidator } from '../../validations';
 import { authenticate, authorize } from '../../middlewares/auth';
 import catchAsync from '../../utils/catchAsync';
 
@@ -11,7 +11,7 @@ router.route('/')
   .get(
     authenticate,
     authorize(['admin', 'super_admin']),
-    contactUsValidator.get,
+    commonValidator.get,
     catchAsync(contactUsController.get),
   );
 
