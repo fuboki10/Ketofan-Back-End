@@ -11,6 +11,12 @@ const selectList = [
   'doctors.bio',
 ];
 
+interface DoctorSearchProps {
+  name?: string;
+  area?: number;
+  insurance?: number;
+}
+
 export const getById = async (id : number) => {
   const doctor = await Doctor.db
     .select(selectList)
@@ -22,9 +28,15 @@ export const getById = async (id : number) => {
   return doctor[0];
 };
 
-export const get = async (limit : number, offset : number) => {
+export const get = async (limit : number, offset : number, searchProps: DoctorSearchProps) => {
   const [doctors, total] : any = await Promise.all([
-    Doctor.find().offset(offset).limit(limit),
+    Doctor.db
+      .select(selectList)
+      .join('users', 'users.id', '=', 'doctors.userId')
+      .where('name', 'like', `${searchProps.name}%`)
+      .offset(offset)
+      .limit(limit),
+
     Doctor.db.count(),
   ]);
 

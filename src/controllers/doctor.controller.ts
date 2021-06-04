@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
+import _ from 'lodash';
 import { doctorService } from '../services';
 
 export const getById = async (req : Request, res : Response) => {
@@ -17,9 +18,14 @@ export const getById = async (req : Request, res : Response) => {
 };
 
 export const get = async (req : Request, res : Response) => {
-  const { limit, offset } : any = req.query;
+  const {
+    limit, offset, name, area, insurance,
+  } : any = req.query;
 
-  const { doctors, total } = await doctorService.get(limit, offset);
+  const { doctors, total } = await doctorService.get(
+    limit, offset,
+    _.pickBy({ name, area, insurance }, _.identity),
+  );
 
   const response = {
     status: status.OK,
