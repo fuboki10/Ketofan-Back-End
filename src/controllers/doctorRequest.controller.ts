@@ -37,7 +37,18 @@ export const get = async (req: Request, res : Response) => {
 };
 
 export const approve = async (req: Request, res : Response) => {
+  const { id } : any = req.params;
 
+  await doctorRequestService.approve(id);
+
+  const response = {
+    status: status.OK,
+    data: {
+      message: 'Approved',
+    },
+  };
+
+  res.status(status.OK).json(response);
 };
 
 export const reject = async (req: Request, res : Response) => {

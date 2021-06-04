@@ -1,10 +1,15 @@
 import { body, CustomValidator } from 'express-validator';
 import validate from '../../middlewares/validate';
-import { DoctorRequest } from '../../models';
+import { DoctorRequest, User } from '../../models';
 
 const isUniqueEmail : CustomValidator = async (value) => {
-  const doctorRequest = await DoctorRequest.find({ email: value });
+  const [doctorRequest, user] : any = await Promise.all([
+    DoctorRequest.find({ email: value }),
+    User.find({ email: value }),
+  ]);
+
   if (doctorRequest && doctorRequest.length > 0) { throw new Error('E-mail already in use'); }
+  if (user && user.length > 0) { throw new Error('E-mail already in use'); }
 };
 
 const checkId : CustomValidator = async (value) => {
