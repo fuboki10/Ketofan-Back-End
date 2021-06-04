@@ -6,6 +6,7 @@ import {
   User, CreateUserProps, UserInterface,
 } from '../models';
 import AppError from '../utils/AppError';
+import hashPassword from './helpers/hashPassword';
 // eslint-disable-next-line import/order
 import config = require('config');
 
@@ -61,23 +62,6 @@ export const verifyAuthToken = async (token : string) : Promise<PayloadInterface
 const checkPassword = async (password : string, hashedPassword : string) : Promise<boolean> => {
   const isPasswordMatch : boolean = await bcrypt.compare(password, hashedPassword);
   return isPasswordMatch;
-};
-
-/**
- * Hash Password
- *
- * @function
- * @public
- * @author Abdelrahman Tarek
- * @param {String} Password Password to be hashed
- * @summary Hash Password
- * @returns {String} `hashedPassword`
- */
-export const hashPassword = async (password : string) : Promise<string> => {
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
-  return hashedPassword;
 };
 
 /**

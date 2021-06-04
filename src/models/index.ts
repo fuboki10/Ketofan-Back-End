@@ -9,6 +9,7 @@ import Insurance from './insurance.model';
 import DoctorArea from './doctorArea.model';
 import DoctorInsurance from './doctorInsurance.model';
 import DoctorSpecialization from './doctorSpecialization.model';
+import DoctorRequest, { CreateDoctorRequestProps, DoctorRequestInterface } from './doctorRequest.model';
 
 export {
   User,
@@ -32,4 +33,7 @@ export {
   DoctorArea,
   DoctorInsurance,
   DoctorSpecialization,
+  DoctorRequest,
+  CreateDoctorRequestProps,
+  DoctorRequestInterface,
 };

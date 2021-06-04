@@ -1,11 +1,11 @@
 import { Knex } from 'knex';
-import { authService } from '../../src/services';
+import hashPassword from '../../src/services/helpers/hashPassword';
 
 export async function seed(knex: Knex): Promise<void> {
   // Deletes ALL existing entries
   await knex('users').del();
 
-  const hashedPassword = await authService.hashPassword('12341234');
+  const hashedPassword = await hashPassword('12341234');
 
   // Inserts seed entries
   await knex('users').insert([

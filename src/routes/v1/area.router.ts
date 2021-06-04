@@ -1,6 +1,6 @@
 import express from 'express';
 import { areaController } from '../../controllers';
-import { areaValidator } from '../../validations';
+import { areaValidator, commonValidator } from '../../validations';
 import { authenticate, authorize } from '../../middlewares/auth';
 import catchAsync from '../../utils/catchAsync';
 
@@ -15,7 +15,7 @@ router
     catchAsync(areaController.create),
   )
   .get(
-    areaValidator.get,
+    commonValidator.get,
     catchAsync(areaController.get),
   );
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import { insuranceController } from '../../controllers';
-import { insuranceValidator } from '../../validations';
+import { insuranceValidator, commonValidator } from '../../validations';
 import { authenticate, authorize } from '../../middlewares/auth';
 import catchAsync from '../../utils/catchAsync';
 
@@ -15,7 +15,7 @@ router
     catchAsync(insuranceController.create),
   )
   .get(
-    insuranceValidator.get,
+    commonValidator.get,
     catchAsync(insuranceController.get),
   );
 

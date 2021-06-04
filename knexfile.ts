@@ -1,5 +1,10 @@
+import { types } from 'pg';
 import config = require('config');
 
+const DATE_OID = 1082;
+const parseDate = (value : any) => value;
+
+types.setTypeParser(DATE_OID, parseDate);
 interface IConfig {
   [key: string]: any;
 }
