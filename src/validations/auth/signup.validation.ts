@@ -29,7 +29,7 @@ const signupValidate = [
     .isString()
     .isLength({ min: 1, max: 100 })
     .custom((value) => value.match(/^[A-Za-z ]+$/))
-    .withMessage('Please Enter a Valid Name')
+    .withMessage('Please Enter a valid Name')
     .trim()
     .escape(),
 
@@ -37,7 +37,14 @@ const signupValidate = [
   body('gender')
     .isString()
     .isIn(['M', 'F'])
-    .withMessage('Please Enter a Valid gender'),
+    .withMessage('Please Enter a valid gender'),
+
+  // chech dateOfBirth
+  body('dateOfBirth', 'Please Enter a valid date of birth')
+    .isString()
+    .isDate()
+    .trim()
+    .escape(),
 
 ];
 

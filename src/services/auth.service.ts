@@ -90,7 +90,7 @@ export const hashPassword = async (password : string) : Promise<string> => {
  * @param {Object} userProps
  * @returns
  */
-export const createUser = async (userProps : CreateUserProps) : Promise<UserInterface> => {
+export const create = async (userProps : CreateUserProps) : Promise<UserInterface> => {
   const hashedPassword : String = await hashPassword(userProps.password);
 
   return knex.transaction(async (trx) => {
@@ -99,6 +99,7 @@ export const createUser = async (userProps : CreateUserProps) : Promise<UserInte
       email: userProps.email,
       name: userProps.name,
       gender: userProps.gender,
+      dateOfBirth: userProps.dateOfBirth,
       role: 'patient',
     });
 
@@ -146,7 +147,7 @@ const userService = {
   generateAuthToken,
   verifyAuthToken,
   hashPassword,
-  createUser,
+  create,
   verifyUser,
 };
 
