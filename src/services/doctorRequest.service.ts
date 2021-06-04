@@ -1,4 +1,6 @@
+import status from 'http-status';
 import { DoctorRequest, CreateDoctorRequestProps } from '../models';
+import AppError from '../utils/AppError';
 
 export const create = async (doctorProps: CreateDoctorRequestProps) => {
   const doctorRequest = await DoctorRequest.db
@@ -17,9 +19,21 @@ export const get = async (limit : number, offset : number) => {
   return { doctorRequests, total: parseInt(total[0].count, 10) };
 };
 
+export const reject = async (id: number) => {
+  const request : any = await DoctorRequest.db
+    .returning('*')
+    .delete()
+    .where({ id });
+
+  if (!request || !request[0]) { throw new AppError('Request with the given id is not found', status.NOT_FOUND); }
+
+  return request[0];
+};
+
 const doctorRequestService = {
   create,
   get,
+  reject,
 };
 
 export default doctorRequestService;

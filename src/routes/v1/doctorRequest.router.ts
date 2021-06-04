@@ -16,4 +16,22 @@ router
     catchAsync(doctorRequestController.get),
   );
 
+router
+  .route('/:id/approve')
+  .put(
+    authenticate,
+    authorize(['admin', 'super_admin']),
+    commonValidator.id,
+    catchAsync(doctorRequestController.approve),
+  );
+
+router
+  .route('/:id/reject')
+  .put(
+    authenticate,
+    authorize(['admin', 'super_admin']),
+    commonValidator.id,
+    catchAsync(doctorRequestController.reject),
+  );
+
 export default router;

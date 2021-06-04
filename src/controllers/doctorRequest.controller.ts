@@ -36,9 +36,30 @@ export const get = async (req: Request, res : Response) => {
   res.status(status.OK).json(response);
 };
 
+export const approve = async (req: Request, res : Response) => {
+
+};
+
+export const reject = async (req: Request, res : Response) => {
+  const { id } : any = req.params;
+
+  await doctorRequestService.reject(id);
+
+  const response = {
+    status: status.OK,
+    data: {
+      message: 'Rejected',
+    },
+  };
+
+  res.status(status.OK).json(response);
+};
+
 const doctorRequestController = {
   create,
   get,
+  approve,
+  reject,
 };
 
 export default doctorRequestController;
