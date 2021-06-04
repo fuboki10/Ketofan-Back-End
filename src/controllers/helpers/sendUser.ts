@@ -9,6 +9,7 @@ export const createTokenAndSend = async (user : UserInterface, res: Response) =>
     id: user.id,
     role: user.role,
     verified: user.verified,
+    name: user.name,
   };
 
   const token = await authService.generateAuthToken(payload);
