@@ -5,6 +5,7 @@ import specializationController from './specialization.controller';
 import contactUsController from './contactUs.controller';
 import areaController from './area.controller';
 import insuranceController from './insurance.controller';
+import doctorController from './doctor.controller';
 
 export {
   authController,
@@ -13,4 +14,5 @@ export {
   contactUsController,
   areaController,
   insuranceController,
+  doctorController,
 };

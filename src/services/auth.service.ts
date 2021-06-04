@@ -99,6 +99,7 @@ export const create = async (userProps : CreateUserProps) : Promise<UserInterfac
       email: userProps.email,
       name: userProps.name,
       gender: userProps.gender,
+      dateOfBirth: userProps.dateOfBirth,
       role: 'patient',
     });
 

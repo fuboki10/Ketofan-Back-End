@@ -11,6 +11,7 @@ export interface UserInterface {
   role: string;
   name: string;
   gender: string;
+  dateOfBirth: string;
   verified: boolean;
   lastLogin: Date;
   created_at: Date;
@@ -23,6 +24,7 @@ export interface CreateUserProps {
   password: string;
   name: string;
   gender: string;
+  dateOfBirth: string;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
@@ -31,7 +33,8 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.string('password').notNullable();
   table.string('role', 50).notNullable();
   table.boolean('verified').notNullable().defaultTo(false);
-  table.string('name').notNullable();
+  table.string('name').notNullable().index();
+  table.date('dateOfBirth').notNullable();
   table.string('gender', 1).notNullable();
   table.timestamp('lastLogin').notNullable().defaultTo(knex.fn.now());
   table.timestamps(true, true);
