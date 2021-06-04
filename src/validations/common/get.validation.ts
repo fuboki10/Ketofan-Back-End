@@ -13,18 +13,18 @@ const checklimit : CustomValidator = async (value) => {
 const getValidate = [
   // check offset
   query('offset')
+    .default(0)
     .isInt()
     .toInt()
     .withMessage('Please Enter a valid offset')
-    .default(0)
     .custom(checkOffset),
 
   // check limit
   query('limit')
+    .default(25)
     .isInt()
     .toInt()
     .withMessage('Please Enter a valid limit')
-    .default(25)
     .custom(checklimit),
 
 ];
