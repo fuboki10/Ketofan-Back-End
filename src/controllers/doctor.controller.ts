@@ -18,12 +18,14 @@ export const getById = async (req : Request, res : Response) => {
 
 export const get = async (req : Request, res : Response) => {
   const {
-    limit, offset, name, area, insurance,
+    limit, offset, name, area, insurance, specialization,
   } : any = req.query;
 
   const { doctors, total } = await doctorService.get(
     limit, offset,
-    { name, area, insurance },
+    {
+      name, area, insurance, specialization,
+    },
   );
 
   const response = {

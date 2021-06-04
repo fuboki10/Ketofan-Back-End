@@ -8,6 +8,7 @@ import Area from './area.model';
 import Insurance from './insurance.model';
 import DoctorArea from './doctorArea.model';
 import DoctorInsurance from './doctorInsurance.model';
+import DoctorSpecialization from './doctorSpecialization.model';
 
 export {
   User,
@@ -30,4 +31,5 @@ export {
   Insurance,
   DoctorArea,
   DoctorInsurance,
+  DoctorSpecialization,
 };

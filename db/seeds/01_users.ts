@@ -21,5 +21,20 @@ export async function seed(knex: Knex): Promise<void> {
     {
       role: 'patient', password: hashedPassword, email: 'patient1@gmail.com', gender: 'M', name: 'patient', dateOfBirth: '1999-10-20',
     },
+    {
+      role: 'doctor', password: hashedPassword, email: 'doctor2@gmail.com', gender: 'M', name: 'ahmed walid', dateOfBirth: '1999-10-20',
+    },
+    {
+      role: 'doctor', password: hashedPassword, email: 'doctor3@gmail.com', gender: 'M', name: 'arafat', dateOfBirth: '1999-10-20',
+    },
+    {
+      role: 'doctor', password: hashedPassword, email: 'doctor4@gmail.com', gender: 'M', name: 'hassan', dateOfBirth: '1999-10-20',
+    },
+    {
+      role: 'doctor', password: hashedPassword, email: 'doctor5@gmail.com', gender: 'M', name: 'doctor mekawy', dateOfBirth: '1999-10-20',
+    },
+    {
+      role: 'doctor', password: hashedPassword, email: 'doctor6@gmail.com', gender: 'M', name: 'doctor6', dateOfBirth: '1999-10-20',
+    },
   ]);
 }

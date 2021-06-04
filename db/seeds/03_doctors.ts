@@ -7,7 +7,22 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   await knex('doctors').insert([
     {
-      userId: 3,
+      userId: 3, bio: 'good doctor', phone: '01128745555',
+    },
+    {
+      userId: 5, bio: 'good doctor', phone: '01128745555',
+    },
+    {
+      userId: 6, bio: 'good doctor', phone: '01128745555',
+    },
+    {
+      userId: 7, bio: 'good doctor', phone: '01128745555',
+    },
+    {
+      userId: 8, bio: 'good doctor', phone: '01128745555',
+    },
+    {
+      userId: 9, bio: 'good doctor', phone: '01128745555',
     },
   ]);
 }

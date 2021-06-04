@@ -59,6 +59,15 @@ const getValidate = [
     .bail()
     .custom(checkId),
 
+  // chech specialization
+  query('specialization')
+    .optional()
+    .isInt()
+    .toInt()
+    .withMessage('Please Enter a valid id')
+    .bail()
+    .custom(checkId),
+
 ];
 
 export default validate(getValidate);
