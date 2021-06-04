@@ -29,14 +29,16 @@ export const getById = async (id : number) => {
 };
 
 export const get = async (limit : number, offset : number, searchProps: DoctorSearchProps) => {
-  const [doctors, total] : any = await Promise.all([
-    Doctor.db
-      .select(selectList)
-      .join('users', 'users.id', '=', 'doctors.userId')
-      .where('name', 'like', `${searchProps.name}%`)
-      .offset(offset)
-      .limit(limit),
+  const query = Doctor.db
+    .select(selectList)
+    .join('users', 'users.id', '=', 'doctors.userId');
 
+  if (searchProps.name) {
+    query.where('name', 'like', `${searchProps.name}%`);
+  }
+
+  const [doctors, total] : any = await Promise.all([
+    query.offset(offset).limit(limit),
     Doctor.db.count(),
   ]);
 

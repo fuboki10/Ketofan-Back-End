@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
-import _ from 'lodash';
 import { doctorService } from '../services';
 
 export const getById = async (req : Request, res : Response) => {
@@ -24,7 +23,7 @@ export const get = async (req : Request, res : Response) => {
 
   const { doctors, total } = await doctorService.get(
     limit, offset,
-    _.pickBy({ name, area, insurance }, _.identity),
+    { name, area, insurance },
   );
 
   const response = {
