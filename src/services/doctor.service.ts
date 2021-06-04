@@ -22,8 +22,18 @@ export const getById = async (id : number) => {
   return doctor[0];
 };
 
+export const get = async (limit : number, offset : number) => {
+  const [doctors, total] : any = await Promise.all([
+    Doctor.find().offset(offset).limit(limit),
+    Doctor.db.count(),
+  ]);
+
+  return { doctors, total: parseInt(total[0].count, 10) };
+};
+
 const doctorService = {
   getById,
+  get,
 };
 
 export default doctorService;

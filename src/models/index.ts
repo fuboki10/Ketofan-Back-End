@@ -6,6 +6,7 @@ import VerifyToken from './verifyToken.model';
 import ContactUs, { ContactUsInterface, CreateContactUsProps } from './contactUs.model';
 import Area from './area.model';
 import Insurance from './insurance.model';
+import doctorArea from './doctorArea.model';
 
 export {
   User,
@@ -26,4 +27,5 @@ export {
   CreateContactUsProps,
   Area,
   Insurance,
+  doctorArea,
 };

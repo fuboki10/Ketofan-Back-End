@@ -16,8 +16,30 @@ export const getById = async (req : Request, res : Response) => {
   res.status(status.OK).json(response);
 };
 
+export const get = async (req : Request, res : Response) => {
+  const { limit, offset } : any = req.query;
+
+  const { doctors, total } = await doctorService.get(limit, offset);
+
+  const response = {
+    status: status.OK,
+    _metadata: {
+      limit,
+      offset,
+      count: doctors.length,
+      total,
+    },
+    data: {
+      doctors,
+    },
+  };
+
+  res.status(status.OK).json(response);
+};
+
 const doctorController = {
   getById,
+  get,
 };
 
 export default doctorController;
