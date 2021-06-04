@@ -9,4 +9,8 @@ router
   .route('/:id')
   .get(doctorValidator.getById, catchAsync(doctorController.getById));
 
+router
+  .route('/')
+  .get(doctorValidator.get, catchAsync(doctorController.get));
+
 export default router;
