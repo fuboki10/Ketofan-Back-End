@@ -12,6 +12,7 @@ import config = require('config');
 
 interface PayloadInterface {
   id: string;
+  name: string;
   role: string;
   verified: boolean;
 }
