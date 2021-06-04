@@ -7,7 +7,6 @@ const checkOffset : CustomValidator = async (value) => {
 
 const checklimit : CustomValidator = async (value) => {
   if (value < 1) throw new Error('Limit Must Be at Least 1');
-  if (value > 50) throw new Error('Limit Must Be at Most 50');
 };
 
 const getValidate = [
@@ -21,7 +20,7 @@ const getValidate = [
 
   // check limit
   query('limit')
-    .default(25)
+    .default(1000000)
     .isInt()
     .toInt()
     .withMessage('Please Enter a valid limit')

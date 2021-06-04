@@ -30,7 +30,7 @@ router
   .delete(
     authenticate,
     authorize(['admin', 'super_admin']),
-    areaValidator.remove,
+    commonValidator.id,
     catchAsync(areaController.remove),
   );
 
