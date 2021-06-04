@@ -6,6 +6,7 @@ import contactUsService from './contactUs.service';
 import areaService from './area.service';
 import insuranceService from './insurance.service';
 import doctorService from './doctor.service';
+import doctorRequestService from './doctorRequest.service';
 
 export {
   authService,
@@ -16,4 +17,5 @@ export {
   areaService,
   insuranceService,
   doctorService,
+  doctorRequestService,
 };

@@ -1,7 +1,7 @@
 import express from 'express';
 import catchAsync from '../../utils/catchAsync';
 import { specializationController } from '../../controllers';
-import { specializationValidator } from '../../validations';
+import { specializationValidator, commonValidator } from '../../validations';
 import { authenticate, authorize } from '../../middlewares/auth';
 
 const router = express.Router();
@@ -9,7 +9,7 @@ const router = express.Router();
 router
   .route('/')
   .get(
-    specializationValidator.get,
+    commonValidator.get,
     catchAsync(specializationController.get),
   )
   .post(
