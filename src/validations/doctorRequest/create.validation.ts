@@ -54,6 +54,22 @@ const createValidate = [
     .bail()
     .custom(checkId),
 
+  // chech id
+  body('areaId')
+    .isInt()
+    .toInt()
+    .withMessage('Please Enter a valid id')
+    .bail()
+    .custom(checkId),
+
+  // check bio
+  body('bio', 'Please Enter a valid ')
+    .isString(),
+
+  body('mobileNumber', 'Please Enter a valid mobile number')
+    .isString()
+    .isMobilePhone('any'),
+
 ];
 
 export default validate(createValidate);
