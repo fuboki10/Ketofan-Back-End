@@ -2,7 +2,6 @@
 import express from 'express';
 import cors from 'cors';
 import status from 'http-status';
-import multer from 'multer';
 import morgan from './utils/morgan';
 import { errorConverter, errorHandler } from './middlewares/error';
 import AppError from './utils/AppError';

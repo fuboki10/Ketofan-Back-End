@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { imageService } from '../services';
 
 export const getById = async (req: Request, res : Response) => {
-  const { id } : any = req.query;
+  const { id } : any = req.params;
 
   const imagePath = await imageService.getById(id);
 

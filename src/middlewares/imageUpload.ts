@@ -7,7 +7,7 @@ const multerStorage = multer.diskStorage({
     cb(null, 'public/images');
   },
   filename: (req : Request, file : Express.Multer.File, cb : Function) => {
-    cb(null, `${new Date().valueOf()}_${file.originalname}`);
+    cb(null, `${new Date().valueOf()}_${file.originalname.replace(/ /g, '_')}`);
   },
 });
 
