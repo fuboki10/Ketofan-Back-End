@@ -6,16 +6,19 @@ import { SchemaInterface } from './Model';
 export interface SpecializationInterface {
   id: string;
   name: string;
+  src?: string;
 }
 
 export interface CreateSpecializationProps {
   id?: string;
   name: string;
+  src?: string;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.increments('id').primary().notNullable();
-  table.string('name', 100).unique().notNullable();
+  table.string('name').notNullable();
+  table.text('src').notNullable();
 };
 
 export const Specialization = ModelBuilder.build('specializations', schema);

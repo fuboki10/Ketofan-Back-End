@@ -55,6 +55,7 @@
     "migrate": "knex migrate:latest",
     "unmigrate": "knex migrate:rollback",
     "seed": "knex seed:run",
+    "db:create": "ts-node ./db/createDatabase",
     "postinstall": "ts-node ./db/createDatabase"
   },
   "repository": {
