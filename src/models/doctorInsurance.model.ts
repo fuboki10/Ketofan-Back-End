@@ -15,6 +15,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.primary(['doctorId', 'insuranceId']);
 };
 
-export const DoctorInsurances = ModelBuilder.build('doctor_insurances', schema);
+export const DoctorInsurance = ModelBuilder.build('doctor_insurances', schema);
 
-export default DoctorInsurances;
+export default DoctorInsurance;

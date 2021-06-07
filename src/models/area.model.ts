@@ -5,7 +5,7 @@ import { SchemaInterface } from './Model';
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.increments('id').primary().notNullable();
-  table.string('name').unique().notNullable();
+  table.string('name').notNullable();
 };
 
 export const Area = ModelBuilder.build('areas', schema);

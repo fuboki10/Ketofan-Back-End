@@ -10,7 +10,6 @@ const isUniqueName : CustomValidator = async (value) => {
 const createValidate = [
   // check name
   body('name', 'Please Enter a Valid name')
-    .toLowerCase()
     .matches(/^[A-Z]+$/i)
     .bail()
     .trim()

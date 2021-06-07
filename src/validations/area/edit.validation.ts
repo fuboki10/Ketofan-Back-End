@@ -22,7 +22,6 @@ const editValidate = [
 
   // check name
   body('name', 'Please Enter a valid name')
-    .toLowerCase()
     .matches(/^[A-Z]+$/i)
     .trim()
     .escape()
