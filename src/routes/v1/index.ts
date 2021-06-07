@@ -7,6 +7,7 @@ import contactUsRouter from './contactUs.router';
 import areaRouter from './area.router';
 import insuranceRouter from './insurance.router';
 import doctorRouter from './doctor.router';
+import imageRouter from './image.router';
 
 const router = express.Router();
 
@@ -18,5 +19,6 @@ router.use('/contactUs', contactUsRouter);
 router.use('/areas', areaRouter);
 router.use('/insurances', insuranceRouter);
 router.use('/doctors', doctorRouter);
+router.use('/images', imageRouter);
 
 export default router;

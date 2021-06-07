@@ -18,7 +18,7 @@ export const createTokenAndSend = async (user : UserInterface, res: Response) =>
     status: status.OK,
     token,
     data: {
-      user: _.omit(user, ['password']),
+      user: _(user).omit(['password']),
     },
   };
 

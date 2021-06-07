@@ -67,7 +67,6 @@ const createValidate = [
     .isString(),
 
   body('mobileNumber', 'Please Enter a valid mobile number')
-    .isString()
     .isMobilePhone('any'),
 
 ];

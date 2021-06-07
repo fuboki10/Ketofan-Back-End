@@ -5,7 +5,7 @@ import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
 export interface UserInterface {
-  id: string;
+  id: number;
   email: string;
   password?: string;
   role: string;
@@ -13,18 +13,22 @@ export interface UserInterface {
   gender: string;
   dateOfBirth: string;
   verified: boolean;
+  profileImage?: number;
+  mobileNumber?: string;
   lastLogin: Date;
   created_at: Date;
   updated_at: Date;
 }
 
 export interface CreateUserProps {
-  id?: string;
+  id?: number;
   email: string;
   password: string;
   name: string;
   gender: string;
   dateOfBirth: string;
+  profileImage?: number;
+  mobileNumber?: string;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
@@ -35,6 +39,10 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.boolean('verified').notNullable().defaultTo(false);
   table.string('name').notNullable().index();
   table.date('dateOfBirth').notNullable();
+  table.integer('profileImage').unsigned().references('id')
+    .inTable('images')
+    .onDelete('CASCADE');
+  table.string('mobileNumber', 20).unique().notNullable();
   table.string('gender', 1).notNullable();
   table.timestamp('lastLogin').notNullable().defaultTo(knex.fn.now());
   table.timestamps(true, true);

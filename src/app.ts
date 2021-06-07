@@ -2,6 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import status from 'http-status';
+import multer from 'multer';
 import morgan from './utils/morgan';
 import { errorConverter, errorHandler } from './middlewares/error';
 import AppError from './utils/AppError';
@@ -27,6 +28,9 @@ app.use(express.json());
 app.use(
   express.urlencoded({ extended: true }),
 );
+
+// for parsing multipart/form-data
+// app.use(multer().none());
 
 // enable cors
 const corsOptions = {

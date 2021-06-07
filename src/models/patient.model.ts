@@ -6,17 +6,11 @@ import { SchemaInterface } from './Model';
 export interface PatientInterface {
   id: string;
   userId: string;
-  birthDate?: Date;
-  profileImage?: string;
-  phone?: string;
 }
 
 export interface CreatePatientProps {
   id?: string;
   userId: string;
-  birthDate?: Date;
-  profileImage?: string;
-  phone?: string;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
@@ -25,9 +19,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .inTable('users')
     .onDelete('CASCADE')
     .unique();
-  table.date('birthDate');
-  table.string('profileImage');
-  table.string('phone', 20).unique();
 };
 
 const Patient = ModelBuilder.build('patients', schema);

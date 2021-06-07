@@ -7,6 +7,7 @@ import areaService from './area.service';
 import insuranceService from './insurance.service';
 import doctorService from './doctor.service';
 import doctorRequestService from './doctorRequest.service';
+import imageService from './image.service';
 
 export {
   authService,
@@ -18,4 +19,5 @@ export {
   insuranceService,
   doctorService,
   doctorRequestService,
+  imageService,
 };

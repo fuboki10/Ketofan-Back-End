@@ -50,7 +50,7 @@ export const findToken = async (token : string) : Promise<any> => {
   return verifyToken[0];
 };
 
-export const verifyUser = async (userId : string) : Promise<UserInterface> => {
+export const verifyUser = async (userId : number) : Promise<UserInterface> => {
   const user : UserInterface[] = await User.findById(userId)
     .returning('*')
     .update({ verified: true });
