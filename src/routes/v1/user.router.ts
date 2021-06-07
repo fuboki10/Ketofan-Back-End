@@ -18,4 +18,11 @@ router.route('/me/profileImage')
     catchAsync(userController.editProfileImage),
   );
 
+router.route('/me/password')
+  .patch(
+    authenticate,
+    userValidator.editPassword,
+    catchAsync(userController.editPassword),
+  );
+
 export default router;
