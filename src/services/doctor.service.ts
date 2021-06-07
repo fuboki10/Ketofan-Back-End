@@ -4,8 +4,8 @@ import AppError from '../utils/AppError';
 
 const selectList = [
   'doctors.id',
-  'doctors.profileImage',
-  'doctors.phone',
+  'users.profileImage',
+  'users.mobileNumber',
   'users.name',
   'users.gender',
   'doctors.bio',

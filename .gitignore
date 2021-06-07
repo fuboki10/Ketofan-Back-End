@@ -106,3 +106,8 @@ dist
 config/production.*
 
 dist
+
+
+*.png
+*.jpg
+*.jpeg

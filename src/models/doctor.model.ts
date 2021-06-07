@@ -7,16 +7,12 @@ export interface DoctorInterface {
   id: string;
   userId: string;
   bio?: string;
-  profileImage?: string;
-  phone?: string;
 }
 
 export interface CreateDoctorProps {
   id?: string;
   userId: string;
   bio?: string;
-  profileImage?: string;
-  phone?: string;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
@@ -26,8 +22,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .onDelete('CASCADE')
     .unique();
   table.text('bio');
-  table.string('profileImage');
-  table.string('phone', 20).unique();
 };
 
 const Doctor = ModelBuilder.build('doctors', schema);

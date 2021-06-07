@@ -7,6 +7,7 @@ import areaController from './area.controller';
 import insuranceController from './insurance.controller';
 import doctorController from './doctor.controller';
 import doctorRequestController from './doctorRequest.controller';
+import imageController from './image.controller';
 
 export {
   authController,
@@ -17,4 +18,5 @@ export {
   insuranceController,
   doctorController,
   doctorRequestController,
+  imageController,
 };

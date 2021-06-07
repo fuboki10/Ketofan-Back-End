@@ -11,7 +11,7 @@ import hashPassword from './helpers/hashPassword';
 import config = require('config');
 
 interface PayloadInterface {
-  id: string;
+  id: number;
   name: string;
   role: string;
   verified: boolean;
@@ -85,6 +85,7 @@ export const create = async (userProps : CreateUserProps) : Promise<UserInterfac
       name: userProps.name,
       gender: userProps.gender,
       dateOfBirth: userProps.dateOfBirth,
+      mobileNumber: userProps.mobileNumber,
       role: 'patient',
     });
 

@@ -46,6 +46,9 @@ const signupValidate = [
     .trim()
     .escape(),
 
+  body('mobileNumber', 'Please Enter a valid mobile number')
+    .isMobilePhone('any'),
+
 ];
 
 export default validate(signupValidate);

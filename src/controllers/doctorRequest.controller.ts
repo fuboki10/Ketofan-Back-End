@@ -1,9 +1,26 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
-import { doctorRequestService } from '../services';
+import { doctorRequestService, imageService } from '../services';
+import AppError from '../utils/AppError';
+import deleteFileIfFound from './helpers/deleteFileIfFound';
 
 export const create = async (req: Request, res: Response) => {
-  const doctorRequest = await doctorRequestService.create(req.body);
+  if (!req.files.profileImage) {
+    deleteFileIfFound(req.files.document[0]);
+    throw new AppError('Profile Image is Not Found', status.NOT_FOUND);
+  }
+
+  if (!req.files.document) {
+    deleteFileIfFound(req.files.profileImage[0]);
+    throw new AppError('Document is Not Found', status.NOT_FOUND);
+  }
+
+  const [profileImage, document] = await Promise.all([
+    imageService.add(req.files.profileImage[0]),
+    imageService.add(req.files.document[0]),
+  ]);
+
+  const doctorRequest = await doctorRequestService.create({ ...req.body, profileImage, document });
 
   const response = {
     status: status.OK,

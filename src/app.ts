@@ -28,6 +28,9 @@ app.use(
   express.urlencoded({ extended: true }),
 );
 
+// for parsing multipart/form-data
+// app.use(multer().none());
+
 // enable cors
 const corsOptions = {
   exposedHeaders: ['Authorization'],
