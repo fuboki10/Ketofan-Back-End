@@ -11,4 +11,4 @@ export * from './doctorInsurance.model';
 export * from './doctorSpecialization.model';
 export * from './doctorRequest.model';
 export * from './image.model';
-export * from './appointment.model';
+export * from './workingDay.model';

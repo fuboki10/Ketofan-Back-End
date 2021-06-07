@@ -1,11 +1,5 @@
-import { body, CustomValidator } from 'express-validator';
+import { body } from 'express-validator';
 import validate from '../../middlewares/validate';
-import { Area } from '../../models';
-
-const isUniqueName : CustomValidator = async (value) => {
-  const area = await Area.find({ name: value });
-  if (area && area.length > 0) { throw new Error('Name already in use'); }
-};
 
 const createValidate = [
   // check name
@@ -13,8 +7,7 @@ const createValidate = [
     .matches(/^[A-Z]+$/i)
     .bail()
     .trim()
-    .escape()
-    .custom(isUniqueName),
+    .escape(),
 
 ];
 

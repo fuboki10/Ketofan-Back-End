@@ -1,11 +1,5 @@
 import { body, CustomValidator, param } from 'express-validator';
-import { Area } from '../../models';
 import validate from '../../middlewares/validate';
-
-const isUniqueName : CustomValidator = async (value) => {
-  const area = await Area.find({ name: value });
-  if (area && area.length > 0) { throw new Error('Name already in use'); }
-};
 
 const checkId : CustomValidator = async (value) => {
   if (value <= 0) throw new Error('ID must be at least 1');
@@ -25,9 +19,7 @@ const editValidate = [
     .matches(/^[A-Z]+$/i)
     .trim()
     .escape()
-    .bail()
-    .custom(isUniqueName),
-
+    .bail(),
 ];
 
 export default validate(editValidate);

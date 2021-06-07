@@ -5,21 +5,21 @@ import AppError from '../utils/AppError';
 import deleteFileIfFound from '../services/helpers/deleteFileIfFound';
 
 export const create = async (req: Request, res: Response) => {
-  const { profileImageFile, documentFile } = req.files;
-
-  if (!profileImageFile) {
-    if (documentFile && documentFile[0]) deleteFileIfFound(documentFile[0].path);
+  if (!req.files.profileImage) {
+    if (req.files.document && req.files.document[0]) deleteFileIfFound(req.files.document[0].path);
     throw new AppError('Profile Image is Not Found', status.NOT_FOUND);
   }
 
-  if (!documentFile) {
-    if (profileImageFile && profileImageFile[0]) deleteFileIfFound(profileImageFile[0].path);
+  if (!req.files.document) {
+    if (req.files.profileImage && req.files.profileImage[0]) {
+      deleteFileIfFound(req.files.profileImage[0].path);
+    }
     throw new AppError('Document is Not Found', status.NOT_FOUND);
   }
 
   const [profileImage, document] = await Promise.all([
-    imageService.add(profileImageFile[0]),
-    imageService.add(documentFile[0]),
+    imageService.add(req.files.profileImage[0]),
+    imageService.add(req.files.document[0]),
   ]);
 
   const doctorRequest = await doctorRequestService.create({ ...req.body, profileImage, document });
