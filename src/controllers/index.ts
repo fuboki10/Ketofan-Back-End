@@ -8,6 +8,7 @@ import insuranceController from './insurance.controller';
 import doctorController from './doctor.controller';
 import doctorRequestController from './doctorRequest.controller';
 import imageController from './image.controller';
+import userController from './user.controller';
 
 export {
   authController,
@@ -19,4 +20,5 @@ export {
   doctorController,
   doctorRequestController,
   imageController,
+  userController,
 };
