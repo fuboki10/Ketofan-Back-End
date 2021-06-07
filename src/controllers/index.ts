@@ -1,24 +1,11 @@
 /* eslint-disable import/prefer-default-export */
-import authController from './auth.controller';
-import verifyController from './verify.controller';
-import specializationController from './specialization.controller';
-import contactUsController from './contactUs.controller';
-import areaController from './area.controller';
-import insuranceController from './insurance.controller';
-import doctorController from './doctor.controller';
-import doctorRequestController from './doctorRequest.controller';
-import imageController from './image.controller';
-import userController from './user.controller';
-
-export {
-  authController,
-  verifyController,
-  specializationController,
-  contactUsController,
-  areaController,
-  insuranceController,
-  doctorController,
-  doctorRequestController,
-  imageController,
-  userController,
-};
+export * as authController from './auth.controller';
+export * as verifyController from './verify.controller';
+export * as specializationController from './specialization.controller';
+export * as contactUsController from './contactUs.controller';
+export * as areaController from './area.controller';
+export * as insuranceController from './insurance.controller';
+export * as doctorController from './doctor.controller';
+export * as doctorRequestController from './doctorRequest.controller';
+export * as imageController from './image.controller';
+export * as userController from './user.controller';
