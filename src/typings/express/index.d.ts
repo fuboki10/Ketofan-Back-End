@@ -1,9 +1,4 @@
 /* eslint-disable no-unused-vars */
-
-interface CustomFile {
-
-}
-
 declare namespace Express {
   export interface Request {
       user: any;
