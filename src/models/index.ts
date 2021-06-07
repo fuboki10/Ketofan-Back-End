@@ -10,6 +10,7 @@ import DoctorArea from './doctorArea.model';
 import DoctorInsurance from './doctorInsurance.model';
 import DoctorSpecialization from './doctorSpecialization.model';
 import DoctorRequest, { CreateDoctorRequestProps, DoctorRequestInterface } from './doctorRequest.model';
+import Image from './image.model';
 
 export {
   User,
@@ -36,4 +37,5 @@ export {
   DoctorRequest,
   CreateDoctorRequestProps,
   DoctorRequestInterface,
+  Image,
 };
