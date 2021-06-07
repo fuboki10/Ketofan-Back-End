@@ -21,6 +21,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .unique();
 };
 
-const Patient = ModelBuilder.build('patients', schema);
+export const Patient = ModelBuilder.build('patients', schema);
 
 export default Patient;

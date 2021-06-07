@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import status from 'http-status';
 import knex from '../../db';
@@ -7,6 +6,7 @@ import {
 } from '../models';
 import AppError from '../utils/AppError';
 import hashPassword from './helpers/hashPassword';
+import checkPassword from './helpers/checkPassword';
 // eslint-disable-next-line import/order
 import config = require('config');
 
@@ -46,23 +46,6 @@ export const verifyAuthToken = async (token : string) : Promise<PayloadInterface
   });
 
   return payload;
-};
-
-/**
- * Check if password is correct
- *
- * @function
- * @public
- * @async
- * @author Abdelrahman Tarek
- * @param {String} password
- * @param {String} hashedPassword
- * @summary Check if password is correct
- * @returns {Boolean} `isPasswordMatch` is `true` the password is correct
- */
-const checkPassword = async (password : string, hashedPassword : string) : Promise<boolean> => {
-  const isPasswordMatch : boolean = await bcrypt.compare(password, hashedPassword);
-  return isPasswordMatch;
 };
 
 /**

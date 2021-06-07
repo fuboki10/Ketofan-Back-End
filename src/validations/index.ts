@@ -6,6 +6,7 @@ import insuranceValidator from './insurance';
 import doctorValidator from './doctor';
 import doctorRequestValidator from './doctorRequest';
 import commonValidator from './common';
+import userValidator from './user';
 
 const validators = {
   authValidator,
@@ -16,6 +17,7 @@ const validators = {
   doctorValidator,
   doctorRequestValidator,
   commonValidator,
+  userValidator,
 };
 
 export default validators;
@@ -29,4 +31,5 @@ export {
   doctorValidator,
   doctorRequestValidator,
   commonValidator,
+  userValidator,
 };

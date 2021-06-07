@@ -8,6 +8,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.string('name').unique().notNullable();
 };
 
-const Area = ModelBuilder.build('areas', schema);
+export const Area = ModelBuilder.build('areas', schema);
 
 export default Area;

@@ -48,6 +48,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.timestamps(true, true);
 };
 
-const User = ModelBuilder.build('users', schema);
+export const User = ModelBuilder.build('users', schema);
 
 export default User;

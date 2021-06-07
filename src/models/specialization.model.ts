@@ -18,6 +18,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.string('name', 100).unique().notNullable();
 };
 
-const Specialization = ModelBuilder.build('specializations', schema);
+export const Specialization = ModelBuilder.build('specializations', schema);
 
 export default Specialization;

@@ -1,41 +1,13 @@
-import User, { UserInterface, CreateUserProps } from './user.model';
-import Patient, { PatientInterface, CreatePatientProps } from './patient.model';
-import Doctor, { DoctorInterface, CreateDoctorProps } from './doctor.model';
-import Specialization, { SpecializationInterface, CreateSpecializationProps } from './specialization.model';
-import VerifyToken from './verifyToken.model';
-import ContactUs, { ContactUsInterface, CreateContactUsProps } from './contactUs.model';
-import Area from './area.model';
-import Insurance from './insurance.model';
-import DoctorArea from './doctorArea.model';
-import DoctorInsurance from './doctorInsurance.model';
-import DoctorSpecialization from './doctorSpecialization.model';
-import DoctorRequest, { CreateDoctorRequestProps, DoctorRequestInterface } from './doctorRequest.model';
-import Image from './image.model';
-
-export {
-  User,
-  UserInterface,
-  CreateUserProps,
-  Patient,
-  PatientInterface,
-  CreatePatientProps,
-  Doctor,
-  DoctorInterface,
-  CreateDoctorProps,
-  Specialization,
-  SpecializationInterface,
-  CreateSpecializationProps,
-  VerifyToken,
-  ContactUs,
-  ContactUsInterface,
-  CreateContactUsProps,
-  Area,
-  Insurance,
-  DoctorArea,
-  DoctorInsurance,
-  DoctorSpecialization,
-  DoctorRequest,
-  CreateDoctorRequestProps,
-  DoctorRequestInterface,
-  Image,
-};
+export * from './user.model';
+export * from './patient.model';
+export * from './doctor.model';
+export * from './specialization.model';
+export * from './verifyToken.model';
+export * from './contactUs.model';
+export * from './area.model';
+export * from './insurance.model';
+export * from './doctorArea.model';
+export * from './doctorInsurance.model';
+export * from './doctorSpecialization.model';
+export * from './doctorRequest.model';
+export * from './image.model';

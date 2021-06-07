@@ -8,6 +8,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.string('name').unique().notNullable();
 };
 
-const Insurance = ModelBuilder.build('insurances', schema);
+export const Insurance = ModelBuilder.build('insurances', schema);
 
 export default Insurance;

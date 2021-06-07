@@ -24,3 +24,14 @@ export const createTokenAndSend = async (user : UserInterface, res: Response) =>
 
   return res.status(status.OK).json(response);
 };
+
+export const sendUser = async (user : UserInterface, res: Response) => {
+  const response = {
+    status: status.OK,
+    data: {
+      user: _(user).omit(['password']),
+    },
+  };
+
+  return res.status(status.OK).json(response);
+};

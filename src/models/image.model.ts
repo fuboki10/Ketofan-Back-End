@@ -2,6 +2,14 @@ import { Knex } from 'knex';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
+export interface ImageInterface {
+  id: number;
+  filename: string;
+  filepath: string;
+  mimetype: string;
+  size: number;
+}
+
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.increments('id').primary().notNullable();
   table.text('filename').unique().notNullable();
@@ -10,6 +18,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.bigInteger('size').notNullable();
 };
 
-const Image = ModelBuilder.build('images', schema);
+export const Image = ModelBuilder.build('images', schema);
 
 export default Image;

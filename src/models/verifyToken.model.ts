@@ -16,6 +16,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.timestamps(true, true);
 };
 
-const VerifyToken = ModelBuilder.build('verify_tokens', schema);
+export const VerifyToken = ModelBuilder.build('verify_tokens', schema);
 
 export default VerifyToken;
