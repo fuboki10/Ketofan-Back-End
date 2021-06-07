@@ -60,6 +60,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.timestamps(true, true);
 };
 
-const DoctorRequest = ModelBuilder.build('doctor_requests', schema);
+export const DoctorRequest = ModelBuilder.build('doctor_requests', schema);
 
 export default DoctorRequest;

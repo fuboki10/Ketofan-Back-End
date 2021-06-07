@@ -1,8 +1,9 @@
 import path from 'path';
 import status from 'http-status';
 import { Express } from 'express';
-import { Image } from '../models';
+import { Image, ImageInterface } from '../models';
 import AppError from '../utils/AppError';
+import deleteFileIfFound from './helpers/deleteFileIfFound';
 
 export const getById = async (id : number) => {
   const image = await Image.findById(id);
@@ -31,9 +32,19 @@ export const add = async (file : Express.Multer.File) => {
   return image[0].id;
 };
 
+export const remove = async (id: number) : Promise<void> => {
+  const image : ImageInterface[] = (await Image.db
+    .returning('*')
+    .where({ id })
+    .delete());
+
+  if (image && image[0]) deleteFileIfFound(image[0].filepath);
+};
+
 const imageService = {
   getById,
   add,
+  remove,
 };
 
 export default imageService;
