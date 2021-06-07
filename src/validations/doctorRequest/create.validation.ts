@@ -16,13 +16,20 @@ const checkId : CustomValidator = async (value) => {
   if (value <= 0) throw new Error('ID must be at least 1');
 };
 
+const isUniqueMobile : CustomValidator = async (value) => {
+  const doctorRequest = await DoctorRequest.find({ mobileNumber: value });
+  if (doctorRequest && doctorRequest.length > 0) { throw new Error('Mobile Number already in use'); }
+};
+
 const createValidate = [
   // check name
-  body('name', 'Please Enter a valid name')
+  body('name')
     .isString()
+    .bail()
     .isLength({ min: 1, max: 100 })
     .bail()
     .custom((value) => value.match(/^[A-Za-z ]+$/))
+    .withMessage('Please Enter a valid Name')
     .trim()
     .escape(),
 
@@ -36,12 +43,14 @@ const createValidate = [
   // check gender
   body('gender')
     .isString()
+    .bail()
     .isIn(['M', 'F'])
     .withMessage('Please Enter a valid gender'),
 
   // chech dateOfBirth
   body('dateOfBirth', 'Please Enter a valid date of birth')
     .isString()
+    .bail()
     .isDate()
     .trim()
     .escape(),
@@ -67,7 +76,9 @@ const createValidate = [
     .isString(),
 
   body('mobileNumber', 'Please Enter a valid mobile number')
-    .isMobilePhone('any'),
+    .isMobilePhone('any')
+    .bail()
+    .custom(isUniqueMobile),
 
 ];
 

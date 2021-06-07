@@ -8,6 +8,7 @@ import insuranceService from './insurance.service';
 import doctorService from './doctor.service';
 import doctorRequestService from './doctorRequest.service';
 import imageService from './image.service';
+import userService from './user.service';
 
 export {
   authService,
@@ -20,4 +21,5 @@ export {
   doctorService,
   doctorRequestService,
   imageService,
+  userService,
 };
