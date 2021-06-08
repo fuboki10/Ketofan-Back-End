@@ -16,8 +16,6 @@ export const create = async (
       .where('bookings.id', '=', appointmentProps.bookingId)
       .join('working_days', 'working_days.id', '=', 'bookings.workingDayId');
 
-    console.log(booking);
-
     // check if it is not founds
     if (!booking || !booking[0]) {
       throw new AppError('Booking with the given id is not found', status.NOT_FOUND);
@@ -30,7 +28,6 @@ export const create = async (
 
     // get today
     const today = (new Date()).getDay();
-    console.log(today);
 
     const appointmentDay = weekDays.indexOf(booking[0].day);
 
@@ -45,8 +42,6 @@ export const create = async (
     date.setHours(h);
     date.setMinutes(m);
     date.setSeconds(s);
-
-    console.log(date.toISOString());
 
     // insert and update available booking to false
     const [appointment] : any = await Promise.all([
