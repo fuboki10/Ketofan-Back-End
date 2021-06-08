@@ -19,4 +19,8 @@ router
   .route('/:id')
   .get(commonValidator.id('id'), catchAsync(patientController.getById));
 
+router
+  .route('/')
+  .get(commonValidator.get, commonValidator.name, catchAsync(patientController.get));
+
 export default router;
