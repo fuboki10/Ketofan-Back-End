@@ -4,7 +4,7 @@ import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
 export interface WorkingDayInterface {
-  id: string;
+  id: number;
   doctorId: number;
   type: string;
   day: string;
@@ -15,7 +15,7 @@ export interface WorkingDayInterface {
 }
 
 export interface CreateWorkingDayProps {
-  id?: string;
+  id?: number;
   doctorId: number;
   type: string;
   day: string;
@@ -41,6 +41,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.unique(['doctorId', 'day']);
 };
 
-export const WorkingDay = ModelBuilder.build('Working_days', schema);
+export const WorkingDay = ModelBuilder.build('working_days', schema);
 
 export default WorkingDay;

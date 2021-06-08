@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { DoctorSpecialization } from '../../src/models';
+import DoctorSpecialization from '../../src/models/doctorSpecialization.model';
 
 export async function up(knex: Knex): Promise<void> {
   await DoctorSpecialization.createTable(knex);

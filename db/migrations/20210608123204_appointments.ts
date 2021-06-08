@@ -1,11 +1,10 @@
 import { Knex } from 'knex';
-
-import WorkingDay from '../../src/models/workingDay.model';
+import Appointment from '../../src/models/appointment.model';
 
 export async function up(knex: Knex): Promise<void> {
-  await WorkingDay.createTable(knex);
+  await Appointment.createTable(knex);
 }
 
 export async function down(knex: Knex): Promise<void> {
-  await WorkingDay.dropTable(knex);
+  await Appointment.dropTable(knex);
 }
