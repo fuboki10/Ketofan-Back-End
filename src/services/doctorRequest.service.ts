@@ -9,6 +9,12 @@ import hashPassword from './helpers/hashPassword';
 import mailService from './mail.service';
 import logger from '../utils/logger';
 
+const selectList = [
+  'doctor_requests.*',
+  'areas.name as area',
+  'specializations.name as specialization',
+];
+
 const sendEmailWithPassword = async (user: UserInterface, password: string) => {
   const message = `Hello ${user.name}<br>
   Your request is approved<br>
@@ -66,16 +72,28 @@ const createDoctor = async (doctorRequest: DoctorRequestInterface) => {
 };
 
 export const create = async (doctorProps: CreateDoctorRequestProps) => {
-  const doctorRequest = await DoctorRequest.db
+  let doctorRequest : DoctorRequestInterface[] = await DoctorRequest.db
     .returning('*')
     .insert(doctorProps);
+
+  doctorRequest = await DoctorRequest.db
+    .select(selectList)
+    .where('doctor_requests.id', doctorRequest[0].id)
+    .join('areas', 'areas.id', '=', 'doctor_requests.areaId')
+    .join('specializations', 'specializations.id', '=', 'doctor_requests.specializationId');
 
   return doctorRequest[0];
 };
 
 export const get = async (limit : number, offset : number) => {
   const [doctorRequests, total] : any = await Promise.all([
-    DoctorRequest.find().offset(offset).limit(limit),
+    DoctorRequest.find()
+      .select(selectList)
+      .offset(offset)
+      .limit(limit)
+      .join('areas', 'areas.id', '=', 'doctor_requests.areaId')
+      .join('specializations', 'specializations.id', '=', 'doctor_requests.specializationId'),
+
     DoctorRequest.db.count(),
   ]);
 
