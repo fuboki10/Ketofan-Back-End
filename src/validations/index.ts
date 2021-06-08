@@ -7,6 +7,7 @@ import doctorValidator from './doctor';
 import doctorRequestValidator from './doctorRequest';
 import commonValidator from './common';
 import userValidator from './user';
+import workingDayValidator from './wrokingDay';
 
 const validators = {
   authValidator,
@@ -18,6 +19,7 @@ const validators = {
   doctorRequestValidator,
   commonValidator,
   userValidator,
+  workingDayValidator,
 };
 
 export default validators;
@@ -32,4 +34,5 @@ export {
   doctorRequestValidator,
   commonValidator,
   userValidator,
+  workingDayValidator,
 };
