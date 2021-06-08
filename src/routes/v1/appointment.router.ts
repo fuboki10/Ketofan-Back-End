@@ -10,9 +10,9 @@ router
   .route('/')
   .get(
     authenticate,
-    authorize(['doctor']),
+    authorize(['doctor', 'patient']),
     commonValidator.get,
-    catchAsync(appointmentController.getDoctorAppointments),
+    catchAsync(appointmentController.get),
   );
 
 export default router;

@@ -51,8 +51,14 @@ export const getPatientAppointments = async (req: Request, res : Response) => {
   res.status(status.OK).json(response);
 };
 
+export const get = async (req: Request, res : Response) => {
+  if (req.user.role === 'doctor') return getDoctorAppointments(req, res);
+  if (req.user.role === 'patient') return getPatientAppointments(req, res);
+  throw new Error('Only Doctors and Patients can run this');
+};
+
 const appointmentController = {
-  getDoctorAppointments,
+  get,
 };
 
 export default appointmentController;
