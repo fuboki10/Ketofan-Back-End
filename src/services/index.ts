@@ -9,3 +9,4 @@ export * as doctorService from './doctor.service';
 export * as doctorRequestService from './doctorRequest.service';
 export * as imageService from './image.service';
 export * as userService from './user.service';
+export * as workingDayService from './workingDay.service';

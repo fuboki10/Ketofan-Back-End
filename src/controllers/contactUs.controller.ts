@@ -36,9 +36,24 @@ export const get = async (req: Request, res : Response) => {
   res.status(status.OK).json(response);
 };
 
+export const removeById = async (req: Request, res : Response) => {
+  const { id } : any = req.params;
+  const contactUs = await contactUsService.removeById(id);
+
+  const response = {
+    status: status.OK,
+    data: {
+      contactUs,
+    },
+  };
+
+  res.status(status.OK).json(response);
+};
+
 const contactUsController = {
   create,
   get,
+  removeById,
 };
 
 export default contactUsController;
