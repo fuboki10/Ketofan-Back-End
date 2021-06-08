@@ -13,3 +13,4 @@ export * from './doctorRequest.model';
 export * from './image.model';
 export * from './workingDay.model';
 export * from './booking.model';
+export * from './appointment.model';
