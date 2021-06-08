@@ -1,6 +1,6 @@
 /* eslint-disable no-return-assign */
 import knex from '../../db';
-import { WorkingDayInterface } from '../models';
+import { WorkingDayInterface, WorkingDay } from '../models';
 
 interface CreateWorkingDay {
   type: string;
@@ -20,17 +20,26 @@ Promise<WorkingDayInterface[]> => {
       .where({ doctorId })
       .delete();
 
-    const workingDay : any = await trx('Working_days')
+    const workingDays : any = await trx('Working_days')
       .returning('*')
       .where({ doctorId })
       .insert(objs);
 
-    return workingDay;
+    return workingDays;
   });
+};
+
+export const get = async (doctorId: number) : Promise<WorkingDayInterface[]> => {
+  const workingDays = await WorkingDay
+    .find({ doctorId })
+    .returning('*');
+
+  return workingDays;
 };
 
 const workingDayService = {
   create,
+  get,
 };
 
 export default workingDayService;

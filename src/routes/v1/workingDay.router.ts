@@ -10,6 +10,7 @@ router.use(authenticate);
 router.use(authorize(['doctor']));
 
 router.route('/')
-  .post(catchAsync(workingDayController.create));
+  .post(catchAsync(workingDayController.create))
+  .get(catchAsync(workingDayController.get));
 
 export default router;
