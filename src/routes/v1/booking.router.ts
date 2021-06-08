@@ -1,11 +1,11 @@
 import express from 'express';
-import { areaController } from '../../controllers';
+import { bookingController } from '../../controllers';
 import catchAsync from '../../utils/catchAsync';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router
   .route('/')
-  .get(catchAsync(areaController.create));
+  .get(catchAsync(bookingController.get));
 
 export default router;

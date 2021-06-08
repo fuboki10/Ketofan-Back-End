@@ -28,4 +28,4 @@ const getValidate = [
 
 ];
 
-export default validate(getValidate);
+export default validate(getValidate, false);

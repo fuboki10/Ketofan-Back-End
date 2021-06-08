@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
-import { workingDayService, bookingsService } from '../services';
+import { workingDayService, bookingsService, doctorService } from '../services';
 
 export const create = async (req: Request, res : Response) => {
-  const workingDays = await workingDayService.create(req.user.id, req.body);
+  const doctor = await doctorService.getByUserId(req.user.id);
+
+  const workingDays = await workingDayService.create(doctor.id, req.body);
 
   bookingsService.create(workingDays);
 
@@ -24,7 +26,9 @@ export const create = async (req: Request, res : Response) => {
 };
 
 export const get = async (req: Request, res : Response) => {
-  const workingDays = await workingDayService.get(req.user.id);
+  const doctor = await doctorService.getByUserId(req.user.id);
+
+  const workingDays = await workingDayService.get(doctor.id);
 
   const currentType = workingDays.length ? workingDays[0].type : undefined;
 

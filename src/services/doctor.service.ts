@@ -1,5 +1,5 @@
 import status from 'http-status';
-import { Doctor } from '../models';
+import { Doctor, DoctorInterface } from '../models';
 import AppError from '../utils/AppError';
 
 const selectList = [
@@ -68,7 +68,19 @@ export const get = async (limit : number, offset : number, searchProps: DoctorSe
   return { doctors, total: parseInt(total[0].count, 10) };
 };
 
+export const getByUserId = async (userId : number) : Promise<DoctorInterface> => {
+  const doctor = await Doctor.db
+    .select(selectList)
+    .where('doctors.userId', userId)
+    .join('users', 'users.id', '=', 'doctors.userId');
+
+  if (!doctor || !doctor[0]) { throw new AppError('Doctor with the given id is not found', status.NOT_FOUND); }
+
+  return doctor[0];
+};
+
 const doctorService = {
+  getByUserId,
   getById,
   get,
 };

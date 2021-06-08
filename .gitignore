@@ -112,3 +112,4 @@ dist
 *.jpeg
 !public/images/p1.jpg
 
+*.sql

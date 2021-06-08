@@ -9,16 +9,18 @@ import status from 'http-status';
  * @see https://express-validator.github.io/docs/running-imperatively.html
  */
 // eslint-disable-next-line max-len
-const validate = (validations: ValidationChain[]) => async (req: Request, res: Response, next: NextFunction) => {
+const validate = (validations: ValidationChain[], extractData : boolean = true) => async (req: Request, res: Response, next: NextFunction) => {
   await Promise.all(validations.map((validation) => validation.run(req)));
 
   const errors = validationResult(req);
 
   if (errors.isEmpty()) {
     // Extracts data validated or sanitized by express-validator
-    req.body = matchedData(req, { locations: ['body'] });
-    req.params = matchedData(req, { locations: ['params'] });
-    req.query = matchedData(req, { locations: ['query'] });
+    if (extractData) {
+      req.body = matchedData(req, { locations: ['body'] });
+      req.params = matchedData(req, { locations: ['params'] });
+      req.query = matchedData(req, { locations: ['query'] });
+    }
 
     return next();
   }

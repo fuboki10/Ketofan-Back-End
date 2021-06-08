@@ -1,4 +1,6 @@
-import { Booking, WorkingDayInterface, CreateBookingProps } from '../models';
+import {
+  Booking, WorkingDay, WorkingDayInterface, CreateBookingProps, BookingInterface,
+} from '../models';
 
 const getTimeToFromInSeconds = (to : Date, from : Date) => {
   let [h, m, s] = to.toString().split(':').map((v) => parseInt(v, 10));
@@ -37,8 +39,29 @@ export const create = async (workingDays : WorkingDayInterface[]) => {
   return booking[0];
 };
 
+export const get = async (doctorId: number) => {
+  const bookings : BookingInterface[] = await WorkingDay.db
+    .select(['bookings.*', 'working_days.day'])
+    .where('working_days.doctorId', '=', doctorId)
+    .join('bookings', 'bookings.workingDayId', '=', 'working_days.id');
+
+  const res: any = {};
+
+  bookings.forEach((booking) => {
+    if (!booking.day) return;
+
+    if (!res[booking.day]) {
+      res[booking.day] = [];
+    }
+    res[booking.day].push({ time: booking.time, id: booking.id, available: booking.available });
+  });
+
+  return res;
+};
+
 const bookingService = {
   create,
+  get,
 };
 
 export default bookingService;

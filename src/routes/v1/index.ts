@@ -9,7 +9,6 @@ import insuranceRouter from './insurance.router';
 import doctorRouter from './doctor.router';
 import imageRouter from './image.router';
 import userRouter from './user.router';
-import workingDayRouter from './workingDay.router';
 
 const router = express.Router();
 
@@ -23,6 +22,5 @@ router.use('/insurances', insuranceRouter);
 router.use('/doctors', doctorRouter);
 router.use('/images', imageRouter);
 router.use('/users', userRouter);
-router.use('/workingDays', workingDayRouter);
 
 export default router;
