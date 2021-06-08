@@ -6,6 +6,6 @@ import { commonValidator } from '../../validations';
 const router = express.Router();
 
 router.route('/:id')
-  .get(commonValidator.id, catchAsync(imageController.getById));
+  .get(commonValidator.id('id'), catchAsync(imageController.getById));
 
 export default router;

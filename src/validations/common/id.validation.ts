@@ -5,14 +5,16 @@ const checkId : CustomValidator = async (value) => {
   if (value <= 0) throw new Error('ID must be at least 1');
 };
 
-const idValidate = [
-  // chech id
-  param('id')
-    .isInt()
-    .toInt()
-    .withMessage('Please Enter a valid id')
-    .bail()
-    .custom(checkId),
-];
+export default function customIdValidator(ID: string = 'id') {
+  const idValidate = [
+    // chech id
+    param(ID)
+      .isInt()
+      .toInt()
+      .withMessage('Please Enter a valid id')
+      .bail()
+      .custom(checkId),
+  ];
 
-export default validate(idValidate, false);
+  return validate(idValidate, false);
+}

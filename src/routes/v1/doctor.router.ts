@@ -14,7 +14,7 @@ router.use('/workingDays', workingDayRouter);
 
 router
   .route('/:id')
-  .get(commonValidator.id, catchAsync(doctorController.getById));
+  .get(commonValidator.id('id'), catchAsync(doctorController.getById));
 
 router
   .route('/')
