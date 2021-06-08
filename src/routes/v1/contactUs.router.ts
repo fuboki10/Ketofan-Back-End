@@ -15,4 +15,12 @@ router.route('/')
     catchAsync(contactUsController.get),
   );
 
+router.route('/:id')
+  .delete(
+    authenticate,
+    authorize(['admin', 'super_admin']),
+    commonValidator.id,
+    catchAsync(contactUsController.removeById),
+  );
+
 export default router;
