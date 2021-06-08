@@ -37,8 +37,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.time('to').notNullable();
   table.integer('duration'); // duration in minutes
   table.integer('slots');
-
-  table.unique(['doctorId', 'day']);
 };
 
 export const WorkingDay = ModelBuilder.build('working_days', schema);

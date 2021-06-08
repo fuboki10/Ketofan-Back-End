@@ -22,7 +22,6 @@ Promise<WorkingDayInterface[]> => {
 
     const workingDays : any = await trx('working_days')
       .returning('*')
-      .where({ doctorId })
       .insert(objs);
 
     return workingDays;

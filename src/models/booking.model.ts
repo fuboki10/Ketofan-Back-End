@@ -3,15 +3,15 @@ import { Knex } from 'knex';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
-export interface AppointmentInterface {
+export interface BookingInterface {
   id: string;
   time: Date;
   workingDayId: number;
 }
 
-export interface CreateAppointmentProps {
+export interface CreateBookingProps {
   id?: string;
-  time: Date;
+  time: string;
   workingDayId: number;
 }
 
@@ -23,6 +23,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .onDelete('CASCADE');
 };
 
-export const Appointment = ModelBuilder.build('appointments', schema);
+export const Booking = ModelBuilder.build('bookings', schema);
 
-export default Appointment;
+export default Booking;

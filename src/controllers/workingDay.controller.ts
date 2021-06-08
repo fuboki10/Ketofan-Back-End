@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
-import { workingDayService, appointmentService } from '../services';
+import { workingDayService, bookingsService } from '../services';
 
 export const create = async (req: Request, res : Response) => {
   const workingDays = await workingDayService.create(req.user.id, req.body);
 
-  appointmentService.create(workingDays);
+  bookingsService.create(workingDays);
 
   const days = workingDays.map(({
     id, doctorId, type, ...keep
