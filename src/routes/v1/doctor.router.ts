@@ -9,7 +9,7 @@ import workingDayRouter from './workingDay.router';
 const router = express.Router({ mergeParams: true });
 
 router.use('/request', doctorRequestRouter);
-router.use('/:id/bookings', commonValidator.id, bookingRouter);
+router.use('/:doctorId/bookings', commonValidator.id('doctorId'), bookingRouter);
 router.use('/workingDays', workingDayRouter);
 
 router

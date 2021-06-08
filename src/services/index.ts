@@ -11,3 +11,4 @@ export * as imageService from './image.service';
 export * as userService from './user.service';
 export * as workingDayService from './workingDay.service';
 export * as bookingsService from './booking.service';
+export * as appointmentService from './appointment.service';

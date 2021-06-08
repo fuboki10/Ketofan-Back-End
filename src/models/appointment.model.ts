@@ -7,6 +7,7 @@ export interface AppointmentInterface {
   id?: number;
   bookingId: number;
   patientId: number;
+  doctorId: number;
   date: Date;
 }
 
@@ -14,6 +15,7 @@ export interface CreateAppointmentProps {
   id?: number;
   bookingId: number;
   patientId: number;
+  doctorId: number;
   date?: Date;
 }
 
