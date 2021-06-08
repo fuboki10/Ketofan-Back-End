@@ -4,15 +4,18 @@ import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
 export interface BookingInterface {
-  id: string;
+  id: number;
+  day?: string;
   time: Date;
   workingDayId: number;
+  available : boolean;
 }
 
 export interface CreateBookingProps {
-  id?: string;
+  id?: number;
   time: string;
   workingDayId: number;
+  available?: boolean;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
@@ -21,6 +24,7 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.integer('workingDayId').unsigned().notNullable().references('id')
     .inTable('working_days')
     .onDelete('CASCADE');
+  table.boolean('available').defaultTo(true);
 };
 
 export const Booking = ModelBuilder.build('bookings', schema);

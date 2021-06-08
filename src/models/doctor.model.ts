@@ -4,13 +4,13 @@ import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
 export interface DoctorInterface {
-  id: string;
+  id: number;
   userId: string;
   bio?: string;
 }
 
 export interface CreateDoctorProps {
-  id?: string;
+  id?: number;
   userId: string;
   bio?: string;
 }

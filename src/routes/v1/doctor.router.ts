@@ -5,10 +5,10 @@ import { doctorValidator, commonValidator } from '../../validations';
 import doctorRequestRouter from './doctorRequest.router';
 import bookingRouter from './booking.router';
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.use('/request', doctorRequestRouter);
-router.use('/:id/bookings', bookingRouter);
+router.use('/:id/bookings', commonValidator.id, bookingRouter);
 
 router
   .route('/:id')
