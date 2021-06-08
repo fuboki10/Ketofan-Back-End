@@ -26,7 +26,9 @@ export const create = async (req: Request, res : Response) => {
 };
 
 export const get = async (req: Request, res : Response) => {
-  const workingDays = await workingDayService.get(req.user.id);
+  const doctor = await doctorService.getByUserId(req.user.id);
+
+  const workingDays = await workingDayService.get(doctor.id);
 
   const currentType = workingDays.length ? workingDays[0].type : undefined;
 
