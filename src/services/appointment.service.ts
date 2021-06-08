@@ -9,7 +9,6 @@ const selectList = [
   'appointments.*',
   'bookings.time as time',
   'working_days.day as day',
-  'users.name as patient',
 ];
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
@@ -82,7 +81,7 @@ export const getDoctorAppointments = async (
 
   const [appointments, total] : any = await Promise.all([
     Appointment.db
-      .select(selectList)
+      .select([...selectList, 'users.name as patient'])
       .where('appointments.doctorId', '=', doctor.id)
       .join('bookings', 'bookings.id', '=', 'appointments.bookingId')
       .join('working_days', 'working_days.id', '=', 'bookings.workingDayId')
@@ -104,7 +103,7 @@ export const getPatientAppointments = async (
 
   const [appointments, total] : any = await Promise.all([
     Appointment.db
-      .select(selectList)
+      .select([...selectList, 'users.name as doctor'])
       .where('appointments.patientId', '=', patient.id)
       .join('bookings', 'bookings.id', '=', 'appointments.bookingId')
       .join('working_days', 'working_days.id', '=', 'bookings.workingDayId')

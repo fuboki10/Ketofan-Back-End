@@ -8,7 +8,6 @@ const selectList = [
   'users.mobileNumber',
   'users.name',
   'users.gender',
-  'patients.bio',
 ];
 
 interface PatientSearchProps {

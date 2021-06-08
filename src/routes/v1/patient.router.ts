@@ -1,8 +1,18 @@
 import express from 'express';
-import appointmentRouter from './appointment.router';
+import { appointmentController } from '../../controllers';
+import { authenticate, authorize } from '../../middlewares/auth';
+import catchAsync from '../../utils/catchAsync';
+import { commonValidator } from '../../validations';
 
-const router = express.Router({ mergeParams: true });
+const router = express.Router();
 
-router.use('/appointments', appointmentRouter);
+router
+  .route('/appointments')
+  .get(
+    authenticate,
+    authorize(['patient']),
+    commonValidator.get,
+    catchAsync(appointmentController.getPatientAppointments),
+  );
 
 export default router;
