@@ -76,7 +76,7 @@ export const create = async (
 );
 
 export const getDoctorAppointments = async (
-  props :{doctor: PatientInterface, limit : number, offset : number},
+  props :{doctor: DoctorInterface, limit : number, offset : number},
 ) => {
   const { doctor, limit, offset } = props;
 
@@ -98,7 +98,7 @@ export const getDoctorAppointments = async (
 };
 
 export const getPatientAppointments = async (
-  props :{patient: DoctorInterface, limit : number, offset : number},
+  props :{patient: PatientInterface, limit : number, offset : number},
 ) => {
   const { patient, limit, offset } = props;
 
