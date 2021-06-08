@@ -26,7 +26,7 @@ router
   .put(
     authenticate,
     authorize(['admin', 'super_admin']),
-    commonValidator.id,
+    commonValidator.id('id'),
     catchAsync(doctorRequestController.approve),
   );
 
@@ -35,7 +35,7 @@ router
   .put(
     authenticate,
     authorize(['admin', 'super_admin']),
-    commonValidator.id,
+    commonValidator.id('id'),
     catchAsync(doctorRequestController.reject),
   );
 

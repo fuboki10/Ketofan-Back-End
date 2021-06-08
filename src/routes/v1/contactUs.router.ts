@@ -19,7 +19,7 @@ router.route('/:id')
   .delete(
     authenticate,
     authorize(['admin', 'super_admin']),
-    commonValidator.id,
+    commonValidator.id('id'),
     catchAsync(contactUsController.removeById),
   );
 

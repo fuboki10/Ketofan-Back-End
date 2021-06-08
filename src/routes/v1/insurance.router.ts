@@ -30,7 +30,7 @@ router
   .delete(
     authenticate,
     authorize(['admin', 'super_admin']),
-    commonValidator.id,
+    commonValidator.id('id'),
     catchAsync(insuranceController.remove),
   );
 
