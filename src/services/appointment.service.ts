@@ -1,7 +1,16 @@
 import status from 'http-status';
-import { CreateAppointmentProps } from '../models';
+import {
+  Appointment, CreateAppointmentProps, DoctorInterface,
+} from '../models';
 import AppError from '../utils/AppError';
 import knex from '../../db';
+
+const selectList = [
+  'appointments.*',
+  'bookings.time as time',
+  'working_days.day as day',
+  'users.name as patient',
+];
 
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const DAY_IN_MS = 86400000;
@@ -66,8 +75,31 @@ export const create = async (
   },
 );
 
+export const getDoctorAppointments = async (
+  props :{doctor: DoctorInterface, limit : number, offset : number},
+) => {
+  const { doctor, limit, offset } = props;
+
+  const [appointments, total] : any = await Promise.all([
+    Appointment.db
+      .select(selectList)
+      .where('appointments.doctorId', '=', doctor.id)
+      .join('bookings', 'bookings.id', '=', 'appointments.bookingId')
+      .join('working_days', 'working_days.id', '=', 'bookings.workingDayId')
+      .join('patients', 'patients.id', '=', 'appointments.patientId')
+      .join('users', 'users.id', '=', 'patients.userId')
+      .offset(offset)
+      .limit(limit),
+
+    Appointment.db.where({ doctorId: doctor.id }).count(),
+  ]);
+
+  return { appointments, total: parseInt(total[0].count, 10) };
+};
+
 const appointmentService = {
   create,
+  getDoctorAppointments,
 };
 
 export default appointmentService;
