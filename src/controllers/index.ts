@@ -12,3 +12,4 @@ export * as userController from './user.controller';
 export * as workingDayController from './workingDay.controller';
 export * as bookingController from './booking.controller';
 export * as appointmentController from './appointment.controller';
+export * as patientController from './patient.controller';
