@@ -14,7 +14,7 @@ router
   .route('/:bookingId')
   .post(
     authenticate,
-    authorize(['doctor']),
+    authorize(['patient']),
     commonValidator.id('bookingId'),
     catchAsync(bookingController.create),
   );

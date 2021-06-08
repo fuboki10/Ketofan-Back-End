@@ -6,7 +6,9 @@ import knex from '../../db';
 const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 const DAY_IN_MS = 86400000;
 
-export const create = async (appointmentProps : CreateAppointmentProps) => knex.transaction(
+export const create = async (
+  appointmentProps : CreateAppointmentProps, patient: string, doctor: string,
+) => knex.transaction(
   async (trx) => {
     // get the booking
     const booking : any = await trx('bookings')
@@ -23,7 +25,7 @@ export const create = async (appointmentProps : CreateAppointmentProps) => knex.
 
     // check if it is available
     if (!booking[0].available || !booking[0].day) {
-      throw new AppError('Booking with the given id is not available', status.UNAUTHORIZED);
+      throw new AppError('Booking with the given id is not available', status.FORBIDDEN);
     }
 
     // get today
@@ -47,7 +49,7 @@ export const create = async (appointmentProps : CreateAppointmentProps) => knex.
     console.log(date.toISOString());
 
     // insert and update available booking to false
-    const [appointment] = await Promise.all([
+    const [appointment] : any = await Promise.all([
       trx('appointments')
         .returning('*')
         .insert({ ...appointmentProps, date }),
@@ -57,7 +59,15 @@ export const create = async (appointmentProps : CreateAppointmentProps) => knex.
         .update({ available: false }),
     ]);
 
-    return appointment[0];
+    const res = {
+      ...(appointment[0]),
+      day: booking[0].day,
+      time: booking[0].time,
+      patient,
+      doctor,
+    };
+
+    return res;
   },
 );
 
