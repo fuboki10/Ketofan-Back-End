@@ -1,5 +1,6 @@
 import express from 'express';
 import { workingDayController } from '../../controllers';
+import { workingDayValidator } from '../../validations';
 import catchAsync from '../../utils/catchAsync';
 import { authenticate, authorize } from '../../middlewares/auth';
 
@@ -10,7 +11,7 @@ router.use(authenticate);
 router.use(authorize(['doctor']));
 
 router.route('/')
-  .post(catchAsync(workingDayController.create))
+  .post(workingDayValidator.create, catchAsync(workingDayController.create))
   .get(catchAsync(workingDayController.get));
 
 export default router;
