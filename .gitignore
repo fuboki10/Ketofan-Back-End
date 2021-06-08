@@ -107,7 +107,8 @@ config/production.*
 
 dist
 
-
 *.png
 *.jpg
 *.jpeg
+!public/images/p1.jpg
+

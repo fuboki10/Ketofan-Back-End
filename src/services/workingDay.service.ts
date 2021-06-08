@@ -15,14 +15,13 @@ Promise<WorkingDayInterface[]> => {
   const objs = workingDayProps.days.map((obj) => ({ ...obj, type, doctorId }));
 
   return knex.transaction(async (trx) => {
-    await trx('Working_days')
+    await trx('working_days')
       .returning('*')
       .where({ doctorId })
       .delete();
 
-    const workingDays : any = await trx('Working_days')
+    const workingDays : any = await trx('working_days')
       .returning('*')
-      .where({ doctorId })
       .insert(objs);
 
     return workingDays;

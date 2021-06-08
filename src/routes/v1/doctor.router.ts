@@ -3,10 +3,12 @@ import { doctorController } from '../../controllers';
 import catchAsync from '../../utils/catchAsync';
 import { doctorValidator, commonValidator } from '../../validations';
 import doctorRequestRouter from './doctorRequest.router';
+import bookingRouter from './booking.router';
 
 const router = express.Router();
 
 router.use('/request', doctorRequestRouter);
+router.use('/:id/bookings', bookingRouter);
 
 router
   .route('/:id')
