@@ -1,10 +1,14 @@
 /* eslint-disable no-unused-vars */
-declare namespace Express {
-  export interface Request {
-      user: any;
-      files: { [fieldname: string]: Express.Multer.File[]; };
-  }
-  export interface Response {
-      user: any;
-  }
+
+import { Express } from 'express';
+import { UserInterface } from '../../models';
+
+declare module 'express-serve-static-core' {
+   export interface Request {
+        user: UserInterface;
+        files: { [fieldname: string]: Express.Multer.File[]; };
+    }
+    export interface Response {
+        user: any;
+    }
 }

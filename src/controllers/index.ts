@@ -9,3 +9,4 @@ export * as doctorController from './doctor.controller';
 export * as doctorRequestController from './doctorRequest.controller';
 export * as imageController from './image.controller';
 export * as userController from './user.controller';
+export * as workingDayController from './workingDay.controller';

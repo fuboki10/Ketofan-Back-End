@@ -5,6 +5,7 @@ import { SchemaInterface } from './Model';
 
 export interface WorkingDayInterface {
   id: string;
+  doctorId: number;
   type: string;
   day: string;
   from: Date;
@@ -15,6 +16,7 @@ export interface WorkingDayInterface {
 
 export interface CreateWorkingDayProps {
   id?: string;
+  doctorId: number;
   type: string;
   day: string;
   from: Date;
