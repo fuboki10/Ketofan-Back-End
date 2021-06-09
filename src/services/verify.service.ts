@@ -26,7 +26,7 @@ const sendVerifyEmail = (user: UserInterface, token : string) : void => {
     subject: 'Verify your account',
     message,
     button: 'CONFIRM ACCOUNT',
-    link: `http://localhost:3000/api/v1/verify/${token}`,
+    link: `https://ketofan-api.herokuapp.com/api/v1/verify/${token}`,
   };
 
   mailService.sendEmail(mailOptions)

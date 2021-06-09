@@ -33,13 +33,7 @@ export const sendEmail = async (options : EmailOptionsInterface) => {
     from: 'ketofan666@gmail.com',
     subject: options.subject,
     text: options.message,
-    html: `<p align="center">
-    <a href="" rel="noopener">
-      <img width=300px
-        src="https://user-images.githubusercontent.com/35429211/76151624-b3377e80-60bf-11ea-94e5-d55c9a515dc1.png"
-        alt="Ketofan image"></a>
-  </p>
-  
+    html: `
   <h1 align="center"> &#127973; Ketofan </h1>
   
   <h1
@@ -56,8 +50,8 @@ export const sendEmail = async (options : EmailOptionsInterface) => {
   
     <center style="border:none;margin:0px;padding:0px"><a
         href=${options.link}
-        bgcolor="#1ED760"
-        style="border:none;margin:0px;padding:0px;text-decoration:none;width:240px;height:44px;background-color:#fcbf1a;border-radius:22px;color:rgb(255,255,255);display:block"
+        bgcolor="#0070cd"
+        style="border:none;margin:0px;padding:0px;text-decoration:none;width:240px;height:44px;background-color:#0070cd;border-radius:22px;color:rgb(255,255,255);display:block"
         target="_blank">
         <table style="border:none;margin:0px;border-collapse:collapse;padding:0px;width:240px;height:44px" width="240"
           height="44" cellspacing="0" cellpadding="0">
