@@ -7,21 +7,21 @@ import { commonValidator } from '../../validations';
 const router = express.Router();
 
 router
-  .route('/appointments')
-  .get(
-    authenticate,
-    authorize(['patient']),
-    commonValidator.get,
-    catchAsync(appointmentController.getPatientAppointments),
-  );
-
-router
   .route('/appointments/:id')
   .delete(
     authenticate,
     authorize(['patient']),
     commonValidator.id('id'),
     catchAsync(appointmentController.remove),
+  );
+
+router
+  .route('/appointments')
+  .get(
+    authenticate,
+    authorize(['patient']),
+    commonValidator.get,
+    catchAsync(appointmentController.getPatientAppointments),
   );
 
 router
