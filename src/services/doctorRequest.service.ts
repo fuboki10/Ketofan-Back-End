@@ -30,7 +30,7 @@ const sendEmailWithPassword = async (user: UserInterface, password: string) => {
     subject: 'Approved Request',
     message,
     button: 'SIGNIN',
-    link: `${config.get('WEBSITE')}/api/v1/auth/signin`,
+    link: `${config.get('WEBSITE')}/login`,
   };
 
   mailService.sendEmail(mailOptions)

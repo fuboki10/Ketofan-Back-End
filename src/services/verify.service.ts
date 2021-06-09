@@ -28,7 +28,7 @@ const sendVerifyEmail = (user: UserInterface, token : string) : void => {
     subject: 'Verify your account',
     message,
     button: 'CONFIRM ACCOUNT',
-    link: `${config.get('WEBSITE')}/api/v1/verify/${token}`,
+    link: `${config.get('WEBSITE')}/verify/${token}`,
   };
 
   mailService.sendEmail(mailOptions)
