@@ -12,8 +12,8 @@ interface CreateWorkingDay {
   ]
 }
 
-export const create = async (doctorId: number, workingDayProps: CreateWorkingDay = { days: [{}] }) :
-Promise<WorkingDayInterface[]> => {
+export const create = async (doctorId: number,
+  workingDayProps: CreateWorkingDay = { days: [{ }] }) : Promise<WorkingDayInterface[]> => {
   const { type } = workingDayProps;
   let objs = workingDayProps.days.map((obj) => ({
     ...obj, type, doctorId, working: true,
@@ -31,9 +31,8 @@ Promise<WorkingDayInterface[]> => {
   objs = objs.filter((obj) => obj.day);
   const propsArr = objs.map((obj) => _.omitBy(obj, _.isNil));
 
-  return knex.transaction(async (trx) => {
+  const res = await knex.transaction(async (trx) => {
     await trx('working_days')
-      .returning('*')
       .where({ doctorId })
       .delete();
 
@@ -41,12 +40,12 @@ Promise<WorkingDayInterface[]> => {
       .returning('*')
       .insert(propsArr);
 
-    await trx.commit();
-
-    await bookingService.create(workingDays);
-
     return workingDays;
   });
+
+  await bookingService.create(res);
+
+  return res;
 };
 
 export const get = async (doctorId: number) : Promise<WorkingDayInterface[]> => {

@@ -34,11 +34,13 @@ const createValidate = [
     .escape(),
 
   body('days[*].duration', 'Please Enter a valid duration')
+    .optional()
     .isInt()
     .bail()
     .custom(check),
 
   body('days[*].slots', 'Please Enter a valid slots')
+    .optional()
     .isInt()
     .bail()
     .custom(check),

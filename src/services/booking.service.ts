@@ -19,13 +19,18 @@ export const create = async (workingDays : WorkingDayInterface[]) => {
 
     const { timeTo, timeFrom } = getTimeToFromInSeconds(day.to, day.from);
 
-    let slotTime = (day.duration ?? 0) * 60;
+    let slotTime = 0;
+    let slots = 1;
 
-    if (day.slots) {
-      slotTime = Math.floor((timeTo - timeFrom) / day.slots);
+    if (day.type === 'reservation' && day.duration) {
+      slotTime = day.duration * 60;
+      slots = Math.floor((timeTo - timeFrom) / slotTime);
     }
 
-    const slots = Math.floor((timeTo - timeFrom) / slotTime);
+    if (day.type === 'fifo' && day.slots) {
+      slots = day.slots;
+      slotTime = Math.floor((timeTo - timeFrom) / day.slots);
+    }
 
     for (let i = 0; i < slots; i += 1) {
       const startTime = timeFrom + i * slotTime;
