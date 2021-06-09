@@ -47,7 +47,8 @@ export const get = async (doctorId: number) => {
   const bookings : BookingInterface[] = await WorkingDay.db
     .select(['bookings.*', 'working_days.day'])
     .where('working_days.doctorId', '=', doctorId)
-    .join('bookings', 'bookings.workingDayId', '=', 'working_days.id');
+    .join('bookings', 'bookings.workingDayId', '=', 'working_days.id')
+    .orderBy('bookings.time', 'asc');
 
   const res: any = {};
 
