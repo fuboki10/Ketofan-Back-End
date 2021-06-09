@@ -54,7 +54,9 @@ export const get = async (doctorId: number) : Promise<WorkingDayInterface[]> => 
     .find({ doctorId })
     .select('*');
 
-  return workingDays;
+  const res = workingDays.map((obj : any) => _.omitBy(obj, _.isNil));
+
+  return res;
 };
 
 const workingDayService = {
