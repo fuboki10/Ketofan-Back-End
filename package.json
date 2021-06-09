@@ -49,7 +49,7 @@
   },
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon -L ./src/server.ts",
-    "start": "NODE_ENV=production node ./dist/src/server.js",
+    "start": "cross-env NODE_ENV=production node ./dist/src/server.js",
     "build": "tsc --project ./",
     "test": "jest --watchAll --verbose --runInBand",
     "migrate": "knex migrate:latest",

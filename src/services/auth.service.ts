@@ -17,17 +17,6 @@ interface PayloadInterface {
   verified: boolean;
 }
 
-/**
- * Generate Authentication token
- *
- * @function
- * @public
- * @async
- * @author Abdelrahman Tarek
- * @summary Generate Authentication token
- * @param {String} userId User ID
- * @returns {String} `token` authentication token
- */
 export const generateAuthToken = async (payload : PayloadInterface) => {
   const expTime : string = process.env.JWT_EXPIRES_IN || config.get('JWT_EXPIRES_IN');
   const privateKey : string = process.env.JWT_KEY || config.get('JWT_KEY');
@@ -48,16 +37,6 @@ export const verifyAuthToken = async (token : string) : Promise<PayloadInterface
   return payload;
 };
 
-/**
- * Create user
- * @function
- * @public
- * @async
- * @summary Create user
- * @author Abdelrahman Tarek
- * @param {Object} userProps
- * @returns
- */
 export const create = async (userProps : CreateUserProps) : Promise<UserInterface> => {
   const hashedPassword : String = await hashPassword(userProps.password);
 
@@ -80,16 +59,6 @@ export const create = async (userProps : CreateUserProps) : Promise<UserInterfac
   });
 };
 
-/**
- * verify user login
- * @function
- * @async
- * @public
- * @author Abdelrahman Tarek
- * @param userProps {object{ username: string }
- * @param password
- * @returns
- */
 export const verifyUser = async (email : string, password : string) : Promise<UserInterface> => {
   const user : UserInterface[] | undefined = await User
     .find({ email });

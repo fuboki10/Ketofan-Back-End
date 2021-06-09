@@ -1,6 +1,6 @@
 import status from 'http-status';
 import {
-  Appointment, CreateAppointmentProps, DoctorInterface, PatientInterface,
+  Appointment, CreateAppointmentProps, DoctorInterface, PatientInterface, Booking,
 } from '../models';
 import AppError from '../utils/AppError';
 import knex from '../../db';
@@ -125,6 +125,11 @@ export const remove = async (id:number) => {
     .where({ id });
 
   if (!appointment || !appointment[0]) { throw new AppError('Appointment with the given id is not found', status.NOT_FOUND); }
+
+  // update available booking
+  await Booking.db
+    .update({ available: true })
+    .where({ id: appointment[0].bookingId });
 
   return appointment[0];
 };

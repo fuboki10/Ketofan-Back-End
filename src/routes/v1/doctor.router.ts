@@ -14,6 +14,15 @@ router.use('/:doctorId/bookings', commonValidator.id('doctorId'), bookingRouter)
 router.use('/workingDays', workingDayRouter);
 
 router
+  .route('/appointments/:id')
+  .delete(
+    authenticate,
+    authorize(['docotor']),
+    commonValidator.id('id'),
+    catchAsync(appointmentController.remove),
+  );
+
+router
   .route('/appointments')
   .get(
     authenticate,
