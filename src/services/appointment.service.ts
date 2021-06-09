@@ -119,8 +119,6 @@ export const getPatientAppointments = async (
 };
 
 export const remove = async (id:number) => {
-  console.log(id);
-
   const appointment : any = await Appointment.db
     .returning('*')
     .delete()
