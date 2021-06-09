@@ -7,7 +7,7 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   await knex('areas').insert([
     { name: 'Cairo' },
-    { name: 'Gize' },
+    { name: 'Giza' },
     { name: 'Alexandria' },
     { name: 'North Coast' },
     { name: 'Qalyubia' },
