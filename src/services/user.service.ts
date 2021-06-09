@@ -6,6 +6,13 @@ import checkPassword from './helpers/checkPassword';
 import hashPassword from './helpers/hashPassword';
 
 export const edit = async (id : number, userProps : CreateUserProps) : Promise<UserInterface> => {
+  const otherUserWithMobileNumber : UserInterface[] = await User.db
+    .returning('*')
+    .where({ mobileNumber: userProps.mobileNumber })
+    .andWhereNot({ id });
+
+  if (otherUserWithMobileNumber && otherUserWithMobileNumber[0]) throw new AppError('Mobile Number already in use', status.BAD_REQUEST);
+
   const user : UserInterface[] = await User.db
     .returning('*')
     .where({ id })

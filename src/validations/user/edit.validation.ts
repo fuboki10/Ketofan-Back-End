@@ -1,11 +1,5 @@
-import { body, CustomValidator } from 'express-validator';
-import { User } from '../../models';
+import { body } from 'express-validator';
 import validate from '../../middlewares/validate';
-
-const isUniqueMobile : CustomValidator = async (value) => {
-  const user = await User.find({ mobileNumber: value });
-  if (user && user.length > 0) { throw new Error('Mobile Number already in use'); }
-};
 
 const editValidate = [
   // check name
@@ -35,9 +29,7 @@ const editValidate = [
     .escape(),
 
   body('mobileNumber', 'Please Enter a valid mobile number')
-    .isMobilePhone('any')
-    .bail()
-    .custom(isUniqueMobile),
+    .isMobilePhone('any'),
 
 ];
 
