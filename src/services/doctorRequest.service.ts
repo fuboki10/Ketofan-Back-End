@@ -30,7 +30,7 @@ const sendEmailWithPassword = async (user: UserInterface, password: string) => {
     subject: 'Approved Request',
     message,
     button: 'SIGNIN',
-    link: `${config.get('WEBSITE')}/login`,
+    link: `${process.env.WEBSITE || config.get('WEBSITE')}/login`,
   };
 
   mailService.sendEmail(mailOptions)
