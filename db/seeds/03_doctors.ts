@@ -31,7 +31,7 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('doctors').insert(doctorData);
 
   // insert working days
-  const workingDays :any = {
+  let workingDays :any = {
     type: 'reservation',
     days: [
       {
@@ -39,11 +39,50 @@ export async function seed(knex: Knex): Promise<void> {
         from: '00:00:00',
         to: '12:00:00',
         duration: 60,
+      },
+      {
+        day: 'Friday',
+        from: '00:00:00',
+        to: '12:00:00',
         slots: 12,
       },
     ],
   };
-  for (let i = 0; i < doctorData.length; i += 1) {
+  for (let i = 0; i < 3; i += 1) {
+    await workingDayService.create(i + 1, workingDays);
+  }
+
+  workingDays = {
+    type: 'fifo',
+    days: [
+      {
+        day: 'Wednesday',
+        from: '00:00:00',
+        to: '12:00:00',
+        slots: 12,
+      },
+      {
+        day: 'Thursday',
+        from: '00:00:00',
+        to: '12:00:00',
+        slots: 12,
+      },
+      {
+        day: 'Friday',
+        from: '00:00:00',
+        to: '12:00:00',
+        slots: 12,
+      },
+      {
+        day: 'Saturday',
+        from: '00:00:00',
+        to: '12:00:00',
+        slots: 12,
+      },
+    ],
+  };
+
+  for (let i = 3; i < doctorData.length; i += 1) {
     await workingDayService.create(i + 1, workingDays);
   }
 }

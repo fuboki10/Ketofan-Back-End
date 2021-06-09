@@ -1,5 +1,9 @@
-import { body } from 'express-validator';
+import { body, CustomValidator } from 'express-validator';
 import validate from '../../middlewares/validate';
+
+const check : CustomValidator = async (value) => {
+  if (value <= 0) throw new Error('Value must be at least 1');
+};
 
 const createValidate = [
   body('type', 'Please Enter a valid type')
@@ -31,13 +35,13 @@ const createValidate = [
 
   body('days[*].duration', 'Please Enter a valid duration')
     .isInt()
-    .trim()
-    .escape(),
+    .bail()
+    .custom(check),
 
   body('days[*].slots', 'Please Enter a valid slots')
     .isInt()
-    .trim()
-    .escape(),
+    .bail()
+    .custom(check),
 
 ];
 
