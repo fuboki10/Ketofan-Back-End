@@ -17,7 +17,7 @@ const knexConfig : IConfig = {
       directory: './db/migrations',
     },
     seeds: { directory: './db/seeds' },
-    pool: { min: 0, max: 7 },
+    pool: { min: 0, max: 5 },
   },
 
   test: {
@@ -27,7 +27,7 @@ const knexConfig : IConfig = {
       directory: './db/migrations',
     },
     seeds: { directory: './db/seeds' },
-    pool: { min: 0, max: 7 },
+    pool: { min: 0, max: 5 },
   },
 
   production: {
@@ -37,7 +37,7 @@ const knexConfig : IConfig = {
       directory: './db/migrations',
     },
     seeds: { directory: './db/seeds' },
-    pool: { min: 0, max: 7 },
+    pool: { min: 0, max: 5 },
   },
 };
 
