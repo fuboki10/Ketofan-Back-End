@@ -111,5 +111,11 @@ dist
 *.jpg
 *.jpeg
 !public/images/p1.jpg
+!public/images/p2.jpg
+!public/images/p3.jpg
+!public/images/p4.jpg
+!public/images/p5.jpg
+!public/images/p6.jpg
+!public/images/p7.jpg
 
 *.sql

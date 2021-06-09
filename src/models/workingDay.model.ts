@@ -33,10 +33,10 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .inTable('doctors')
     .onDelete('CASCADE');
 
-  table.string('type', 20).notNullable().defaultTo('reservation');
+  table.string('type', 20).defaultTo('reservation').notNullable();
   table.string('day', 20).notNullable();
-  table.time('from').notNullable().defaultTo('00:00:00');
-  table.time('to').notNullable().defaultTo('12:00:00');
+  table.time('from').defaultTo('00:00:00').notNullable();
+  table.time('to').defaultTo('12:00:00').notNullable();
   table.integer('duration').defaultTo(60); // duration in minutes
   table.integer('slots');
   table.boolean('working').notNullable().defaultTo(false);

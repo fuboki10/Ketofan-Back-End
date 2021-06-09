@@ -44,7 +44,19 @@ export async function seed(knex: Knex): Promise<void> {
         day: 'Friday',
         from: '00:00:00',
         to: '12:00:00',
-        slots: 12,
+        duration: 60,
+      },
+      {
+        day: 'Saturday',
+        from: '00:00:00',
+        to: '12:00:00',
+        duration: 60,
+      },
+      {
+        day: 'Sunday',
+        from: '00:00:00',
+        to: '12:00:00',
+        duration: 60,
       },
     ],
   };

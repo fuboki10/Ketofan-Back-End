@@ -1,4 +1,5 @@
 /* eslint-disable no-return-assign */
+import _ from 'lodash';
 import knex from '../../db';
 import { WorkingDayInterface, WorkingDay } from '../models';
 import bookingService from './booking.service';
@@ -14,7 +15,7 @@ interface CreateWorkingDay {
 export const create = async (doctorId: number, workingDayProps: CreateWorkingDay = { days: [{}] }) :
 Promise<WorkingDayInterface[]> => {
   const { type } = workingDayProps;
-  const objs = workingDayProps.days.map((obj) => ({
+  let objs = workingDayProps.days.map((obj) => ({
     ...obj, type, doctorId, working: true,
   }));
 
@@ -27,6 +28,9 @@ Promise<WorkingDayInterface[]> => {
     }
   });
 
+  objs = objs.filter((obj) => obj.day);
+  const propsArr = objs.map((obj) => _.omitBy(obj, _.isNil));
+
   return knex.transaction(async (trx) => {
     await trx('working_days')
       .returning('*')
@@ -35,7 +39,7 @@ Promise<WorkingDayInterface[]> => {
 
     const workingDays : any = await trx('working_days')
       .returning('*')
-      .insert(objs);
+      .insert(propsArr);
 
     await trx.commit();
 
@@ -48,7 +52,7 @@ Promise<WorkingDayInterface[]> => {
 export const get = async (doctorId: number) : Promise<WorkingDayInterface[]> => {
   const workingDays = await WorkingDay
     .find({ doctorId })
-    .returning('*');
+    .select('*');
 
   return workingDays;
 };

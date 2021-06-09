@@ -45,13 +45,14 @@ const createDoctor = async (doctorRequest: DoctorRequestInterface) => {
   const hashedPassword : String = await hashPassword(password);
 
   // create doctor
-  const newUser = await knex.transaction(async (trx) => {
+  return knex.transaction(async (trx) => {
     const user : UserInterface[] = await trx('users').returning('*').insert({
       password: hashedPassword,
       email: doctorRequest.email,
       name: doctorRequest.name,
       gender: doctorRequest.gender,
       dateOfBirth: doctorRequest.dateOfBirth,
+      mobileNumber: doctorRequest.mobileNumber,
       verified: true,
       role: 'doctors',
     });
@@ -60,18 +61,25 @@ const createDoctor = async (doctorRequest: DoctorRequestInterface) => {
       userId: user[0].id,
     });
 
-    workingDayService.create(doctor[0].id);
-
     await trx('doctor_specializations').insert({
       doctorId: doctor[0].id,
       specializationId: doctorRequest.specializationId,
     });
 
+    await trx('doctor_areas').insert({
+      doctorId: doctor[0].id,
+      areaId: doctorRequest.areaId,
+    });
+
+    await trx.commit();
+
+    await workingDayService.create(doctor[0].id);
+
+    // send email with password
+    sendEmailWithPassword(user[0], password);
+
     return user[0];
   });
-
-  // send email with password
-  sendEmailWithPassword(newUser, password);
 };
 
 export const create = async (doctorProps: CreateDoctorRequestProps) => {
@@ -114,8 +122,8 @@ export const reject = async (id: number) => {
   return request[0];
 };
 
-export const approve = async (id: number) => {
-  const request : any = await DoctorRequest.db
+export const approve = async (id: number) => knex.transaction(async (trx) => {
+  const request : any = await trx('doctor_requests')
     .returning('*')
     .delete()
     .where({ id });
@@ -125,7 +133,7 @@ export const approve = async (id: number) => {
   await createDoctor(request[0]);
 
   return request[0];
-};
+});
 
 const doctorRequestService = {
   create,
