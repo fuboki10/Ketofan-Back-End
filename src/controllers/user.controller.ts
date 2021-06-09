@@ -1,12 +1,12 @@
 import { Request, Response, Express } from 'express';
-import { sendUser } from './helpers/sendUser';
+import { createTokenAndSend } from './helpers/sendUser';
 import { userService, imageService } from '../services';
 import AppError from '../utils/AppError';
 
 export const me = async (req : Request, res : Response) => {
   const { user } = req;
 
-  return sendUser(user, res);
+  return createTokenAndSend(user, res);
 };
 
 export const edit = async (req : Request, res : Response) => {
@@ -14,7 +14,7 @@ export const edit = async (req : Request, res : Response) => {
 
   const user = await userService.edit(id, req.body);
 
-  return sendUser(user, res);
+  return createTokenAndSend(user, res);
 };
 
 export const editProfileImage = async (req : Request, res : Response) => {
@@ -28,7 +28,7 @@ export const editProfileImage = async (req : Request, res : Response) => {
 
   const user = await userService.editProfileImage(id, profileImage);
 
-  return sendUser(user, res);
+  return createTokenAndSend(user, res);
 };
 
 export const editPassword = async (req : Request, res : Response) => {
@@ -37,7 +37,7 @@ export const editPassword = async (req : Request, res : Response) => {
 
   const user = await userService.editPassword(id, oldPassword, newPassword);
 
-  return sendUser(user, res);
+  return createTokenAndSend(user, res);
 };
 
 const userController = {

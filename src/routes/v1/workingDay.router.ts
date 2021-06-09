@@ -8,9 +8,10 @@ const router = express.Router();
 
 // only for doctors
 router.use(authenticate);
+authorize(['doctor']);
 
 router.route('/')
-  .post(workingDayValidator.create, authorize(['patient']), catchAsync(workingDayController.create))
-  .get(authorize(['doctor']), catchAsync(workingDayController.get));
+  .post(workingDayValidator.create, catchAsync(workingDayController.create))
+  .get(catchAsync(workingDayController.get));
 
 export default router;

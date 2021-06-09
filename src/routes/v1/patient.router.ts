@@ -16,6 +16,15 @@ router
   );
 
 router
+  .route('/appointments/:id')
+  .delete(
+    authenticate,
+    authorize(['patient']),
+    commonValidator.id('id'),
+    catchAsync(appointmentController.remove),
+  );
+
+router
   .route('/:id')
   .get(commonValidator.id('id'), catchAsync(patientController.getById));
 

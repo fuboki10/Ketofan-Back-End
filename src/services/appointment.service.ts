@@ -107,8 +107,8 @@ export const getPatientAppointments = async (
       .where('appointments.patientId', '=', patient.id)
       .join('bookings', 'bookings.id', '=', 'appointments.bookingId')
       .join('working_days', 'working_days.id', '=', 'bookings.workingDayId')
-      .join('patients', 'patients.id', '=', 'appointments.patientId')
-      .join('users', 'users.id', '=', 'patients.userId')
+      .join('doctors', 'doctors.id', '=', 'appointments.doctorId')
+      .join('users', 'users.id', '=', 'doctors.userId')
       .offset(offset)
       .limit(limit),
 
@@ -118,10 +118,22 @@ export const getPatientAppointments = async (
   return { appointments, total: parseInt(total[0].count, 10) };
 };
 
+export const remove = async (id:number) => {
+  const appointment : any = await Appointment.db
+    .returning('*')
+    .delete()
+    .where({ id });
+
+  if (!appointment || !appointment[0]) { throw new AppError('Appointment with the given id is not found', status.NOT_FOUND); }
+
+  return appointment[0];
+};
+
 const appointmentService = {
   create,
   getDoctorAppointments,
   getPatientAppointments,
+  remove,
 };
 
 export default appointmentService;

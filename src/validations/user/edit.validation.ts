@@ -2,8 +2,12 @@ import { body, CustomValidator } from 'express-validator';
 import { User } from '../../models';
 import validate from '../../middlewares/validate';
 
-const isUniqueMobile : CustomValidator = async (value) => {
-  const user = await User.find({ mobileNumber: value });
+const isUniqueMobile : CustomValidator = async (value, obj : { req : any }) => {
+  const user : any = await User.db
+    .returning('*')
+    .where({ mobileNumber: value })
+    .andWhereNot({ id: obj.req.user.id });
+
   if (user && user.length > 0) { throw new Error('Mobile Number already in use'); }
 };
 

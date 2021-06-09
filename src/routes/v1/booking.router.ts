@@ -7,10 +7,6 @@ import { commonValidator } from '../../validations';
 const router = express.Router({ mergeParams: true });
 
 router
-  .route('/')
-  .get(catchAsync(bookingController.get));
-
-router
   .route('/:bookingId')
   .post(
     authenticate,
@@ -18,5 +14,9 @@ router
     commonValidator.id('bookingId'),
     catchAsync(bookingController.create),
   );
+
+router
+  .route('/')
+  .get(catchAsync(bookingController.get));
 
 export default router;
