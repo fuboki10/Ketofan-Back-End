@@ -45,6 +45,9 @@ const createValidate = [
     .bail()
     .custom(check),
 
+  body('days[*].working', 'Please Enter a valid working')
+    .default(false)
+    .isBoolean(),
 ];
 
 export default validate(createValidate);

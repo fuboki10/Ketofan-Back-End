@@ -15,15 +15,16 @@ interface CreateWorkingDay {
 export const create = async (doctorId: number,
   workingDayProps: CreateWorkingDay = { days: [{ }] }) : Promise<WorkingDayInterface[]> => {
   const { type } = workingDayProps;
+
   let objs = workingDayProps.days.map((obj) => ({
-    ...obj, type, doctorId, working: true,
+    ...obj, type, doctorId,
   }));
 
   weekDays.forEach((day) => {
     const found = objs.find((obj) => (obj.day === day));
     if (!found) {
       objs.push({
-        day, working: false, type, doctorId,
+        day, type, doctorId,
       });
     }
   });
