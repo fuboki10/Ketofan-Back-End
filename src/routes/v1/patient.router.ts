@@ -20,7 +20,7 @@ router
   .delete(
     authenticate,
     authorize(['patient']),
-    commonValidator.id,
+    commonValidator.id('id'),
     catchAsync(appointmentController.remove),
   );
 
