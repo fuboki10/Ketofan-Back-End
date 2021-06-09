@@ -112,7 +112,7 @@ export const remove = async (id:number) => {
 
   await User.db
     .delete()
-    .where({ id: doctor.userId });
+    .where({ id: doctor[0].userId });
 
   return doctor[0];
 };
