@@ -23,6 +23,7 @@
   - [Installation](#installation)
   - [Environmental Variables](#environmental-variables)
   - [Running](#running)
+  - [Database](#database)
 - [Testing](#testing)
   - [Running Unit Tests](#running-unit-tests)
 - [API Documentation](#api-documentation)
@@ -59,7 +60,7 @@ To get a local copy up and running follow these simple example steps.
 git clone https://github.com/fuboki10/Ketofan-Back-End.git
 ```
 
-2. Install dependencies
+2. Install dependencies (it will create the database automatically)
 
 ```sh
 npm install
@@ -77,7 +78,8 @@ For production, you need to make your own `config\production.json` with the foll
   "JWT_EXPIRES_IN": "30d",
   "NODE_ENV": "production",
   "DB": "postgres://<user>:<password>@<host>:<port>/ketofan",
-  "PORT": "3000"
+  "PORT": "3000",
+  "SENDGRID_API_KEY": "SG."
 }
 ```
 
@@ -88,6 +90,7 @@ For production, you need to make your own `config\production.json` with the foll
   > Eg: `"postgres://<user>:<password>@localhost:<port>/ketofan"` If you're hosting on your localhost server.
 - `PORT`: Your api hosting port
 - `NODE_ENV`: It **must** be `"production"` in order to run the api on production otherwise use `config\development.json`
+- `SENDGRID_API_KEY`: SENDGRID api key to send emails
 
 ### Running
 
@@ -104,6 +107,32 @@ Upon creating `config\production.json` like in [Environmental Variables](#enviro
 ```sh
 npm run build
 npm start
+```
+
+### Database
+
+1. Migration
+
+```sh
+npm run migrate
+```
+
+2. Seeds
+
+```sh
+npm run seed
+```
+
+3. Roll back migration
+
+```sh
+npm run unmigrate
+```
+
+4. Create Database
+
+```sh
+npm run db:create
 ```
 
 <!-- TESTING -->
