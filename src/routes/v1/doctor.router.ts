@@ -33,7 +33,8 @@ router
 
 router
   .route('/:id')
-  .get(commonValidator.id('id'), catchAsync(doctorController.getById));
+  .get(commonValidator.id('id'), catchAsync(doctorController.getById))
+  .delete(commonValidator.id('id'), catchAsync(doctorController.remove));
 
 router
   .route('/')

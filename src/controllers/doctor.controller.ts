@@ -44,9 +44,25 @@ export const get = async (req : Request, res : Response) => {
   res.status(status.OK).json(response);
 };
 
+export const remove = async (req: Request, res: Response) => {
+  const { id } : any = req.params;
+
+  const doctor = await doctorService.remove(id);
+
+  const response = {
+    status: status.OK,
+    data: {
+      doctor,
+    },
+  };
+
+  res.status(status.OK).json(response);
+};
+
 const doctorController = {
   getById,
   get,
+  remove,
 };
 
 export default doctorController;

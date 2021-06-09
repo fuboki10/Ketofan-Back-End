@@ -102,10 +102,22 @@ export const getByUserId = async (userId : number) : Promise<DoctorInterface> =>
   return doctor[0];
 };
 
+export const remove = async (id:number) => {
+  const doctor : any = await Doctor.db
+    .returning('*')
+    .delete()
+    .where({ id });
+
+  if (!doctor || !doctor[0]) { throw new AppError('Doctor with the given id is not found', status.NOT_FOUND); }
+
+  return doctor[0];
+};
+
 const doctorService = {
   getByUserId,
   getById,
   get,
+  remove,
 };
 
 export default doctorService;
