@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
-import { bookingService, appointmentService, doctorService } from '../services';
+import {
+  bookingService, appointmentService, doctorService, patientService,
+} from '../services';
 
 export const get = async (req: Request, res : Response) => {
   const { doctorId } : any = req.params;
@@ -21,9 +23,10 @@ export const create = async (req: Request, res : Response) => {
   const { doctorId, bookingId } : any = req.params;
 
   const doctor : any = await doctorService.getById(doctorId);
+  const patient : any = await patientService.getByUserId(req.user.id);
 
-  const patientId = doctor.id;
-  const patientName = req.user.name;
+  const patientId = patient.id;
+  const patientName = patient.name;
   const doctorName = doctor.name;
 
   const appointment = await appointmentService.create(

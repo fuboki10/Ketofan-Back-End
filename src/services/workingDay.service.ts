@@ -52,7 +52,7 @@ Promise<WorkingDayInterface[]> => {
 export const get = async (doctorId: number) : Promise<WorkingDayInterface[]> => {
   const workingDays = await WorkingDay
     .find({ doctorId })
-    .returning('*');
+    .select('*');
 
   return workingDays;
 };
