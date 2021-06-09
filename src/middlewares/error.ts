@@ -5,7 +5,6 @@ import {
   Request, Response, NextFunction,
 } from 'express';
 import multer from 'multer';
-import httpStatus from 'http-status';
 import AppError from '../utils/AppError';
 import logger from '../utils/logger';
 
@@ -95,7 +94,7 @@ const handleValidationErrorDB = (err : any) => {
   return new AppError(message, 400);
 };
 
-const handleMulterError = (err : any) => new AppError(err.message, httpStatus.BAD_REQUEST);
+const handleMulterError = (err : any) => new AppError(err.message, status.BAD_REQUEST);
 
 /**
  * @author Abdelrahman Tarek
