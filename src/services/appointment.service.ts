@@ -107,8 +107,8 @@ export const getPatientAppointments = async (
       .where('appointments.patientId', '=', patient.id)
       .join('bookings', 'bookings.id', '=', 'appointments.bookingId')
       .join('working_days', 'working_days.id', '=', 'bookings.workingDayId')
-      .join('patients', 'patients.id', '=', 'appointments.patientId')
-      .join('users', 'users.id', '=', 'patients.userId')
+      .join('doctors', 'doctors.id', '=', 'appointments.doctorId')
+      .join('users', 'users.id', '=', 'doctors.userId')
       .offset(offset)
       .limit(limit),
 
