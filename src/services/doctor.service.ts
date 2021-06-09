@@ -71,7 +71,6 @@ export const get = async (limit : number, offset : number, searchProps: DoctorSe
   // handle insurance search
   if (searchProps.insurance) {
     query
-
       .where('doctor_insurances.insuranceId', '=', searchProps.insurance);
   }
 
