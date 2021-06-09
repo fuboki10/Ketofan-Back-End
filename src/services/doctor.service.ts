@@ -1,5 +1,5 @@
 import status from 'http-status';
-import { Doctor, DoctorInterface } from '../models';
+import { Doctor, DoctorInterface, User } from '../models';
 import AppError from '../utils/AppError';
 
 const essentialSelect = [
@@ -109,6 +109,10 @@ export const remove = async (id:number) => {
     .where({ id });
 
   if (!doctor || !doctor[0]) { throw new AppError('Doctor with the given id is not found', status.NOT_FOUND); }
+
+  await User.db
+    .delete()
+    .where({ id: doctor.userId });
 
   return doctor[0];
 };
