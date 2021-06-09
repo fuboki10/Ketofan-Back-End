@@ -1,8 +1,11 @@
+/* eslint-disable max-len */
 import status from 'http-status';
 import config from 'config';
 import {
   Request, Response, NextFunction,
 } from 'express';
+import multer from 'multer';
+import httpStatus from 'http-status';
 import AppError from '../utils/AppError';
 import logger from '../utils/logger';
 
@@ -19,6 +22,82 @@ function handleDuplicateKeyViolationDB(error : any) : AppError {
 }
 
 /**
+ * Handle ENOENT Error
+ *
+ * @function
+ * @private
+ * @author Abdelrahman Tarek
+ * @param {Object} err Error object
+ * @returns {Object} AppError object
+ */
+const handleENOENTError = () => new AppError('File Does Not exist', 404);
+
+/**
+ * Handle OAuth Error
+ *
+ * @function
+ * @private
+ * @author Abdelrahman Tarek
+ * @param {Object} err Error object
+ * @returns {Object} AppError object
+ */
+const handleOAuthError = (err : any) => new AppError(err.message, err.oauthError.statusCode ? err.oauthError.statusCode : err.oauthError);
+
+/**
+ * Handle Cast DB Error
+ *
+ * @function
+ * @private
+ * @author Abdelrahman Tarek
+ * @param {Object} err Error object
+ * @returns {Object} AppError object
+ */
+const handleCastErrorDB = (err : any) => {
+  const message = `Invalid ${err.path}: ${err.value}.`;
+  return new AppError(message, 400);
+};
+
+/**
+ * Handle JWT Error
+ *
+ * @function
+ * @private
+ * @author Abdelrahman Tarek
+ * @param {Object} err Error object
+ * @returns {Object} AppError object
+ */
+const handleJWTError = () => new AppError('Invalid Token. Please log in again', 401);
+
+/**
+ * Handle JWT Expired Error
+ *
+ * @function
+ * @private
+ * @author Abdelrahman Tarek
+ * @param {Object} err Error object
+ * @returns {Object} AppError object
+ */
+const handleJWTExpiredError = () => new AppError('Your token has expired! Please log in again.', 401);
+
+/**
+ * Handle Validation Error
+ *
+ * @function
+ * @private
+ * @author Abdelrahman Tarek
+ * @param {Object} err Error object
+ * @returns {Object} AppError object
+ */
+const handleValidationErrorDB = (err : any) => {
+  const errors = Object.values(err.errors).map((el : any) => el.message);
+
+  const message = `Invalid input data. ${errors.join('. ')}`;
+  return new AppError(message, 400);
+};
+
+const handleMulterError = (err : any) => new AppError(err.message, httpStatus.BAD_REQUEST);
+
+/**
  * @author Abdelrahman Tarek
  * @summary Convert Error to AppError
  */
@@ -26,6 +105,13 @@ const errorConverter = (err : any, _req : Request, _res : Response, next : NextF
   let error = err;
 
   if (error.code === '23505') error = handleDuplicateKeyViolationDB(error);
+  if (error.code === 'ENOENT') error = handleENOENTError();
+  if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
+  if (error.name === 'JsonWebTokenError') error = handleJWTError();
+  if (error.name === 'TokenExpiredError') error = handleJWTExpiredError();
+  if (error.name === 'CastError') error = handleCastErrorDB(error);
+  if (error.name === 'InternalOAuthError') error = handleOAuthError(error);
+  if (error instanceof multer.MulterError) error = handleMulterError(error);
 
   // create AppError object if it's not an operational error
   if (!(error instanceof AppError)) {
