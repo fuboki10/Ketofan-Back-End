@@ -34,6 +34,8 @@ export const create = async (workingDays : WorkingDayInterface[]) => {
     }
   });
 
+  if (bookings.length < 1) return [];
+
   const booking = await Booking.db
     .returning('*')
     .insert(bookings);

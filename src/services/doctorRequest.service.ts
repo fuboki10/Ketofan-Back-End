@@ -7,6 +7,7 @@ import {
 import AppError from '../utils/AppError';
 import hashPassword from './helpers/hashPassword';
 import mailService from './mail.service';
+import workingDayService from './workingDay.service';
 import logger from '../utils/logger';
 
 const selectList = [
@@ -58,6 +59,8 @@ const createDoctor = async (doctorRequest: DoctorRequestInterface) => {
     const doctor : DoctorInterface[] = await trx('doctors').returning('*').insert({
       userId: user[0].id,
     });
+
+    workingDayService.create(doctor[0].id);
 
     await trx('doctor_specializations').insert({
       doctorId: doctor[0].id,
