@@ -124,7 +124,7 @@ export const remove = async (id:number) => {
     .delete()
     .where({ id });
 
-  if (appointment || !appointment[0]) { throw new AppError('Appointment with the given id is not found', status.NOT_FOUND); }
+  if (!appointment || !appointment[0]) { throw new AppError('Appointment with the given id is not found', status.NOT_FOUND); }
 
   return appointment[0];
 };
