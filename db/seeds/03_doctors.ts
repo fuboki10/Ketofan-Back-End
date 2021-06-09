@@ -36,8 +36,8 @@ export async function seed(knex: Knex): Promise<void> {
     days: [
       {
         day: 'Wednesday',
-        from: '00:00:00',
-        to: '12:00:00',
+        from: '12:00:00',
+        to: '24:00:00',
         duration: 60,
         working: true,
       },
@@ -73,15 +73,15 @@ export async function seed(knex: Knex): Promise<void> {
     days: [
       {
         day: 'Wednesday',
-        from: '00:00:00',
-        to: '12:00:00',
+        from: '10:00:00',
+        to: '22:00:00',
         slots: 12,
         working: true,
       },
       {
         day: 'Thursday',
-        from: '00:00:00',
-        to: '12:00:00',
+        from: '04:00:00',
+        to: '16:00:00',
         slots: 12,
         working: true,
       },
@@ -94,8 +94,8 @@ export async function seed(knex: Knex): Promise<void> {
       },
       {
         day: 'Saturday',
-        from: '00:00:00',
-        to: '12:00:00',
+        from: '05:00:00',
+        to: '17:00:00',
         slots: 12,
         working: true,
       },
