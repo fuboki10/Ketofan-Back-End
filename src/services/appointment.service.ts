@@ -129,7 +129,7 @@ export const remove = async (id:number) => {
   // update available booking
   await Booking.db
     .update({ available: true })
-    .where({ id: appointment.bookingId });
+    .where({ id: appointment[0].bookingId });
 
   return appointment[0];
 };
