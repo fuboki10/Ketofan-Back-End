@@ -59,12 +59,14 @@ const createDoctor = async (doctorRequest: DoctorRequestInterface) => {
       gender: doctorRequest.gender,
       dateOfBirth: doctorRequest.dateOfBirth,
       mobileNumber: doctorRequest.mobileNumber,
+      profileImage: doctorRequest.profileImage,
       verified: true,
       role: 'doctor',
     });
 
     const doctor : DoctorInterface[] = await trx('doctors').returning('*').insert({
       userId: user[0].id,
+      bio: doctorRequest.bio,
     });
 
     await trx('doctor_specializations').insert({

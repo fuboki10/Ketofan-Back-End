@@ -17,8 +17,13 @@ const checkId : CustomValidator = async (value) => {
 };
 
 const isUniqueMobile : CustomValidator = async (value) => {
-  const doctorRequest = await DoctorRequest.find({ mobileNumber: value });
+  const [doctorRequest, user] : any = await Promise.all([
+    DoctorRequest.find({ mobileNumber: value }),
+    User.find({ mobileNumber: value }),
+  ]);
+
   if (doctorRequest && doctorRequest.length > 0) { throw new Error('Mobile Number already in use'); }
+  if (user && user.length > 0) { throw new Error('Mobile Number already in use'); }
 };
 
 const createValidate = [
