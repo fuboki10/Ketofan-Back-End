@@ -38,7 +38,7 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.time('from').notNullable().defaultTo('00:00:00');
   table.time('to').notNullable().defaultTo('12:00:00');
   table.integer('duration').defaultTo(60); // duration in minutes
-  table.integer('slots').defaultTo(12);
+  table.integer('slots');
   table.boolean('working').notNullable().defaultTo(false);
 };
 
