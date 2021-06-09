@@ -12,6 +12,7 @@ export interface WorkingDayInterface {
   to: Date;
   duration?: number;
   slots?: number;
+  working:boolean;
 }
 
 export interface CreateWorkingDayProps {
@@ -23,6 +24,7 @@ export interface CreateWorkingDayProps {
   to: Date;
   duration?: number;
   slots?: number;
+  working?:boolean;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
@@ -31,12 +33,13 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .inTable('doctors')
     .onDelete('CASCADE');
 
-  table.string('type', 20).notNullable();
+  table.string('type', 20).notNullable().defaultTo('reservation');
   table.string('day', 20).notNullable();
-  table.time('from').notNullable();
-  table.time('to').notNullable();
-  table.integer('duration'); // duration in minutes
-  table.integer('slots');
+  table.time('from').notNullable().defaultTo('00:00:00');
+  table.time('to').notNullable().defaultTo('12:00:00');
+  table.integer('duration').defaultTo(0); // duration in minutes
+  table.integer('slots').defaultTo(0);
+  table.boolean('working').notNullable().defaultTo(false);
 };
 
 export const WorkingDay = ModelBuilder.build('working_days', schema);
