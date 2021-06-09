@@ -51,6 +51,21 @@ export const getPatientAppointments = async (req: Request, res : Response) => {
   res.status(status.OK).json(response);
 };
 
+export const remove = async (req: Request, res : Response) => {
+  const { id } : any = req.params;
+
+  const appointment = await appointmentService.remove(id);
+
+  const response = {
+    status: status.OK,
+    data: {
+      appointment,
+    },
+  };
+
+  res.status(status.OK).json(response);
+};
+
 const appointmentController = {
   getDoctorAppointments,
   getPatientAppointments,
