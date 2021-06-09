@@ -20,7 +20,7 @@ export const edit = async (req : Request, res : Response) => {
 export const editProfileImage = async (req : Request, res : Response) => {
   const { id } = req.user;
 
-  if (!req.files.profileImage) throw new AppError('Please send a valid file', 400);
+  if (!req.files || !req.files.profileImage) throw new AppError('Please send a valid file', 400);
 
   const file : Express.Multer.File = req.files.profileImage[0];
 

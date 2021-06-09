@@ -7,10 +7,6 @@ import imageUpload from '../../middlewares/imageUpload';
 
 const router = express.Router();
 
-router.route('/me')
-  .get(authenticate, catchAsync(userController.me))
-  .put(authenticate, userValidator.edit, catchAsync(userController.edit));
-
 router.route('/me/profileImage')
   .patch(
     authenticate,
@@ -24,5 +20,9 @@ router.route('/me/password')
     userValidator.editPassword,
     catchAsync(userController.editPassword),
   );
+
+router.route('/me')
+  .get(authenticate, catchAsync(userController.me))
+  .put(authenticate, userValidator.edit, catchAsync(userController.edit));
 
 export default router;

@@ -5,12 +5,12 @@ import AppError from '../utils/AppError';
 import deleteFileIfFound from '../services/helpers/deleteFileIfFound';
 
 export const create = async (req: Request, res: Response) => {
-  if (!req.files.profileImage) {
+  if (!req.files || !req.files.profileImage) {
     if (req.files.document && req.files.document[0]) deleteFileIfFound(req.files.document[0].path);
     throw new AppError('Profile Image is Not Found', status.NOT_FOUND);
   }
 
-  if (!req.files.document) {
+  if (!req.files || !req.files.document) {
     if (req.files.profileImage && req.files.profileImage[0]) {
       deleteFileIfFound(req.files.profileImage[0].path);
     }
