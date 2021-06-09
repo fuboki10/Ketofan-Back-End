@@ -49,13 +49,13 @@ export const getById = async (id : number) => {
 export const get = async (limit : number, offset : number, searchProps: DoctorSearchProps) => {
   const query = Doctor.db
     .select(selectList)
-    .join('users', 'users.id', '=', 'doctors.userId')
-    .join('doctor_areas', 'doctor_areas.doctorId', '=', 'doctors.id')
-    .join('doctor_insurances', 'doctor_insurances.doctorId', '=', 'doctors.id')
-    .join('doctor_specializations', 'doctor_specializations.doctorId', '=', 'doctors.id')
-    .join('areas', 'areas.id', '=', 'doctor_areas.areaId')
-    .join('insurances', 'insurances.id', '=', 'doctor_insurances.insuranceId')
-    .join('specializations', 'specializations.id', '=', 'doctor_specializations.specializationId');
+    .leftJoin('users', 'users.id', '=', 'doctors.userId')
+    .leftJoin('doctor_areas', 'doctor_areas.doctorId', '=', 'doctors.id')
+    .leftJoin('doctor_insurances', 'doctor_insurances.doctorId', '=', 'doctors.id')
+    .leftJoin('doctor_specializations', 'doctor_specializations.doctorId', '=', 'doctors.id')
+    .leftJoin('areas', 'areas.id', '=', 'doctor_areas.areaId')
+    .leftJoin('insurances', 'insurances.id', '=', 'doctor_insurances.insuranceId')
+    .leftJoin('specializations', 'specializations.id', '=', 'doctor_specializations.specializationId');
 
   // handle name search
   if (searchProps.name) {

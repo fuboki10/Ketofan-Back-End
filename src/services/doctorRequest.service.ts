@@ -79,11 +79,6 @@ const createDoctor = async (doctorRequest: DoctorRequestInterface) => {
       areaId: doctorRequest.areaId,
     });
 
-    await trx('doctor_insurances').insert({
-      doctorId: doctor[0].id,
-      insuranceId: 1,
-    });
-
     await trx.commit();
 
     await workingDayService.create(doctor[0].id);
