@@ -7,12 +7,14 @@ export interface DoctorInterface {
   id: number;
   userId: string;
   bio?: string;
+  fees?: number;
 }
 
 export interface CreateDoctorProps {
   id?: number;
   userId: string;
   bio?: string;
+  fees?: number;
 }
 
 const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
@@ -22,6 +24,7 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .onDelete('CASCADE')
     .unique();
   table.text('bio');
+  table.integer('fees').notNullable().defaultTo(200);
 };
 
 export const Doctor = ModelBuilder.build('doctors', schema);

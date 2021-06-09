@@ -15,6 +15,8 @@ export const create = async (workingDays : WorkingDayInterface[]) => {
   const bookings : CreateBookingProps[] = [];
 
   workingDays.forEach((day) => {
+    if (!day.working) return;
+
     const { timeTo, timeFrom } = getTimeToFromInSeconds(day.to, day.from);
 
     let slotTime = day.duration ?? 0;
@@ -31,6 +33,8 @@ export const create = async (workingDays : WorkingDayInterface[]) => {
       bookings.push({ time, workingDayId: day.id });
     }
   });
+
+  if (bookings.length < 1) return [];
 
   const booking = await Booking.db
     .returning('*')

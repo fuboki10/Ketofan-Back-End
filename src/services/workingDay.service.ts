@@ -1,18 +1,31 @@
 /* eslint-disable no-return-assign */
 import knex from '../../db';
 import { WorkingDayInterface, WorkingDay } from '../models';
+import bookingService from './booking.service';
 
+const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 interface CreateWorkingDay {
-  type: string;
+  type?: string;
   days: [
-    {day:string, from: string, to:string, duration:number, slots:number, type?: string}
+    {day?:string, from?: string, to?:string, duration?:number, slots?:number, type?: string}
   ]
 }
 
-export const create = async (doctorId: number, workingDayProps: CreateWorkingDay) :
+export const create = async (doctorId: number, workingDayProps: CreateWorkingDay = { days: [{}] }) :
 Promise<WorkingDayInterface[]> => {
   const { type } = workingDayProps;
-  const objs = workingDayProps.days.map((obj) => ({ ...obj, type, doctorId }));
+  const objs = workingDayProps.days.map((obj) => ({
+    ...obj, type, doctorId, working: true,
+  }));
+
+  weekDays.forEach((day) => {
+    const found = objs.find((obj) => (obj.day === day));
+    if (!found) {
+      objs.push({
+        day, working: false, type, doctorId,
+      });
+    }
+  });
 
   return knex.transaction(async (trx) => {
     await trx('working_days')
@@ -23,6 +36,10 @@ Promise<WorkingDayInterface[]> => {
     const workingDays : any = await trx('working_days')
       .returning('*')
       .insert(objs);
+
+    await trx.commit();
+
+    await bookingService.create(workingDays);
 
     return workingDays;
   });

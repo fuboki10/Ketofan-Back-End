@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 import status from 'http-status';
-import { bookingsService, appointmentService, doctorService } from '../services';
+import { bookingService, appointmentService, doctorService } from '../services';
 
 export const get = async (req: Request, res : Response) => {
   const { doctorId } : any = req.params;
 
-  const bookings = await bookingsService.get(doctorId);
+  const bookings = await bookingService.get(doctorId);
 
   const response = {
     status: status.OK,
