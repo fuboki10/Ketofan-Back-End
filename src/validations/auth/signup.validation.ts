@@ -24,8 +24,8 @@ const signupValidate = [
   body('password')
     .isLength({ min: 8 })
     .withMessage('Password Must Be at Least 8 Characters')
-    .isLength({ max: 20 })
-    .withMessage('Password Must Be at Most 20 Characters')
+    .isLength({ max: 50 })
+    .withMessage('Password Must Be at Most 50 Characters')
     .trim()
     .escape(),
 

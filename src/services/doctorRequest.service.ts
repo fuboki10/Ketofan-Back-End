@@ -1,5 +1,4 @@
 import status from 'http-status';
-import crypto from 'crypto';
 import knex from '../../db';
 import {
   DoctorRequest, CreateDoctorRequestProps, DoctorRequestInterface, UserInterface, DoctorInterface,
@@ -9,6 +8,8 @@ import hashPassword from './helpers/hashPassword';
 import mailService from './mail.service';
 import workingDayService from './workingDay.service';
 import logger from '../utils/logger';
+// eslint-disable-next-line import/order
+import config = require('config');
 
 const selectList = [
   'doctor_requests.*',
@@ -19,14 +20,17 @@ const selectList = [
 const sendEmailWithPassword = async (user: UserInterface, password: string) => {
   const message = `Hello ${user.name}<br>
   Your request is approved<br>
-  Your Password : ${password}<br>`;
+  Your Password :  <code style="
+  background-color: rgb(246, 246, 246);
+  padding: 3px;
+">${password}</code><br>`;
 
   const mailOptions = {
     email: user.email,
     subject: 'Approved Request',
     message,
     button: 'SIGNIN',
-    link: 'https://ketofan-api.herokuapp.com/api/v1/auth/signin',
+    link: `${config.get('WEBSITE')}/api/v1/auth/signin`,
   };
 
   mailService.sendEmail(mailOptions)
@@ -39,7 +43,9 @@ const sendEmailWithPassword = async (user: UserInterface, password: string) => {
 
 const createDoctor = async (doctorRequest: DoctorRequestInterface) => {
   // generate password
-  const password = crypto.randomBytes(8).toString('base64');
+  const password = Math.random().toString(36).slice(2)
+  + Math.random().toString(36)
+    .toUpperCase().slice(2);
 
   // hash password
   const hashedPassword : String = await hashPassword(password);

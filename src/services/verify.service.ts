@@ -4,6 +4,8 @@ import { VerifyToken, User, UserInterface } from '../models';
 import mailService from './mail.service';
 import logger from '../utils/logger';
 import AppError from '../utils/AppError';
+// eslint-disable-next-line import/order
+import config = require('config');
 
 const createVerifyToken = async (user: UserInterface) : Promise<string> => {
   const token = crypto.randomBytes(48).toString('hex');
@@ -26,7 +28,7 @@ const sendVerifyEmail = (user: UserInterface, token : string) : void => {
     subject: 'Verify your account',
     message,
     button: 'CONFIRM ACCOUNT',
-    link: `https://ketofan-api.herokuapp.com/api/v1/verify/${token}`,
+    link: `${config.get('WEBSITE')}/api/v1/verify/${token}`,
   };
 
   mailService.sendEmail(mailOptions)

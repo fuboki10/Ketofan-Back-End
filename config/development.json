@@ -4,5 +4,6 @@
   "PORT": 3001,
   "JWT_KEY": "foo",
   "JWT_EXPIRES_IN": "30d",
-  "SENDGRID_API_KEY": "SG."
+  "SENDGRID_API_KEY": "SG.",
+  "WEBSITE": "https://ketofan-api.herokuapp.com"
 }

@@ -1,7 +1,8 @@
 {
-  "DB" : "postgres://postgres:root@localhost:5432/ketofan",
-  "NODE_ENV" : "test",
+  "DB": "postgres://postgres:root@localhost:5432/ketofan",
+  "NODE_ENV": "test",
   "PORT": 3000,
   "JWT_KEY": "foo",
-  "JWT_EXPIRES_IN": "30d"
+  "JWT_EXPIRES_IN": "30d",
+  "WEBSITE": "https://ketofan-api.herokuapp.com"
 }
