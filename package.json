@@ -56,7 +56,7 @@
     "unmigrate": "knex migrate:rollback",
     "seed": "knex seed:run",
     "db:create": "ts-node ./db/createDatabase",
-    "postinstall": "node  ./db/createDatabase.js"
+    "postinstall": "ts-node ./db/createDatabase"
   },
   "repository": {
     "type": "git",
