@@ -28,7 +28,7 @@ export const generateAuthToken = async (payload : PayloadInterface) => {
 
 export const verifyAuthToken = async (token : string) : Promise<PayloadInterface> => {
   const payload = new Promise<any>((resolve, reject) => {
-    jwt.verify(token, config.get('JWT_KEY'), (err, result) => {
+    jwt.verify(token, process.env.JWT_KEY || config.get('JWT_KEY'), (err, result) => {
       if (err || !result) return reject(new AppError('Invalid Token', status.BAD_REQUEST));
       return resolve(result);
     });
