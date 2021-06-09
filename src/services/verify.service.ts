@@ -35,7 +35,7 @@ const sendVerifyEmail = (user: UserInterface, token : string) : void => {
     .then(() => logger.info(`Sent Mail to ${user.email}`))
     .catch((error) => {
       const { code, response } = error;
-      logger.error(`${code} : ${response.body.errors[0].message}`);
+      logger.error(`${code} : ${response?.body?.errors[0]?.message}`);
     });
 };
 
