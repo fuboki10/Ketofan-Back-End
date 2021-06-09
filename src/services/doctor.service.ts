@@ -55,7 +55,10 @@ export const get = async (limit : number, offset : number, searchProps: DoctorSe
     .leftJoin('doctor_specializations', 'doctor_specializations.doctorId', '=', 'doctors.id')
     .leftJoin('areas', 'areas.id', '=', 'doctor_areas.areaId')
     .leftJoin('insurances', 'insurances.id', '=', 'doctor_insurances.insuranceId')
-    .leftJoin('specializations', 'specializations.id', '=', 'doctor_specializations.specializationId');
+    .leftJoin('specializations', 'specializations.id', '=', 'doctor_specializations.specializationId')
+    .join('working_days', 'working_days.doctorId', '=', 'doctors.id')
+    .join('bookings', 'bookings.workingDayId', '=', 'working_days.id')
+    .distinctOn('doctors.id');
 
   // handle name search
   if (searchProps.name) {
