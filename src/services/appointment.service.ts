@@ -127,10 +127,10 @@ export const remove = async (id:number) => {
   if (!appointment || !appointment[0]) { throw new AppError('Appointment with the given id is not found', status.NOT_FOUND); }
 
   // update available booking
-  await Booking.db
+  /* await Booking.db
     .update({ available: true })
     .where({ id: appointment[0].bookingId });
-
+*/
   return appointment[0];
 };
 
