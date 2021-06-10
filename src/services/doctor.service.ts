@@ -62,7 +62,7 @@ export const get = async (limit : number, offset : number, searchProps: DoctorSe
 
   // handle name search
   if (searchProps.name) {
-    query.where('users.name', 'like', `${searchProps.name}%`);
+    query.whereRaw('users.name_tsvector @@ to_tsquery(?)', `${searchProps.name}:*`);
   }
 
   // handle area search

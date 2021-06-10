@@ -34,7 +34,7 @@ export async function seed(knex: Knex): Promise<void> {
       role: 'doctor', password: hashedPassword, email: 'doctor5@gmail.com', gender: 'M', name: 'Ali', dateOfBirth: '1999-10-20', mobileNumber: '01128745548', profileImage: 3,
     },
     {
-      role: 'doctor', password: hashedPassword, email: 'doctor6@gmail.com', gender: 'M', name: 'lido22', dateOfBirth: '1999-10-20', mobileNumber: '01128745547', profileImage: 4,
+      role: 'doctor', password: hashedPassword, email: 'doctor6@gmail.com', gender: 'M', name: 'lido', dateOfBirth: '1999-10-20', mobileNumber: '01128745547', profileImage: 4,
     },
   ]);
 }
