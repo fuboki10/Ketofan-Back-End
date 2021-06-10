@@ -117,5 +117,6 @@ dist
 !public/images/p5.jpg
 !public/images/p6.jpg
 !public/images/p7.jpg
+!public/images/default.jpg
 
 *.sql

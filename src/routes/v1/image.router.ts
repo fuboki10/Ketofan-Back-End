@@ -1,11 +1,10 @@
 import express from 'express';
 import { imageController } from '../../controllers';
 import catchAsync from '../../utils/catchAsync';
-import { commonValidator } from '../../validations';
 
 const router = express.Router();
 
 router.route('/:id')
-  .get(commonValidator.id('id'), catchAsync(imageController.getById));
+  .get(catchAsync(imageController.getById));
 
 export default router;

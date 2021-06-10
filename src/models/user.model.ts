@@ -60,9 +60,8 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.boolean('verified').notNullable().defaultTo(false);
   table.string('name').notNullable().index();
   table.date('dateOfBirth').notNullable();
-  table.integer('profileImage').unsigned().references('id')
-    .inTable('images')
-    .onDelete('CASCADE');
+  table.integer('profileImage').unsigned().defaultTo(8).references('id')
+    .inTable('images');
   table.string('mobileNumber', 20).unique().notNullable();
   table.string('gender', 1).notNullable();
   table.timestamp('lastLogin').notNullable().defaultTo(knex.fn.now());

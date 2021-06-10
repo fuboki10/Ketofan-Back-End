@@ -1,16 +1,20 @@
 import path from 'path';
-import status from 'http-status';
 import { Express } from 'express';
 import { Image, ImageInterface } from '../models';
-import AppError from '../utils/AppError';
 import deleteFileIfFound from './helpers/deleteFileIfFound';
+import fileFound from './helpers/fileFound';
 
-export const getById = async (id : number) => {
-  const image = await Image.findById(id);
+const DEFAULT_IMAGE_ID : number = 1;
 
-  if (!image || !image[0]) { throw new AppError('Image with the given id is not found', status.NOT_FOUND); }
+export const getById = async (id : number | undefined) => {
+  let image : ImageInterface[] = await Image.findById(id || DEFAULT_IMAGE_ID);
+
+  if (!image || !image[0] || !await fileFound(image[0].filepath)) {
+    image = await Image.findById(DEFAULT_IMAGE_ID);
+  }
 
   const dirname = path.resolve();
+
   const imagePath = path.join(dirname, image[0].filepath);
 
   return imagePath;

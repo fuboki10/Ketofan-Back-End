@@ -7,6 +7,9 @@ export async function seed(knex: Knex): Promise<void> {
   // Inserts seed entries
   await knex('images').insert([
     {
+      filename: 'default.jpg', filepath: 'public/images/default.jpg', mimetype: 'image/jpeg', size: 16579,
+    },
+    {
       filename: 'p1.jpg', filepath: 'public/images/p1.jpg', mimetype: 'image/jpeg', size: 18021,
     },
     {

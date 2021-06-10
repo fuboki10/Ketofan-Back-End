@@ -8,7 +8,7 @@ import { imageService } from '../services';
 export const getById = async (req: Request, res : Response) => {
   const { id } : any = req.params;
 
-  const imagePath = await imageService.getById(id);
+  const imagePath = await imageService.getById(parseInt(id, 10));
 
   const file = fs.createReadStream(imagePath);
   const ps = new stream.PassThrough();
