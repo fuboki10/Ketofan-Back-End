@@ -1,9 +1,9 @@
 // eslint-disable-next-line import/extensions
-import Model, { SchemaInterface } from './Model';
+import Model, { ModelProps } from './Model';
 
 export default class ModelBuilder {
   // eslint-disable-next-line no-unused-vars
-  static build(name : string, schema : SchemaInterface) {
-    return new Model({ name, schema });
+  static build(props: ModelProps) {
+    return new Model(props);
   }
 }

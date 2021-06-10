@@ -4,6 +4,27 @@ import knex from '../../db';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
+const tableName = 'users';
+
+const onCreate : string = `
+ALTER TABLE ${tableName} ADD "name_tsvector" tsvector;
+CREATE FUNCTION my_trigger_function()
+RETURNS trigger AS $$
+BEGIN
+  NEW.name_tsvector := to_tsvector(NEW.name || ' ' || NEW.email);
+  RETURN NEW;
+END $$ LANGUAGE 'plpgsql';
+CREATE TRIGGER my_trigger
+BEFORE INSERT ON ${tableName}
+FOR EACH ROW
+EXECUTE PROCEDURE my_trigger_function();
+CREATE INDEX idx_fts_user ON ${tableName} USING gin(name_tsvector);
+`;
+
+const onDrop : string = `
+  DROP FUNCTION IF EXISTS my_trigger_function();
+`;
+
 export interface UserInterface {
   id: number;
   email: string;
@@ -48,6 +69,8 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.timestamps(true, true);
 };
 
-export const User = ModelBuilder.build('users', schema);
+export const User = ModelBuilder.build({
+  tableName, schema, onCreate, onDrop,
+});
 
 export default User;

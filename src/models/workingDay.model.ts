@@ -3,6 +3,7 @@ import { Knex } from 'knex';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
+const tableName = 'working_days';
 export interface WorkingDayInterface {
   id: number;
   doctorId: number;
@@ -42,6 +43,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.boolean('working').notNullable().defaultTo(false);
 };
 
-export const WorkingDay = ModelBuilder.build('working_days', schema);
+export const WorkingDay = ModelBuilder.build({ tableName, schema });
 
 export default WorkingDay;

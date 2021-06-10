@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 import { Knex } from 'knex';
 // eslint-disable-next-line import/extensions
 import dbConn from '../../db';
@@ -21,13 +22,25 @@ export interface ModelProps {
    * Model Name
    * @type {String}
    */
-  name: string;
+  tableName: string;
 
   /**
    * Model Name
    * @type {SchemaInterface}
    */
   schema: SchemaInterface;
+
+  /**
+   * RAW query to execute After create
+   * @type {String}
+   */
+  onCreate?: string;
+
+  /**
+   * RAW query to execute before drop
+   * @type {String}
+   */
+  onDrop?: string;
 }
 
 /**
@@ -35,10 +48,7 @@ export interface ModelProps {
  * @author Abdelrahman Tarek
  */
 export default class Model {
-  name: string;
-
-  // eslint-disable-next-line no-unused-vars
-  schema: SchemaInterface;
+  props : ModelProps;
 
   /**
    * @constructor
@@ -46,12 +56,11 @@ export default class Model {
    * @param {ModelProps} props
    */
   constructor(props : ModelProps) {
-    this.name = props.name;
-    this.schema = props.schema;
+    this.props = props;
   }
 
   get db() {
-    return dbConn(this.name);
+    return dbConn(this.props.tableName);
   }
 
   public find(filters : Object = {}) : Knex.QueryBuilder {
@@ -76,11 +85,18 @@ export default class Model {
       .del();
   }
 
-  public dropTable(knex : Knex) : Knex.SchemaBuilder {
-    return knex.schema.dropTableIfExists(this.name);
+  public dropTable(knex : Knex) : Promise<any> {
+    const promises = [knex.schema.dropTableIfExists(this.props.tableName)];
+
+    if (this.props.onDrop) promises.push(knex.schema.raw(this.props.onDrop));
+
+    return Promise.all(promises);
   }
 
-  public createTable(knex : Knex) : Knex.SchemaBuilder {
-    return knex.schema.createTable(this.name, this.schema);
+  public createTable(knex : Knex) : Promise<any> {
+    return knex.schema.createTable(this.props.tableName, this.props.schema)
+      .then(() => {
+        if (this.props.onCreate) return knex.schema.raw(this.props.onCreate);
+      });
   }
 }

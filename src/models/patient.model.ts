@@ -3,6 +3,7 @@ import { Knex } from 'knex';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
+const tableName = 'patients';
 export interface PatientInterface {
   id: string;
   userId: string;
@@ -21,6 +22,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
     .unique();
 };
 
-export const Patient = ModelBuilder.build('patients', schema);
+export const Patient = ModelBuilder.build({ tableName, schema });
 
 export default Patient;

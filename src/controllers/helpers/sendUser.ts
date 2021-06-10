@@ -18,7 +18,7 @@ export const createTokenAndSend = async (user : UserInterface, res: Response) =>
     status: status.OK,
     token,
     data: {
-      user: _(user).omit(['password']),
+      user: _(user).omit(['password', 'name_tsvector']),
     },
   };
 
@@ -29,7 +29,7 @@ export const sendUser = async (user : UserInterface, res: Response) => {
   const response = {
     status: status.OK,
     data: {
-      user: _(user).omit(['password']),
+      user: _(user).omit(['password', 'name_tsvector']),
     },
   };
 

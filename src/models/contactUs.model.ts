@@ -3,6 +3,8 @@ import { Knex } from 'knex';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
+const tableName = 'contact_us';
+
 export interface ContactUsInterface {
   id: string;
   name: string;
@@ -32,6 +34,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.timestamps(true, true);
 };
 
-export const ContactUs = ModelBuilder.build('contact_us', schema);
+export const ContactUs = ModelBuilder.build({ tableName, schema });
 
 export default ContactUs;

@@ -3,6 +3,7 @@ import { Knex } from 'knex';
 import ModelBuilder from './ModelBuilder';
 import { SchemaInterface } from './Model';
 
+const tableName = 'appointments';
 export interface AppointmentInterface {
   id?: number;
   bookingId: number;
@@ -34,6 +35,6 @@ const schema : SchemaInterface = (table : Knex.CreateTableBuilder) => {
   table.date('date').notNullable();
 };
 
-export const Appointment = ModelBuilder.build('appointments', schema);
+export const Appointment = ModelBuilder.build({ tableName, schema });
 
 export default Appointment;
