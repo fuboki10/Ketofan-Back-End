@@ -40,10 +40,11 @@ Ketofan is a digital healthcare booking platform. We aim to automate physician, 
 ### Built With
 
 - [Node.js](https://nodejs.org)
+- [TypeScript](https://www.typescriptlang.org)
 - [Express](https://expressjs.com)
 - [Jest](https://jestjs.io)
 - [PostgreSQL](https://www.postgresql.org)
-- [Knex](http://knexjs.org/)
+- [Knex](http://knexjs.org)
 
 <!-- GETTING STARTED -->
 
