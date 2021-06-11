@@ -8,16 +8,26 @@ const tableName = 'users';
 
 const onCreate : string = `
 ALTER TABLE ${tableName} ADD "name_tsvector" tsvector;
+
 CREATE FUNCTION my_trigger_function()
 RETURNS trigger AS $$
 BEGIN
   NEW.name_tsvector := to_tsvector(NEW.name || ' ' || NEW.email);
   RETURN NEW;
 END $$ LANGUAGE 'plpgsql';
-CREATE TRIGGER my_trigger
+
+CREATE TRIGGER insert_user_trigger
 BEFORE INSERT ON ${tableName}
 FOR EACH ROW
 EXECUTE PROCEDURE my_trigger_function();
+
+CREATE TRIGGER update_user_trigger
+BEFORE UPDATE ON ${tableName}
+FOR EACH ROW
+WHEN (OLD.name IS DISTINCT FROM NEW.name)
+EXECUTE PROCEDURE my_trigger_function();
+
+
 CREATE INDEX idx_fts_user ON ${tableName} USING gin(name_tsvector);
 `;
 
