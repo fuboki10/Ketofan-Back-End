@@ -40,6 +40,8 @@ Ketofan is a digital healthcare booking platform. We aim to automate physician, 
 <a href="https://ketofan-api.herokuapp.com">KETOFAN API</a>
 <br>
 <a href="https://ketofan.herokuapp.com">KETOFAN WEBSITE</a>
+<br>
+<a href="https://github.com/D4rk1n/ketofan-fe">KETOFAN FRONTEND</a>
 
 ### Built With
 
